@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://laracursos.test/laravel-ghost-logo.png" alt="Laravel Ghost">
+    <img src="https://raw.githubusercontent.com/igorsgm/laravel-ghost/master/logo.png" alt="Laravel Ghost">
 </p>
 
 <p align="center">A Laravel wrapper that allows you to access Ghost APIs (Content & Admin). Access, create and manage your Ghost content from you app!</p>
