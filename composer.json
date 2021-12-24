@@ -1,0 +1,57 @@
+{
+    "name": "igorsgm/laravel-ghost",
+    "description": "A Laravel wrapper that allows you to access Ghost APIs (Content & Admin). Access, create and manage your Ghost content from you app!",
+    "keywords": [
+        "igorsgm",
+        "laravel-ghost",
+        "laravel",
+        "ghost",
+        "blog"
+    ],
+    "homepage": "https://github.com/igorsgm/laravel-ghost",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Igor Moraes",
+            "email": "igor.sgm@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "illuminate/support": "^8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0",
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Igorsgm\\Ghost\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Igorsgm\\Ghost\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Igorsgm\\Ghost\\GhostServiceProvider"
+            ],
+            "aliases": {
+                "Ghost": "Igorsgm\\Ghost\\Facades\\Ghost"
+            }
+        }
+    }
+}
