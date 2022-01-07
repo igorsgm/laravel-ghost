@@ -2,6 +2,7 @@
 
 namespace Igorsgm\Ghost;
 
+use Igorsgm\Ghost\Responses\PostsResponse;
 use Illuminate\Support\Facades\Http;
 
 class Ghost
@@ -66,6 +67,8 @@ class Ghost
      */
     private string $version;
 
+    private string $responseType;
+
     /**
      * @param  string  $key
      * @param  string  $domain
@@ -97,7 +100,8 @@ class Ghost
             return [];
         }
 
-        return $response->json($this->resource);
+        $response = $response->json($this->resource);
+        return new $this->responseType($response);
     }
 
     /**
@@ -197,6 +201,7 @@ class Ghost
     public function posts(): Ghost
     {
         $this->resource = 'posts';
+        $this->responseType = PostsResponse::class;
 
         return $this;
     }
