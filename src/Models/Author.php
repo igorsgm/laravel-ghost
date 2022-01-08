@@ -70,15 +70,20 @@ class Author
     public $url;
 
     /**
-     * @param array $array
+     * @var integer
+     */
+    public $postsCount;
+
+    /**
+     * @param  array  $array
      * @return Author
      */
     public static function createFromArray($array): Author
     {
         $author = new self();
 
-        $author->id = $array['id'] ?? null;
         $author->slug = $array['slug'] ?? null;
+        $author->id = $array['id'] ?? null;
         $author->name = $array['name'] ?? null;
         $author->profileImage = $array['profile_image'] ?? null;
         $author->coverImage = $array['cover_image'] ?? null;
@@ -90,7 +95,13 @@ class Author
         $author->metaTitle = $array['meta_title'] ?? null;
         $author->metaDescription = $array['meta_description'] ?? null;
         $author->url = $array['url'] ?? null;
+        $author->postsCount = data_get($array, 'count.posts', 0);
 
         return $author;
+    }
+
+    public function getResourceName()
+    {
+        return 'authors';
     }
 }

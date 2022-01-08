@@ -2,15 +2,21 @@
 
 namespace Igorsgm\Ghost;
 
-use Igorsgm\Ghost\Responses\PostsResponse;
+use Igorsgm\Ghost\Models\Author;
+use Igorsgm\Ghost\Models\Meta;
+use Igorsgm\Ghost\Models\Page;
+use Igorsgm\Ghost\Models\Post;
+use Igorsgm\Ghost\Models\Settings;
+use Igorsgm\Ghost\Models\Tag;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 
 class Ghost
 {
     /**
-     * @var string
+     * @var mixed
      */
-    public string $resource = "posts";
+    public $resourceModel;
 
     /**
      * @var string
@@ -67,8 +73,6 @@ class Ghost
      */
     private string $version;
 
-    private string $responseType;
-
     /**
      * @param  string  $key
      * @param  string  $domain
@@ -82,17 +86,17 @@ class Ghost
     }
 
     /**
-     * @return array[]
+     * @return Collection|array[]
      */
-    public function all(): array
+    public function all()
     {
         return $this->limit('all')->get();
     }
 
     /**
-     * @return array[]
+     * @return Collection|array[]
      */
-    public function get(): array
+    public function get()
     {
         $response = Http::get($this->make());
 
@@ -100,27 +104,24 @@ class Ghost
             return [];
         }
 
-        $response = $response->json($this->resource);
-        return new $this->responseType($response);
+        $resourceName = $this->resourceModel->getResourceName();
+        $responseData = $response->json($resourceName);
+        $meta = $response->json('meta');
+
+        return $this->buildResponse($resourceName, $responseData, $meta);
     }
 
     /**
      * @param $limit
      * @return array[]
      */
-    public function paginate($limit = null): array
+    public function paginate($limit = null)
     {
         if (isset($limit)) {
             $this->limit = $limit;
         }
 
-        $response = Http::get($this->make());
-
-        if (in_array($response->status(), [404, 422])) {
-            return ['posts' => []];
-        }
-
-        return $response->json();
+        return $this->get();
     }
 
     /**
@@ -142,7 +143,7 @@ class Ghost
      */
     protected function buildEndpoint(): string
     {
-        $endpoint = $this->resource;
+        $endpoint = $this->resourceModel->getResourceName();
         if (!empty($this->resourceId)) {
             $endpoint .= "/{$this->resourceId}";
         } elseif (!empty($this->resourceSlug)) {
@@ -150,6 +151,29 @@ class Ghost
         }
 
         return $endpoint;
+    }
+
+    /**
+     * @param  string  $resourceName
+     * @param  array  $response
+     * @param  array  $meta
+     * @return array
+     */
+    protected function buildResponse($resourceName, $responseData, $meta = null): object
+    {
+        if ($resourceName == 'settings') {
+            $data = $this->resourceModel::createFromArray($responseData);
+        } else {
+            $data = collect();
+            foreach ($responseData as $resourceProperty) {
+                $data->push($this->resourceModel::createFromArray($resourceProperty));
+            }
+        }
+
+        return (object) [
+            'data' => (empty($data) || ($data instanceof Collection && $data->isEmpty())) ? [] : $data,
+            'meta' => Meta::createFromArray($meta),
+        ];
     }
 
     /**
@@ -190,7 +214,7 @@ class Ghost
      */
     public function setResource(string $resource): Ghost
     {
-        $this->resource = $resource;
+        $this->resourceModel = $resource;
 
         return $this;
     }
@@ -200,8 +224,7 @@ class Ghost
      */
     public function posts(): Ghost
     {
-        $this->resource = 'posts';
-        $this->responseType = PostsResponse::class;
+        $this->resourceModel = resolve(Post::class);
 
         return $this;
     }
@@ -211,7 +234,7 @@ class Ghost
      */
     public function authors(): Ghost
     {
-        $this->resource = 'authors';
+        $this->resourceModel = resolve(Author::class);
 
         return $this;
     }
@@ -221,7 +244,7 @@ class Ghost
      */
     public function tags(): Ghost
     {
-        $this->resource = 'tags';
+        $this->resourceModel = resolve(Tag::class);
 
         return $this;
     }
@@ -231,7 +254,7 @@ class Ghost
      */
     public function pages(): Ghost
     {
-        $this->resource = 'pages';
+        $this->resourceModel = resolve(Page::class);
 
         return $this;
     }
@@ -241,7 +264,7 @@ class Ghost
      */
     public function settings(): Ghost
     {
-        $this->resource = 'settings';
+        $this->resourceModel = resolve(Settings::class);
 
         return $this;
     }
@@ -257,7 +280,7 @@ class Ghost
     {
         $this->resourceId = $id;
 
-        return $this->get()[0];
+        return data_get($this->get(), 0, []);
     }
 
     /**
@@ -267,11 +290,11 @@ class Ghost
      *
      * @return array
      */
-    public function fromSlug(string $slug): array
+    public function fromSlug(string $slug)
     {
         $this->resourceSlug = $slug;
 
-        return $this->get()[0] ?? [];
+        return data_get($this->get(), 0, []);
     }
 
     /**

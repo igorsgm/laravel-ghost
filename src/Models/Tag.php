@@ -100,15 +100,20 @@ class Tag
     public $url;
 
     /**
-     * @param array $array
+     * @var mixed
+     */
+    public $postsCount;
+
+    /**
+     * @param  array  $array
      * @return Tag
      */
     public static function createFromArray($array): Tag
     {
         $tag = new self();
 
-        $tag->id = $array['id'] ?? null;
         $tag->slug = $array['slug'] ?? null;
+        $tag->id = $array['id'] ?? null;
         $tag->name = $array['name'] ?? null;
         $tag->description = $array['description'] ?? null;
         $tag->featureImage = $array['feature_image'] ?? null;
@@ -126,7 +131,13 @@ class Tag
         $tag->canonicalUrl = $array['canonical_url'] ?? null;
         $tag->accentColor = $array['accent_color'] ?? null;
         $tag->url = $array['url'] ?? null;
+        $tag->postsCount = data_get($array, 'count.posts', 0);
 
         return $tag;
+    }
+
+    public function getResourceName()
+    {
+        return 'tags';
     }
 }

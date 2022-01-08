@@ -2,7 +2,7 @@
     <img src="https://raw.githubusercontent.com/igorsgm/laravel-ghost/master/logo.png" alt="Laravel Ghost">
 </p>
 
-<p align="center">A Laravel wrapper that allows you to access Ghost APIs (Content & Admin). Access, create and manage your Ghost content from you app!</p>
+<p align="center">A Laravel wrapper that allows you to access Ghost Content API. Manage your Ghost content from you app!</p>
 
 <p align="center">
     <a href="https://packagist.org/packages/igorsgm/laravel-ghost">
@@ -56,7 +56,7 @@ Ghost::tags()->all();
 Ghost::pages()->all();
 
 // Retrieve a single resource by slug
-Ghost::posts()->bySlug('welcome');
+Ghost::posts()->fromSlug('welcome');
 
 // Retrieve a single resource by id
 Ghost::posts()->find('605360bbce93e1003bd6ddd6');

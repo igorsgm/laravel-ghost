@@ -9,12 +9,12 @@ class Post
     /**
      * @var string|null
      */
-    public $slug;
+    public $id;
 
     /**
      * @var string|null
      */
-    public $id;
+    public $slug;
 
     /**
      * @var string|null
@@ -199,8 +199,8 @@ class Post
     {
         $post = new self();
 
-        $post->id = $array['id'] ?? null;
         $post->slug = $array['slug'] ?? null;
+        $post->id = $array['id'] ?? null;
         $post->uuid = $array['uuid'] ?? null;
         $post->title = $array['title'] ?? null;
         $post->html = $array['html'] ?? null;
@@ -233,16 +233,21 @@ class Post
         $post->metaDescription = $array['meta_description'] ?? null;
         $post->emailSubject = $array['email_subject'] ?? null;
 
-        $post->authors = collect($array['authors'])->map(function ($author) {
+        $post->authors = collect(data_get($array, 'authors'))->map(function ($author) {
             return Author::createFromArray($author);
         });
         $post->primaryAuthor = !empty($array['primary_author']) ? Author::createFromArray($array['primary_author']) : null;
 
-        $post->tags = collect($array['tags'])->map(function ($tag) {
+        $post->tags = collect(data_get($array, 'tags'))->map(function ($tag) {
             return Tag::createFromArray($tag);
         });
-        $post->primaryTag = !empty($post['primary_tag']) ? Tag::createFromArray($post['primary_tag']) : null;
+        $post->primaryTag = !empty($array['primary_tag']) ? Tag::createFromArray($array['primary_tag']) : null;
 
         return $post;
+    }
+
+    public function getResourceName()
+    {
+        return 'posts';
     }
 }
