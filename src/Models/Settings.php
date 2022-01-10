@@ -77,46 +77,6 @@ class Settings
     /**
      * @var string|null
      */
-    public $metaTitle;
-
-    /**
-     * @var string|null
-     */
-    public $metaDescription;
-
-    /**
-     * @var string|null
-     */
-    public $ogImage;
-
-    /**
-     * @var string|null
-     */
-    public $ogTitle;
-
-    /**
-     * @var string|null
-     */
-    public $ogDescription;
-
-    /**
-     * @var string|null
-     */
-    public $twitterImage;
-
-    /**
-     * @var string|null
-     */
-    public $twitterTitle;
-
-    /**
-     * @var string|null
-     */
-    public $twitterDescription;
-
-    /**
-     * @var string|null
-     */
     public $membersSupportAddress;
 
     /**
@@ -149,16 +109,10 @@ class Settings
             return Navigation::createFromArray($navigation);
         });
         $settings->secondaryNavigation = $array['secondary_navigation'] ?? null;
-        $settings->metaTitle = $array['meta_title'] ?? null;
-        $settings->metaDescription = $array['meta_description'] ?? null;
-        $settings->ogImage = $array['og_image'] ?? null;
-        $settings->ogTitle = $array['og_title'] ?? null;
-        $settings->ogDescription = $array['og_description'] ?? null;
-        $settings->twitterImage = $array['twitter_image'] ?? null;
-        $settings->twitterTitle = $array['twitter_title'] ?? null;
-        $settings->twitterDescription = $array['twitter_description'] ?? null;
         $settings->membersSupportAddress = $array['members_support_address'] ?? null;
+
         $settings->url = $array['url'] ?? null;
+        $settings->seo = Seo::createFromArray($array);
 
         return $settings;
     }

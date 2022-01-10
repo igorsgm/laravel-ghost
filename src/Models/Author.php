@@ -92,10 +92,10 @@ class Author
         $author->location = $array['location'] ?? null;
         $author->facebook = $array['facebook'] ?? null;
         $author->twitter = $array['twitter'] ?? null;
-        $author->metaTitle = $array['meta_title'] ?? null;
-        $author->metaDescription = $array['meta_description'] ?? null;
-        $author->url = $array['url'] ?? null;
-        $author->postsCount = data_get($array, 'count.posts', 0);
+
+        $author->seo = Seo::createFromArray($array);
+
+        $author->postsCount = data_get($array, 'count.posts');
 
         return $author;
     }
