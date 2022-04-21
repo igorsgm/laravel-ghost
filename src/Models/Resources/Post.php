@@ -1,10 +1,12 @@
 <?php
 
-namespace Igorsgm\Ghost\Models;
+namespace Igorsgm\Ghost\Models\Resources;
 
+use Igorsgm\Ghost\Interfaces\ResourceInterface;
+use Igorsgm\Ghost\Models\Seo;
 use Illuminate\Support\Collection;
 
-class Post
+class Post implements ResourceInterface
 {
     /**
      * @var string|null
@@ -25,6 +27,11 @@ class Post
      * @var string|null
      */
     public $title;
+
+    /**
+     * @var string|null
+     */
+    public $mobiledoc;
 
     /**
      * @var string|null
@@ -127,6 +134,11 @@ class Post
     public $emailSubject;
 
     /**
+     * @var boolean
+     */
+    public $emailOnly;
+
+    /**
      * @var Collection|null
      */
     public $authors;
@@ -163,13 +175,14 @@ class Post
         $post->id = $array['id'] ?? null;
         $post->uuid = $array['uuid'] ?? null;
         $post->title = $array['title'] ?? null;
-//        $post->html = $array['html'] ?? null;
+        $post->mobiledoc = $array['mobiledoc'] ?? null;
+        $post->html = $array['html'] ?? null;
         $post->commentId = $array['comment_id'] ?? null;
         $post->featureImage = $array['feature_image'] ?? null;
         $post->featureImageAlt = $array['feature_image_alt'] ?? null;
         $post->featureImageCaption = $array['feature_image_caption'] ?? null;
-        $post->featured = $array['featured'] ?? null;
-        $post->visibility = $array['visibility'] ?? null;
+        $post->featured = $array['featured'] ?? false;
+        $post->visibility = $array['visibility'] ?? 'public';
 
         $post->createdAt = $array['created_at'] ?? null;
         $post->updatedAt = $array['updated_at'] ?? null;
@@ -179,14 +192,15 @@ class Post
         $post->codeinjectionHead = $array['codeinjection_head'] ?? null;
         $post->codeinjectionFoot = $array['codeinjection_foot'] ?? null;
         $post->customTemplate = $array['custom_template'] ?? null;
-        $post->emailRecipientFilter = $array['email_recipient_filter'] ?? null;
+        $post->emailRecipientFilter = $array['email_recipient_filter'] ?? 'none';
         $post->excerpt = $array['excerpt'] ?? null;
         $post->readingTime = $array['reading_time'] ?? null;
-        $post->access = $array['access'] ?? null;
+        $post->access = $array['access'] ?? false;
 
         $post->url = $array['url'] ?? null;
         $post->seo = Seo::createFromArray($array);
 
+        $post->emailOnly = $array['email_only'] ?? false;
         $post->emailSubject = $array['email_subject'] ?? null;
 
         $post->authors = collect(data_get($array, 'authors'))->map(function ($author) {

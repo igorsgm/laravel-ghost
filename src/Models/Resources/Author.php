@@ -1,8 +1,13 @@
 <?php
 
-namespace Igorsgm\Ghost\Models;
+namespace Igorsgm\Ghost\Models\Resources;
 
-class Author
+use Igorsgm\Ghost\Interfaces\ResourceInterface;
+use Igorsgm\Ghost\Models\Role;
+use Igorsgm\Ghost\Models\Seo;
+use Illuminate\Support\Collection;
+
+class Author implements ResourceInterface
 {
     /**
      * @var string|null
@@ -18,6 +23,11 @@ class Author
      * @var string|null
      */
     public $name;
+
+    /**
+     * @var string|null
+     */
+    public $email;
 
     /**
      * @var string|null
@@ -57,17 +67,37 @@ class Author
     /**
      * @var string|null
      */
-    public $metaTitle;
+    public $accessibility;
 
     /**
      * @var string|null
      */
-    public $metaDescription;
+    public $tour;
+
+    /**
+     * @var string|null
+     */
+    public $lastSeen;
 
     /**
      * @var string|null
      */
     public $url;
+
+    /**
+     * @var string|null
+     */
+    public $createdAt;
+
+    /**
+     * @var string|null
+     */
+    public $updatedAt;
+
+    /**
+     * @var Collection|null
+     */
+    public $roles;
 
     /**
      * @var integer
@@ -82,9 +112,10 @@ class Author
     {
         $author = new self();
 
-        $author->slug = $array['slug'] ?? null;
         $author->id = $array['id'] ?? null;
         $author->name = $array['name'] ?? null;
+        $author->slug = $array['slug'] ?? null;
+        $author->email = $array['email'] ?? null;
         $author->profileImage = $array['profile_image'] ?? null;
         $author->coverImage = $array['cover_image'] ?? null;
         $author->bio = $array['bio'] ?? null;
@@ -92,9 +123,19 @@ class Author
         $author->location = $array['location'] ?? null;
         $author->facebook = $array['facebook'] ?? null;
         $author->twitter = $array['twitter'] ?? null;
+        $author->accessibility = $array['accessibility'] ?? null;
+        $author->tour = $array['tour'] ?? null;
+        $author->lastSeen = $array['last_seen'] ?? null;
+
+        $author->createdAt = $array['created_at'] ?? null;
+        $author->updatedAt = $array['updated_at'] ?? null;
+
+        $author->url = $array['url'] ?? null;
 
         $author->seo = Seo::createFromArray($array);
-
+        $author->roles = collect(data_get($array, 'roles'))->map(function ($role) {
+            return Role::createFromArray($role);
+        });
         $author->postsCount = data_get($array, 'count.posts');
 
         return $author;

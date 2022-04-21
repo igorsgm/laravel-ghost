@@ -20,7 +20,18 @@ return [
      * The Content API URL and key can be obtained by creating a new
      * Custom Integration under the Integrations screen in Ghost Admin.
      */
-    'key' => env('GHOST_API_KEY', ''),
+    'content_key' => env('GHOST_CONTENT_API_KEY', ''),
+
+    /**
+     * The Content API URL and key can be obtained by creating a new
+     * Custom Integration under the Integrations screen in Ghost Admin.
+     */
+    'admin_key' => env('GHOST_ADMIN_API_KEY', ''),
+
+    /**
+     * Set true to return Api Errors instead of empty data
+     */
+    'debug_enabled' => env('GHOST_DEBUG_ENABLED', true),
 
     /**
      * Experimental

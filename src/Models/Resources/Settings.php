@@ -1,8 +1,12 @@
 <?php
 
-namespace Igorsgm\Ghost\Models;
+namespace Igorsgm\Ghost\Models\Resources;
 
-class Settings
+use Igorsgm\Ghost\Interfaces\ResourceInterface;
+use Igorsgm\Ghost\Models\Navigation;
+use Igorsgm\Ghost\Models\Seo;
+
+class Settings implements ResourceInterface
 {
     /**
      * @var string|null
@@ -87,7 +91,7 @@ class Settings
 
     /**
      * @param  array  $array
-     * @return Tag
+     * @return Settings
      */
     public static function createFromArray($array): Settings
     {

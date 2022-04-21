@@ -1,8 +1,11 @@
 <?php
 
-namespace Igorsgm\Ghost\Models;
+namespace Igorsgm\Ghost\Models\Resources;
 
-class Tag
+use Igorsgm\Ghost\Interfaces\ResourceInterface;
+use Igorsgm\Ghost\Models\Seo;
+
+class Tag implements ResourceInterface
 {
     /**
      * @var string|null
@@ -55,6 +58,22 @@ class Tag
     public $url;
 
     /**
+     * @var string|null
+     */
+    public $createdAt;
+
+    /**
+     * @var string|null
+     */
+    public $updatedAt;
+
+    /**
+     * Admin only
+     * @var string|null
+     */
+    public $parent;
+
+    /**
      * @var Seo
      */
     public $seo;
@@ -72,15 +91,19 @@ class Tag
     {
         $tag = new self();
 
-        $tag->slug = $array['slug'] ?? null;
         $tag->id = $array['id'] ?? null;
         $tag->name = $array['name'] ?? null;
+        $tag->slug = $array['slug'] ?? null;
         $tag->description = $array['description'] ?? null;
         $tag->featureImage = $array['feature_image'] ?? null;
         $tag->visibility = $array['visibility'] ?? null;
         $tag->codeinjectionHead = $array['codeinjection_head'] ?? null;
         $tag->codeinjectionFoot = $array['codeinjection_foot'] ?? null;
         $tag->accentColor = $array['accent_color'] ?? null;
+        $tag->parent = $array['parent'] ?? null;
+
+        $tag->createdAt = $array['created_at'] ?? null;
+        $tag->updatedAt = $array['updated_at'] ?? null;
 
         $tag->url = $array['url'] ?? null;
         $tag->seo = Seo::createFromArray($array);

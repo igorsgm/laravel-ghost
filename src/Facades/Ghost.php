@@ -4,9 +4,6 @@ namespace Igorsgm\Ghost\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-/**
- * @see \Igorsgm\lGhost\Skeleton\SkeletonClass
- */
 class Ghost extends Facade
 {
     /**

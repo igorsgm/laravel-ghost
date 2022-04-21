@@ -2,6 +2,7 @@
 
 namespace Igorsgm\Ghost\Models;
 
+use Igorsgm\Ghost\Models\Resources\Tag;
 use Illuminate\Support\Str;
 
 class Seo

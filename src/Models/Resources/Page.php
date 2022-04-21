@@ -1,8 +1,11 @@
 <?php
 
-namespace Igorsgm\Ghost\Models;
+namespace Igorsgm\Ghost\Models\Resources;
 
-class Page
+use Igorsgm\Ghost\Interfaces\ResourceInterface;
+use Igorsgm\Ghost\Models\Seo;
+
+class Page implements ResourceInterface
 {
     /**
      * @var string
