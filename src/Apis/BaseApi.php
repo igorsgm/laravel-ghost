@@ -7,7 +7,7 @@ use Igorsgm\Ghost\Responses\ErrorResponse;
 use Igorsgm\Ghost\Responses\SuccessResponse;
 use Illuminate\Support\Collection;
 
-class BaseApi
+abstract class BaseApi
 {
     /**
      * @var string
@@ -27,7 +27,7 @@ class BaseApi
     /**
      * @var string
      */
-    public string $includes = "";
+    public string $include = "";
 
     /**
      * @var string
@@ -77,14 +77,6 @@ class BaseApi
     /**
      * @return string
      */
-    protected function makeApiUrl(): string
-    {
-        return sprintf("%s/%s/?%s", $this->baseUrl, $this->buildEndpoint(), $this->buildParams());
-    }
-
-    /**
-     * @return string
-     */
     protected function buildEndpoint(): string
     {
         $endpoint = $this->resource->getResourceName();
@@ -100,11 +92,19 @@ class BaseApi
     /**
      * @return string
      */
+    protected function makeApiUrl(): string
+    {
+        return sprintf("%s/%s/?%s", $this->baseUrl, $this->buildEndpoint(), $this->buildParams());
+    }
+
+    /**
+     * @return string
+     */
     protected function buildParams(): string
     {
         $params = [
             'key' => $this->key,
-            'include' => $this->includes ?: null,
+            'include' => $this->include ?: null,
             'fields' => $this->fields ?: null,
             'formats' => $this->formats ?: null,
             'source' => $this->source ?: null,
@@ -116,6 +116,10 @@ class BaseApi
         return http_build_query($params);
     }
 
+    /**
+     * @param $response
+     * @return ErrorResponse|SuccessResponse
+     */
     protected function handleResponse($response)
     {
         if ($response->failed()) {
@@ -151,13 +155,18 @@ class BaseApi
      *
      * @param  string  $id
      *
-     * @return ResourceInterface
+     * @return ResourceInterface|ErrorResponse
      */
     public function find(string $id)
     {
         $this->resourceId = $id;
+        $response = $this->get();
 
-        return data_get($this->get()->data, 0, []);
+        if ($response instanceof ErrorResponse) {
+            return $response;
+        }
+
+        return data_get($response->data, 0, []);
     }
 
     /**
@@ -186,6 +195,14 @@ class BaseApi
     }
 
     /**
+     * @return ResourceInterface
+     */
+    public function getResource()
+    {
+        return $this->resource;
+    }
+
+    /**
      * Alias for Ghost's include
      * Possible includes: authors, tags, count.posts
      *
@@ -195,9 +212,20 @@ class BaseApi
      */
     public function include(...$includes): BaseApi
     {
-        $this->includes = collect($includes)->flatten()->implode(',');
+        $this->include = collect($includes)->flatten()->implode(',');
 
         return $this;
+    }
+
+    /**
+     * Alias for include method
+     *
+     * @param ...$includes
+     * @return $this
+     */
+    public function with(...$includes): BaseApi
+    {
+        return $this->include(...$includes);
     }
 
     /**
@@ -226,7 +254,7 @@ class BaseApi
      *
      * @return $this
      */
-    public function format(string $format): BaseApi
+    public function formats(string $format): BaseApi
     {
         $this->formats = $format;
 
@@ -249,10 +277,22 @@ class BaseApi
      * @param  string  $order
      * @return $this
      */
-    public function orderBy(string $attr, string $order = "DESC"): ContentApi
+    public function order(string $attr, string $order = "DESC"): ContentApi
     {
         $this->order = $attr." ".strtolower($order);
 
         return $this;
+    }
+
+    /**
+     * Alias for order method
+     *
+     * @param  string  $attr
+     * @param  string  $order
+     * @return $this
+     */
+    public function orderBy(string $attr, string $order = "DESC"): ContentApi
+    {
+        return $this->order($attr, $order);
     }
 }

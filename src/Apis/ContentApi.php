@@ -35,12 +35,7 @@ class ContentApi extends BaseApi
     public function get()
     {
         $response = Http::get($this->makeApiUrl());
-
-        if ($response->failed()) {
-            return new ErrorResponse($response);
-        }
-
-        return new SuccessResponse($this, $this->resource, $response);
+        return $this->handleResponse($response);
     }
 
     /**
@@ -48,13 +43,18 @@ class ContentApi extends BaseApi
      *
      * @param  string  $slug
      *
-     * @return array
+     * @return array|ErrorResponse|mixed
      */
     public function fromSlug(string $slug)
     {
         $this->resourceSlug = $slug;
+        $response = $this->get();
 
-        return data_get($this->get()->data, 0, []);
+        if ($response instanceof ErrorResponse) {
+            return $response;
+        }
+
+        return data_get($response->data, 0, []);
     }
 
     /**
