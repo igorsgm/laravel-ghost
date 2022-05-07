@@ -55,7 +55,10 @@ class TestCase extends \Orchestra\Testbench\TestCase
             'admin_domain' => 'https://demo.ghost.io',
             'admin_key' => '1234:56789',
             'content_key' => '22444f78447824223cefc48062',
-            'debug_enabled' => true,
+            'debug' => [
+                'enabled' => true,
+                'default_error_message' => 'Something went wrong. Please try again later.',
+            ],
             'cache' => [
                 'cache_records' => false,
                 'cache_prefix' => 'ghost_',
