@@ -57,11 +57,27 @@ class Meta
     }
 
     /**
+     * @return bool
+     */
+    public function hasNext()
+    {
+        return !empty($this->pagination->next);
+    }
+
+    /**
      * @return int|null
      */
     public function next()
     {
         return $this->pagination->next ?? null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasPrev()
+    {
+        return !empty($this->pagination->prev);
     }
 
     /**

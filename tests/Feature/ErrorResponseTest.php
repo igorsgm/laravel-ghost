@@ -3,11 +3,6 @@
 use Igorsgm\Ghost\Facades\Ghost;
 use Illuminate\Support\Collection;
 
-it('sets success to false', function () {
-    $response = Ghost::content()->posts()->find('foo-not-found');
-    expect($response->success)->toBeFalse();
-});
-
 it('sets errors collection on debug enabled', function () {
     $this->config->set('ghost.debug.enabled', true);
     $response = Ghost::content()->posts()->find('foo-not-found');

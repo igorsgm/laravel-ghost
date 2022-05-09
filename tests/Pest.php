@@ -12,7 +12,10 @@
 */
 
 
+use Igorsgm\Ghost\Models\Meta;
+use Igorsgm\Ghost\Responses\SuccessResponse;
 use Igorsgm\Ghost\Tests\TestCase;
+use Illuminate\Support\Collection;
 
 uses(TestCase::class)->in('Feature');
 uses(TestCase::class)->in('Unit');
@@ -62,9 +65,9 @@ function invokeMethod(&$object, $methodName, array $parameters = [])
 }
 
 /**
- * @param \Igorsgm\Ghost\Apis\BaseApi $ghost
- * @param string $parameter
- * @param string $value
+ * @param  \Igorsgm\Ghost\Apis\BaseApi  $ghost
+ * @param  string  $parameter
+ * @param  string  $value
  * @return void
  */
 function expectParameterSet($ghost, $parameter, $value)
@@ -81,3 +84,32 @@ function expectParameterSet($ghost, $parameter, $value)
         $parameter => $value
     ]);
 }
+
+function expectCollectionToBeEmptyOrInstanceOf(Collection $collection, $class)
+{
+    if ($collection->isEmpty()) {
+        return expect($collection)->toBeEmpty();
+    }
+
+    $collection->each(function ($item) use ($class) {
+        expect($item)->toBeInstanceOf($class);
+    });
+}
+
+function expectSuccessfulResponse($response, $resourceClass)
+{
+    expect($response)->toBeInstanceOf(SuccessResponse::class);
+
+    $items = $response->data;
+    expect($items)
+        ->toBeInstanceOf(Collection::class)
+        ->not()->toBeEmpty();
+
+    expectCollectionToBeEmptyOrInstanceOf($items, $resourceClass);
+
+    if (!empty($response->meta)) {
+        expect($response->meta)->toBeInstanceOf(Meta::class);
+    }
+}
+
+
