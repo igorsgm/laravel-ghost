@@ -12,7 +12,9 @@ class TestCase extends \Orchestra\Testbench\TestCase
      */
     public $config;
 
-    public $defaultResourceId = '605360bbce93e1003bd6ddd6';
+    public $defaultResourceIds = [
+        'posts' => '605360bbce93e1003bd6ddd6',
+    ];
 
     /**
      * @var \Igorsgm\Ghost\Apis\ContentApi

@@ -5,7 +5,6 @@ use Igorsgm\Ghost\Models\Resources\Author;
 use Igorsgm\Ghost\Models\Resources\Post;
 use Igorsgm\Ghost\Models\Resources\Tag;
 use Igorsgm\Ghost\Models\Seo;
-use Igorsgm\Ghost\Responses\ErrorResponse;
 
 it('sets resource to Post::class', function () {
     $ghost = Ghost::content()->posts();
@@ -51,7 +50,7 @@ it('gets previous paginated page', function () {
 
 it('parses properties to Author, Tag and Seo classes', function () {
     $response = Ghost::content()->posts()
-        ->include(['author', 'tags', 'primary_author'])
+        ->include(['authors', 'tags', 'primary_author'])
         ->limit(1)
         ->get();
 
@@ -76,11 +75,11 @@ it('parses properties to Author, Tag and Seo classes', function () {
 
 it('returns a post by ID', function () {
     $ghost = Ghost::content()->posts();
-    $post = $ghost->find($this->defaultResourceId);
+    $post = $ghost->find($this->defaultResourceIds['posts']);
 
-    expectEndpointParameterSet($ghost, 'resourceId', $this->defaultResourceId);
+    expectEndpointParameterSet($ghost, 'resourceId', $this->defaultResourceIds['posts']);
     expect($post)->toBeInstanceOf(Post::class)
-        ->toHaveProperty('id', $this->defaultResourceId);
+        ->toHaveProperty('id', $this->defaultResourceIds['posts']);
 });
 
 it('returns a post by slug', function () {
@@ -92,11 +91,4 @@ it('returns a post by slug', function () {
     expectEndpointParameterSet($ghost, 'resourceSlug', $slug);
     expect($post)->toBeInstanceOf(Post::class)
         ->toHaveProperty('slug', $slug);
-});
-
-it('returns ErrorResponse on slug not found', function () {
-    $ghost = Ghost::content()->posts();
-    $response = $ghost->fromSlug('random-slug');
-
-    expect($response)->toBeInstanceOf(ErrorResponse::class);
 });

@@ -164,7 +164,7 @@ it('returns ErrorResponse when resourceId is not found on find().', function () 
 
 it('returns Resource Model when resourceId is found on find().', function () {
     $ghost = Ghost::content()->posts();
-    $response = $ghost->find($this->defaultResourceId);
+    $response = $ghost->find($this->defaultResourceIds['posts']);
     expect($response)->toBeInstanceOf(get_class($ghost->getResource()));
 });
 
