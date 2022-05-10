@@ -37,22 +37,22 @@ it('sets includes using with()', function () {
     $ghost = Ghost::content();
 
     $ghost->with('authors');
-    expectParameterSet($ghost, 'include', 'authors');
+    expectQueryStringSet($ghost, 'include', 'authors');
     $ghost->with('tags', 'authors');
-    expectParameterSet($ghost, 'include', 'tags,authors');
+    expectQueryStringSet($ghost, 'include', 'tags,authors');
     $ghost->with('count.posts');
-    expectParameterSet($ghost, 'include', 'count.posts');
+    expectQueryStringSet($ghost, 'include', 'count.posts');
 })->group('parameters');
 
 it('sets includes using include()', function () {
     $ghost = Ghost::content();
 
     $ghost->include('authors');
-    expectParameterSet($ghost, 'include', 'authors');
+    expectQueryStringSet($ghost, 'include', 'authors');
     $ghost->include('authors', 'tags');
-    expectParameterSet($ghost, 'include', 'authors,tags');
+    expectQueryStringSet($ghost, 'include', 'authors,tags');
     $ghost->include('count.posts');
-    expectParameterSet($ghost, 'include', 'count.posts');
+    expectQueryStringSet($ghost, 'include', 'count.posts');
 })->group('parameters');
 
 it('sets includes from array', function () {
@@ -66,40 +66,40 @@ it('sets includes from array', function () {
 
 it('sets fields', function () {
     $ghost = Ghost::content()->fields('title', 'url');
-    expectParameterSet($ghost, 'fields', 'title,url');
+    expectQueryStringSet($ghost, 'fields', 'title,url');
 })->group('parameters');
 
 it('sets fields from array', function () {
     $ghost = Ghost::content()->fields(['url', 'title']);
-    expectParameterSet($ghost, 'fields', 'url,title');
+    expectQueryStringSet($ghost, 'fields', 'url,title');
 })->group('parameters');
 
 it('sets formats', function () {
     $formats = 'plaintext';
     $ghost = Ghost::content()->formats($formats);
-    expectParameterSet($ghost, 'formats', $formats);
+    expectQueryStringSet($ghost, 'formats', $formats);
 })->group('parameters');
 
 it('sets limit', function () {
     $limit = 10;
     $ghost = Ghost::content()->limit(10);
-    expectParameterSet($ghost, 'limit', $limit);
+    expectQueryStringSet($ghost, 'limit', $limit);
 })->group('parameters');
 
 it('sets page', function () {
     $page = 2;
     $ghost = Ghost::content()->page($page);
-    expectParameterSet($ghost, 'page', $page);
+    expectQueryStringSet($ghost, 'page', $page);
 })->group('parameters');
 
 it('sets order using "order()"', function () {
     $ghost = Ghost::content()->order('title', 'asc');
-    expectParameterSet($ghost, 'order', 'title asc');
+    expectQueryStringSet($ghost, 'order', 'title asc');
 })->group('parameters');
 
 it('sets order using "orderBy()"', function () {
     $ghost = Ghost::content()->orderBy('title', 'asc');
-    expectParameterSet($ghost, 'order', 'title asc');
+    expectQueryStringSet($ghost, 'order', 'title asc');
 })->group('parameters');
 
 it('sets and retrieves resource', function () {
@@ -147,14 +147,14 @@ it('sets correct limit with paginated results', function () {
     $ghost = Ghost::content()->posts();
     $ghost->paginate(2);
 
-    expectParameterSet($ghost, 'limit', 2);
+    expectQueryStringSet($ghost, 'limit', 2);
 });
 
 it('sets correct limit with all() results', function () {
     $ghost = Ghost::content()->posts();
     $ghost->all();
 
-    expectParameterSet($ghost, 'limit', 'all');
+    expectQueryStringSet($ghost, 'limit', 'all');
 });
 
 it('returns ErrorResponse when resourceId is not found on find().', function () {

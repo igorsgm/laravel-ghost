@@ -70,7 +70,7 @@ function invokeMethod(&$object, $methodName, array $parameters = [])
  * @param  string  $value
  * @return void
  */
-function expectParameterSet($ghost, $parameter, $value)
+function expectQueryStringSet($ghost, $parameter, $value)
 {
     expect($ghost->$parameter)->toEqual($value);
 
@@ -83,6 +83,13 @@ function expectParameterSet($ghost, $parameter, $value)
     expect($parsedQueryString)->toMatchArray([
         $parameter => $value
     ]);
+}
+
+function expectEndpointParameterSet($ghost, $parameter, $value)
+{
+    expect($ghost->$parameter)->toEqual($value);
+    $endpoint = invokeMethod($ghost, 'buildEndpoint');
+    expect($endpoint)->toContain($value);
 }
 
 function expectCollectionToBeEmptyOrInstanceOf(Collection $collection, $class)

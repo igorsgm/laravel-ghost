@@ -5,6 +5,7 @@ use Igorsgm\Ghost\Models\Resources\Author;
 use Igorsgm\Ghost\Models\Resources\Post;
 use Igorsgm\Ghost\Models\Resources\Tag;
 use Igorsgm\Ghost\Models\Seo;
+use Igorsgm\Ghost\Responses\ErrorResponse;
 
 it('sets resource to Post::class', function () {
     $ghost = Ghost::content()->posts();
@@ -71,4 +72,31 @@ it('parses properties to Author, Tag and Seo classes', function () {
     if (!empty($post->seo)) {
         expect($post->seo)->toBeInstanceOf(Seo::class);
     }
+});
+
+it('returns a post by ID', function () {
+    $ghost = Ghost::content()->posts();
+    $post = $ghost->find($this->defaultResourceId);
+
+    expectEndpointParameterSet($ghost, 'resourceId', $this->defaultResourceId);
+    expect($post)->toBeInstanceOf(Post::class)
+        ->toHaveProperty('id', $this->defaultResourceId);
+});
+
+it('returns a post by slug', function () {
+    $slug = 'welcome';
+
+    $ghost = Ghost::content()->posts();
+    $post = $ghost->fromSlug($slug);
+
+    expectEndpointParameterSet($ghost, 'resourceSlug', $slug);
+    expect($post)->toBeInstanceOf(Post::class)
+        ->toHaveProperty('slug', $slug);
+});
+
+it('returns ErrorResponse on slug not found', function () {
+    $ghost = Ghost::content()->posts();
+    $response = $ghost->fromSlug('random-slug');
+
+    expect($response)->toBeInstanceOf(ErrorResponse::class);
 });
