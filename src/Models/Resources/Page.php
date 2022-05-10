@@ -81,6 +81,17 @@ class Page implements ResourceInterface
         $page->accentColor = $array['accent_color'] ?? null;
 
         $page->url = $array['url'] ?? null;
+
+        $page->authors = collect(data_get($array, 'authors'))->map(function ($author) {
+            return Author::createFromArray($author);
+        });
+        $page->primaryAuthor = !empty($array['primary_author']) ? Author::createFromArray($array['primary_author']) : null;
+
+        $page->tags = collect(data_get($array, 'tags'))->map(function ($tag) {
+            return Tag::createFromArray($tag);
+        });
+        $page->primaryTag = !empty($array['primary_tag']) ? Tag::createFromArray($array['primary_tag']) : null;
+
         $page->seo = Seo::createFromArray($array);
 
         return $page;

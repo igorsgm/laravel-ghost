@@ -50,7 +50,7 @@ it('gets previous paginated page', function () {
 
 it('parses properties to Author, Tag and Seo classes', function () {
     $response = Ghost::content()->posts()
-        ->include(['authors', 'tags', 'primary_author'])
+        ->include(['authors', 'tags'])
         ->limit(1)
         ->get();
 

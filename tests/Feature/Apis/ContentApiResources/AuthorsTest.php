@@ -24,20 +24,7 @@ it('gets all authors paginated', function () {
     expect($response->meta->pagination)->not()->toBeEmpty();
 });
 
-it('parses properties to Role and Seo classes', function () {
-    $response = Ghost::content()->authors()->limit(1)->get();
-
-    expectSuccessfulResponse($response, Author::class);
-    $author = $response->data->first();
-
-    expectCollectionToBeEmptyOrInstanceOf($author->roles, Role::class);
-
-    if (!empty($author->seo)) {
-        expect($author->seo)->toBeInstanceOf(Seo::class);
-    }
-});
-
-it('returns a author by ID', function () {
+it('returns an author by ID', function () {
     $authorId = '5979a779df093500228e9590';
     $ghost = Ghost::content()->authors();
     $author = $ghost->find($authorId);
@@ -47,7 +34,7 @@ it('returns a author by ID', function () {
         ->toHaveProperty('id', $authorId);
 });
 
-it('returns a author by slug', function () {
+it('returns an author by slug', function () {
     $slug = 'abe';
 
     $ghost = Ghost::content()->authors();
