@@ -29,7 +29,13 @@ it('gets next paginated page', function () {
     $limit = 5;
     $response = Ghost::content()->posts()->paginate($limit);
 
-    expect($response->meta->hasNext())->toBeTrue();
+    $meta = $response->meta;
+    expect($meta->page())->toEqual(1);
+    expect($meta->limit())->toEqual($limit);
+    expect($meta->pages())->toBeGreaterThanOrEqual(1);
+    expect($meta->total())->toBeGreaterThanOrEqual(1);
+    expect($meta->hasNext())->toBeTrue();
+    expect($meta->next())->toBeGreaterThanOrEqual(2);
 
     $nextPageResponse = $response->getNextPage();
     expectSuccessfulResponse($nextPageResponse, Post::class);
@@ -41,7 +47,9 @@ it('gets previous paginated page', function () {
     $limit = 5;
     $response = Ghost::content()->posts()->page(2)->paginate($limit);
 
-    expect($response->meta->hasPrev())->toBeTrue();
+    $meta = $response->meta;
+    expect($meta->hasPrev())->toBeTrue();
+    expect($meta->prev())->toEqual(1);
 
     $previousPageResponse = $response->getPreviousPage();
 
