@@ -6,6 +6,8 @@ use Igorsgm\Ghost\Models\Resources\Post;
 use Igorsgm\Ghost\Models\Resources\Tag;
 use Igorsgm\Ghost\Models\Seo;
 
+uses()->group('posts');
+
 it('sets resource to Post::class', function () {
     $ghost = Ghost::content()->posts();
     expect($ghost->getResource())->toBeInstanceOf(Post::class);

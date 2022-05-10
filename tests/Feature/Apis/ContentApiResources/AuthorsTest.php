@@ -2,8 +2,6 @@
 
 use Igorsgm\Ghost\Facades\Ghost;
 use Igorsgm\Ghost\Models\Resources\Author;
-use Igorsgm\Ghost\Models\Role;
-use Igorsgm\Ghost\Models\Seo;
 
 uses()->group('authors');
 
