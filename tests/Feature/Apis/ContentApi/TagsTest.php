@@ -3,6 +3,7 @@
 use Igorsgm\Ghost\Facades\Ghost;
 use Igorsgm\Ghost\Models\Resources\Tag;
 
+uses()->group('content');
 uses()->group('tags');
 
 it('sets resource to Tag::class', function () {

@@ -6,6 +6,7 @@ use Igorsgm\Ghost\Models\Resources\Page;
 use Igorsgm\Ghost\Models\Resources\Tag;
 use Igorsgm\Ghost\Models\Seo;
 
+uses()->group('content');
 uses()->group('pages');
 
 it('sets resource to Page::class', function () {

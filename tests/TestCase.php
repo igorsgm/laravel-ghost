@@ -12,10 +12,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
      */
     public $config;
 
-    public $defaultResourceIds = [
-        'posts' => '605360bbce93e1003bd6ddd6',
-    ];
-
     /**
      * @var \Igorsgm\Ghost\Apis\ContentApi
      */
@@ -71,6 +67,17 @@ class TestCase extends \Orchestra\Testbench\TestCase
         ]);
 
         $this->config = $app['config'];
+    }
+
+    /**
+     * Retrieves the content of a Fixture json file, to mock Ghost Admin API responses.
+     *
+     * @param string $fileName
+     * @return false|string
+     */
+    public function getFixtureJson($fileName)
+    {
+        return file_get_contents(__DIR__.'/Fixtures/'.$fileName);
     }
 
     /**

@@ -5,30 +5,44 @@ use Igorsgm\Ghost\Models\Resources\Author;
 use Igorsgm\Ghost\Models\Resources\Post;
 use Igorsgm\Ghost\Models\Resources\Tag;
 use Igorsgm\Ghost\Models\Seo;
+use Illuminate\Support\Facades\Http;
 
-uses()->group('content');
+uses()->group('admin');
 uses()->group('posts');
 
 it('sets resource to Post::class', function () {
-    $ghost = Ghost::content()->posts();
+    $ghost = Ghost::admin()->posts();
     expect($ghost->getResource())->toBeInstanceOf(Post::class);
 });
 
 it('gets all posts', function () {
-    $response = Ghost::content()->posts()->all();
+    Http::fake([
+        "*admin/posts*" => Http::response($this->getFixtureJson('posts.json')),
+    ]);
+
+    $response = Ghost::admin()->posts()->all();
     expectSuccessfulResponse($response, Post::class);
 });
 
 it('gets all posts paginated', function () {
-    $limit = 5;
-    $response = Ghost::content()->posts()->paginate($limit);
+    $limit = 2;
+    Http::fake([
+        "*admin/posts/?limit=$limit*" => Http::response($this->getFixtureJson('posts-page-2.json')),
+    ]);
+    $response = Ghost::admin()->posts()->paginate($limit);
     expectSuccessfulResponse($response, Post::class);
     expect($response->meta->pagination)->not()->toBeEmpty();
 });
 
 it('gets next paginated page', function () {
-    $limit = 5;
-    $response = Ghost::content()->posts()->paginate($limit);
+
+    $limit = 2;
+    Http::fake([
+        "*admin/posts/?limit=$limit&page=2*" => Http::response($this->getFixtureJson('posts-page-2.json')),
+        "*admin/posts/?limit=$limit*" => Http::response($this->getFixtureJson('posts-page-1.json')),
+    ]);
+
+    $response = Ghost::admin()->posts()->paginate($limit);
 
     $meta = $response->meta;
     expect($meta->page())->toEqual(1);
@@ -45,8 +59,13 @@ it('gets next paginated page', function () {
 });
 
 it('gets previous paginated page', function () {
-    $limit = 5;
-    $response = Ghost::content()->posts()->page(2)->paginate($limit);
+    $limit = 2;
+    Http::fake([
+        "*admin/posts/?limit=$limit&page=1*" => Http::response($this->getFixtureJson('posts-page-1.json')),
+        "*admin/posts/?limit=$limit&page=2*" => Http::response($this->getFixtureJson('posts-page-2.json')),
+    ]);
+
+    $response = Ghost::admin()->posts()->page(2)->paginate($limit);
 
     $meta = $response->meta;
     expect($meta->hasPrev())->toBeTrue();
@@ -60,7 +79,12 @@ it('gets previous paginated page', function () {
 });
 
 it('parses properties to Author, Tag and Seo classes', function () {
-    $response = Ghost::content()->posts()
+    Http::fake([
+        sprintf('*admin/posts/?include=%s*',
+            urlencode('authors,tags')) => Http::response($this->getFixtureJson('posts-page-1.json')),
+    ]);
+
+    $response = Ghost::admin()->posts()
         ->include(['authors', 'tags'])
         ->limit(1)
         ->get();
@@ -85,18 +109,26 @@ it('parses properties to Author, Tag and Seo classes', function () {
 });
 
 it('returns a post by ID', function () {
-    $id = '605360bbce93e1003bd6ddd6';
-    $ghost = Ghost::content()->posts();
+    $id = '626106438c3e1e2313c48715';
+    Http::fake([
+        "*admin/posts/$id/?*" => Http::response($this->getFixtureJson('posts.json')),
+    ]);
+
+    $ghost = Ghost::admin()->posts();
     $post = $ghost->find($id);
 
     expectEndpointParameterSet($ghost, 'resourceId', $id);
-    expect($post)->toBeInstanceOf(Post::class)->toHaveProperty('id', $id);
+    expect($post)->toBeInstanceOf(Post::class)
+        ->toHaveProperty('id', $id);
 });
 
 it('returns a post by slug', function () {
-    $slug = 'welcome';
+    $slug = 'my-test-post';
+    Http::fake([
+        "*admin/posts/slug/$slug/?*" => Http::response($this->getFixtureJson('posts.json')),
+    ]);
 
-    $ghost = Ghost::content()->posts();
+    $ghost = Ghost::admin()->posts();
     $post = $ghost->fromSlug($slug);
 
     expectEndpointParameterSet($ghost, 'resourceSlug', $slug);

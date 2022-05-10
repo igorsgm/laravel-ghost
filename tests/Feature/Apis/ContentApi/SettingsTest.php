@@ -6,6 +6,7 @@ use Igorsgm\Ghost\Models\Resources\Settings;
 use Igorsgm\Ghost\Models\Seo;
 use Igorsgm\Ghost\Responses\SuccessResponse;
 
+uses()->group('content');
 uses()->group('settings');
 
 it('sets resource to Settings::class', function () {

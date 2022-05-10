@@ -27,6 +27,11 @@ abstract class BaseApi
     /**
      * @var string
      */
+    public string $resourceSlug = "";
+
+    /**
+     * @var string
+     */
     public string $include = "";
 
     /**
@@ -103,7 +108,6 @@ abstract class BaseApi
     protected function buildParams(): string
     {
         $params = [
-            'key' => $this->key,
             'include' => $this->include ?: null,
             'fields' => $this->fields ?: null,
             'formats' => $this->formats ?: null,
@@ -111,6 +115,7 @@ abstract class BaseApi
             'limit' => $this->limit ?: null,
             'page' => $this->page ?: null,
             'order' => $this->order ?: null,
+            'key' => $this->key,
         ];
 
         return http_build_query($params);
@@ -127,6 +132,25 @@ abstract class BaseApi
         }
 
         return new SuccessResponse($this, $this->resource, $response);
+    }
+
+    /**
+     * Return resource from slug
+     *
+     * @param  string  $slug
+     *
+     * @return array|ErrorResponse|mixed
+     */
+    public function fromSlug(string $slug)
+    {
+        $this->resourceSlug = $slug;
+        $response = $this->get();
+
+        if ($response instanceof ErrorResponse) {
+            return $response;
+        }
+
+        return data_get($response->data, 0, []);
     }
 
     /**

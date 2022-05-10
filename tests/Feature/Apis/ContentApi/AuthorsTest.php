@@ -3,6 +3,7 @@
 use Igorsgm\Ghost\Facades\Ghost;
 use Igorsgm\Ghost\Models\Resources\Author;
 
+uses()->group('content');
 uses()->group('authors');
 
 it('sets resource to Author::class', function () {
