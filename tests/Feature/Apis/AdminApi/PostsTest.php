@@ -5,6 +5,7 @@ use Igorsgm\Ghost\Models\Resources\Author;
 use Igorsgm\Ghost\Models\Resources\Post;
 use Igorsgm\Ghost\Models\Resources\Tag;
 use Igorsgm\Ghost\Models\Seo;
+use Igorsgm\Ghost\Responses\SuccessResponse;
 use Illuminate\Support\Facades\Http;
 
 uses()->group('admin');
@@ -134,4 +135,78 @@ it('returns a post by slug', function () {
     expectEndpointParameterSet($ghost, 'resourceSlug', $slug);
     expect($post)->toBeInstanceOf(Post::class)
         ->toHaveProperty('slug', $slug);
+});
+
+it('creates a post with mobiledoc source', function () {
+    Http::fake([
+        "*admin/posts/?*" => Http::response($this->getFixtureJson('post.json')),
+    ]);
+
+    $response = Ghost::admin()->posts()->create([
+        'title' => 'My Test Post',
+        'mobiledoc' => '{"version":"0.3.1","atoms":[],"cards":[],"markups":[],"sections":[[1,"p",[[0,[],0,"My post content. Work in progress..."]]]]}',
+        'status' => 'published',
+    ]);
+
+    expectSuccessfulResponse($response, Post::class);
+
+    $createdPost = $response->data->first();
+    expect($createdPost)->toBeInstanceOf(Post::class)
+        ->toHaveProperty('id');
+});
+
+it('creates a post with HTML source', function () {
+    Http::fake([
+        "*admin/posts/?*" => Http::response($this->getFixtureJson('post.json')),
+    ]);
+
+    $response = Ghost::admin()->posts()->source('html')->create([
+        'title' => 'My Test Post 2',
+        'html' => '<p>My post content. Work in progress...</p>',
+        'status' => 'published',
+    ]);
+
+    expectSuccessfulResponse($response, Post::class);
+
+    $createdPost = $response->data->first();
+    expect($createdPost)->toBeInstanceOf(Post::class)
+        ->toHaveProperty('id');
+});
+
+it('updates a post with mobiledoc', function () {
+    $id = '6285dbba44c5d85187a074ba';
+
+    // The updated_at field is required as it is used to handle collision detection,
+    // and ensure you’re not overwriting more recent updates.
+    // It is recommended to perform a GET request to fetch the latest data before updating a post.
+    Http::fake([
+        "*admin/posts/$id/?*" => Http::response($this->getFixtureJson('post.json')),
+    ]);
+
+    $post = Ghost::admin()->posts()->find($id);
+    $response = Ghost::admin()->posts()->source('html')->update($id, [
+        'title' => 'My New Title',
+        'mobiledoc' => '{"version":"0.3.1","atoms":[],"cards":[],"markups":[],"sections":[[1,"p",[[0,[],0,"My updated post content. Work in progress..."]]]]}',
+        'updated_at' => $post->updatedAt,
+    ]);
+
+    expectSuccessfulResponse($response, Post::class);
+
+    $createdPost = $response->data->first();
+    expect($createdPost)->toBeInstanceOf(Post::class)
+        ->toHaveProperty('id');
+});
+
+it('deletes a post', function () {
+    $id = '6285dbba44c5d85187a074ba';
+
+    //Delete requests have no payload in the request or response. Successful deletes will return an empty 204 response.
+    Http::fake([
+        "*admin/posts/$id/?*" => Http::response('', 204),
+    ]);
+
+    $response = Ghost::admin()->posts()->delete($id);
+
+    expect($response)->toBeInstanceOf(SuccessResponse::class);
+    expect($response->data)->toBeEmpty();
 });

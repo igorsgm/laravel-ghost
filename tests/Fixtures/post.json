@@ -1,0 +1,108 @@
+{
+  "posts": [
+    {
+      "id": "6285dbba44c5d85187a074ba",
+      "uuid": "7ca4c6fc-0c23-469d-80cd-b0dc0a6a0a7c",
+      "title": "My Test Post",
+      "slug": "my-test-post",
+      "mobiledoc": "{\"version\":\"0.3.1\",\"atoms\":[],\"cards\":[],\"markups\":[],\"sections\":[[1,\"p\",[[0,[],0,\"My post content. Work in progress...\"]]]]}",
+      "comment_id": "6285dbba44c5d85187a074ba",
+      "feature_image": null,
+      "featured": false,
+      "status": "published",
+      "visibility": "public",
+      "email_recipient_filter": "none",
+      "created_at": "2022-05-19T05:55:06.000Z",
+      "updated_at": "2022-05-19T05:55:06.000Z",
+      "published_at": "2022-05-19T05:55:06.000Z",
+      "custom_excerpt": null,
+      "codeinjection_head": null,
+      "codeinjection_foot": null,
+      "custom_template": null,
+      "canonical_url": null,
+      "tags": [],
+      "authors": [
+        {
+          "id": "1",
+          "name": "John Doe",
+          "slug": "john",
+          "email": "john.doe@gmail.com",
+          "profile_image": "//www.gravatar.com/avatar/27ed9a6b4ca3868b57150e24f08537d3?s=250&d=mm&r=x",
+          "cover_image": null,
+          "bio": null,
+          "website": null,
+          "location": null,
+          "facebook": null,
+          "twitter": null,
+          "accessibility": "{\"nightShift\":true}",
+          "status": "active",
+          "meta_title": null,
+          "meta_description": null,
+          "tour": null,
+          "last_seen": "2022-05-19T05:25:00.000Z",
+          "created_at": "2021-10-30T20:34:20.000Z",
+          "updated_at": "2022-05-19T05:25:00.000Z",
+          "roles": [
+            {
+              "id": "617dac4ce01e977921bf8256",
+              "name": "Owner",
+              "description": "Blog Owner",
+              "created_at": "2021-10-30T20:34:20.000Z",
+              "updated_at": "2021-10-30T20:34:20.000Z"
+            }
+          ],
+          "url": "http://localhost:2370/author/john/"
+        }
+      ],
+      "tiers": [],
+      "primary_author": {
+        "id": "1",
+        "name": "John Doe",
+        "slug": "john",
+        "email": "john.doe@gmail.com",
+        "profile_image": "//www.gravatar.com/avatar/2bfa103a13c88b5ffd26da6f982f11df?s=250&d=mm&r=x",
+        "cover_image": null,
+        "bio": null,
+        "website": null,
+        "location": null,
+        "facebook": null,
+        "twitter": null,
+        "accessibility": "{\"nightShift\":true}",
+        "status": "active",
+        "meta_title": null,
+        "meta_description": null,
+        "tour": null,
+        "last_seen": "2022-05-19T05:25:00.000Z",
+        "created_at": "2021-10-30T20:34:20.000Z",
+        "updated_at": "2022-05-19T05:25:00.000Z",
+        "roles": [
+          {
+            "id": "617dac4ce01e977921bf8256",
+            "name": "Owner",
+            "description": "Blog Owner",
+            "created_at": "2021-10-30T20:34:20.000Z",
+            "updated_at": "2021-10-30T20:34:20.000Z"
+          }
+        ],
+        "url": "http://localhost:2370/author/john/"
+      },
+      "primary_tag": null,
+      "url": "http://localhost:2370/my-test-post/",
+      "excerpt": "My post content. Work in progress...",
+      "og_image": null,
+      "og_title": null,
+      "og_description": null,
+      "twitter_image": null,
+      "twitter_title": null,
+      "twitter_description": null,
+      "meta_title": null,
+      "meta_description": null,
+      "email_subject": null,
+      "frontmatter": null,
+      "feature_image_alt": null,
+      "feature_image_caption": null,
+      "email_only": false,
+      "email": null
+    }
+  ]
+}

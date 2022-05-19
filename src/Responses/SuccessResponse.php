@@ -67,6 +67,7 @@ class SuccessResponse
             $data = $this->resource::createFromArray($responseData);
         } else {
             $data = collect();
+            $responseData = !empty($responseData) ? $responseData : [];
             foreach ($responseData as $resourceProperty) {
                 $data->push($this->resource::createFromArray($resourceProperty));
             }
