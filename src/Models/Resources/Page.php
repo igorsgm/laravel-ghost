@@ -80,6 +80,9 @@ class Page implements ResourceInterface
         $page->codeinjectionFoot = $array['codeinjection_foot'] ?? null;
         $page->accentColor = $array['accent_color'] ?? null;
 
+        $page->createdAt = $array['created_at'] ?? null;
+        $page->updatedAt = $array['updated_at'] ?? null;
+
         $page->url = $array['url'] ?? null;
 
         $page->authors = collect(data_get($array, 'authors'))->map(function ($author) {

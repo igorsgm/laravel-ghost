@@ -18,7 +18,7 @@ it('sets resource to Post::class', function () {
 
 it('gets all posts', function () {
     Http::fake([
-        "*admin/posts*" => Http::response($this->getFixtureJson('posts.json')),
+        "*admin/posts*" => Http::response($this->getFixtureJson('posts-page-1.json')),
     ]);
 
     $response = Ghost::admin()->posts()->all();
@@ -112,7 +112,7 @@ it('parses properties to Author, Tag and Seo classes', function () {
 it('returns a post by ID', function () {
     $id = '626106438c3e1e2313c48715';
     Http::fake([
-        "*admin/posts/$id/?*" => Http::response($this->getFixtureJson('posts.json')),
+        "*admin/posts/$id/?*" => Http::response($this->getFixtureJson('posts-page-1.json')),
     ]);
 
     $ghost = Ghost::admin()->posts();
@@ -126,7 +126,7 @@ it('returns a post by ID', function () {
 it('returns a post by slug', function () {
     $slug = 'my-test-post';
     Http::fake([
-        "*admin/posts/slug/$slug/?*" => Http::response($this->getFixtureJson('posts.json')),
+        "*admin/posts/slug/$slug/?*" => Http::response($this->getFixtureJson('posts-page-1.json')),
     ]);
 
     $ghost = Ghost::admin()->posts();
