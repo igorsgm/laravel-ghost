@@ -14,11 +14,6 @@ use Illuminate\Support\Facades\Http;
 class ContentApi extends BaseApi
 {
     /**
-     * @var string
-     */
-    public string $resourceSlug = "";
-
-    /**
      * @param  array  $params  Here you can provide 'key', 'domain', 'version' to override the default ones.
      */
     public function __construct(array $params = [])
@@ -35,26 +30,7 @@ class ContentApi extends BaseApi
     public function get()
     {
         $response = Http::get($this->makeApiUrl());
-
-        if ($response->failed()) {
-            return new ErrorResponse($response);
-        }
-
-        return new SuccessResponse($this, $this->resource, $response);
-    }
-
-    /**
-     * Return resource from slug
-     *
-     * @param  string  $slug
-     *
-     * @return array
-     */
-    public function fromSlug(string $slug)
-    {
-        $this->resourceSlug = $slug;
-
-        return data_get($this->get()->data, 0, []);
+        return $this->handleResponse($response);
     }
 
     /**

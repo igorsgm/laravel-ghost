@@ -28,10 +28,10 @@ return [
      */
     'admin_key' => env('GHOST_ADMIN_API_KEY', ''),
 
-    /**
-     * Set true to return Api Errors instead of empty data
-     */
-    'debug_enabled' => env('GHOST_DEBUG_ENABLED', true),
+    'debug' => [
+        'enabled' => env('GHOST_DEBUG_ENABLED', true),
+        'default_error_message' => 'Something went wrong. Please try again later.',
+    ],
 
     /**
      * Experimental
