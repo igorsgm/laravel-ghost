@@ -227,8 +227,13 @@ abstract class BaseApi
     }
 
     /**
-     * Alias for Ghost's include
-     * Possible includes: authors, tags, count.posts
+     * Alias for Ghost's include.
+     *
+     * The following includes are available:
+     * Posts & Pages: authors, tags
+     * Authors: count.posts
+     * Tags: count.posts
+     * Tiers: monthly_price, yearly_price, benefits
      *
      * @param  string|array  ...$includes
      *
