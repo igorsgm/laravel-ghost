@@ -24,14 +24,14 @@ it('gets all tiers paginated', function () {
 });
 
 
-it('includes monthly_price', function () {
-    $ghost = Ghost::content()->tiers()->include('monthly_price');
-    expectQueryStringSet($ghost, 'include', 'monthly_price');
+it('includes monthly_price and yearly_price', function () {
+    $ghost = Ghost::content()->tiers()->include(['monthly_price', 'yearly_price']);
+    expectQueryStringSet($ghost, 'include', 'monthly_price,yearly_price');
 
     $response = $ghost->limit(1)->get();
     expectSuccessfulResponse($response, Tier::class);
 
     $tier = $response->data->first();
     expect($tier)->toBeInstanceOf(Tier::class)
-        ->toHaveProperties(['monthlyPrice']);
+        ->toHaveProperties(['monthlyPrice', 'yearlyPrice']);
 });
