@@ -3,6 +3,7 @@
 namespace Igorsgm\Ghost\Models\Resources;
 
 use Igorsgm\Ghost\Interfaces\ResourceInterface;
+use Igorsgm\Ghost\Models\Benefit;
 use Igorsgm\Ghost\Models\Price;
 
 class Tier implements ResourceInterface
@@ -67,7 +68,6 @@ class Tier implements ResourceInterface
      */
     public $monthlyPrice;
     /**
-
      * @var \Igorsgm\Ghost\Models\Navigation|Price|null
      */
     public $yearlyPrice;
@@ -90,8 +90,13 @@ class Tier implements ResourceInterface
         $tier->visibility = $array['visibility'] ?? null;
         $tier->benefits = $array['benefits'] ?? [];
 
+        $tier->stripePrices = !empty($array['stripe_prices']) ? Price::createFromArray($array['stripe_prices']) : null;
         $tier->monthlyPrice = !empty($array['monthly_price']) ? Price::createFromArray($array['monthly_price']) : null;
         $tier->yearlyPrice = !empty($array['yearly_price']) ? Price::createFromArray($array['yearly_price']) : null;
+
+        $tier->benefits = collect(data_get($array, 'benefits'))->map(function ($benefit) {
+            return Benefit::createFromArray($benefit);
+        });
 
         $tier->createdAt = $array['created_at'] ?? null;
         $tier->updatedAt = $array['updated_at'] ?? null;
