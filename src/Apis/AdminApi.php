@@ -3,6 +3,7 @@
 namespace Igorsgm\Ghost\Apis;
 
 use Firebase\JWT\JWT;
+use Igorsgm\Ghost\Models\Resources\Member;
 use Igorsgm\Ghost\Models\Resources\Offer;
 use Igorsgm\Ghost\Models\Resources\Page;
 use Igorsgm\Ghost\Models\Resources\Post;
@@ -197,5 +198,16 @@ class AdminApi extends BaseApi
     public function offers(): AdminApi
     {
         return $this->setResource(Offer::class);
+    }
+
+    /**
+     * The members resource provides an endpoint for fetching, creating, and updating member data.
+     *
+     * @see https://ghost.org/docs/admin-api/#members
+     * @return AdminApi
+     */
+    public function members(): AdminApi
+    {
+        return $this->setResource(Member::class);
     }
 }

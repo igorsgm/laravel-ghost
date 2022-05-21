@@ -129,7 +129,6 @@ it('creates a tag', function () {
 
     $response = Ghost::admin()->tags()->create([
         'name' => 'My Test Tag',
-        'status' => 'published',
     ]);
 
     expectSuccessfulResponse($response, Tag::class);
@@ -146,10 +145,8 @@ it('updates a tag', function () {
         "*admin/tags/$id/?*" => Http::response($this->getFixtureJson('tag.json')),
     ]);
 
-    $tag = Ghost::admin()->tags()->find($id);
     $response = Ghost::admin()->tags()->update($id, [
-        'title' => 'About this site updated',
-        'updated_at' => $tag->updatedAt,
+        'name' => 'About this site updated',
     ]);
 
     expectSuccessfulResponse($response, Tag::class);
