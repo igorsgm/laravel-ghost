@@ -66,6 +66,11 @@ class Tier implements ResourceInterface
     /**
      * @var \Igorsgm\Ghost\Models\Navigation|Price|null
      */
+    public $stripePrices;
+
+    /**
+     * @var \Igorsgm\Ghost\Models\Navigation|Price|null
+     */
     public $monthlyPrice;
     /**
      * @var \Igorsgm\Ghost\Models\Navigation|Price|null
@@ -74,7 +79,7 @@ class Tier implements ResourceInterface
 
     /**
      * @param  array  $array
-     * @return Tag
+     * @return Tier
      */
     public static function createFromArray($array): Tier
     {
@@ -88,7 +93,6 @@ class Tier implements ResourceInterface
         $tier->type = $array['type'] ?? null;
         $tier->welcomePageUrl = $array['welcome_page_url'] ?? null;
         $tier->visibility = $array['visibility'] ?? null;
-        $tier->benefits = $array['benefits'] ?? [];
 
         $tier->stripePrices = !empty($array['stripe_prices']) ? Price::createFromArray($array['stripe_prices']) : null;
         $tier->monthlyPrice = !empty($array['monthly_price']) ? Price::createFromArray($array['monthly_price']) : null;

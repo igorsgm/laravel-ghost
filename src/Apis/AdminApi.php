@@ -3,6 +3,7 @@
 namespace Igorsgm\Ghost\Apis;
 
 use Firebase\JWT\JWT;
+use Igorsgm\Ghost\Models\Resources\Offer;
 use Igorsgm\Ghost\Models\Resources\Page;
 use Igorsgm\Ghost\Models\Resources\Post;
 use Igorsgm\Ghost\Models\Resources\Tag;
@@ -185,5 +186,16 @@ class AdminApi extends BaseApi
     public function tiers(): AdminApi
     {
         return $this->setResource(Tier::class);
+    }
+
+    /**
+     * Use offers to create a discount or special price for members signing up on a tier.
+     *
+     * @see https://ghost.org/docs/admin-api/#offers
+     * @return AdminApi
+     */
+    public function offers(): AdminApi
+    {
+        return $this->setResource(Offer::class);
     }
 }
