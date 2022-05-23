@@ -11,6 +11,7 @@ use Igorsgm\Ghost\Models\Resources\Site;
 use Igorsgm\Ghost\Models\Resources\Tag;
 use Igorsgm\Ghost\Models\Resources\Tier;
 use Igorsgm\Ghost\Models\Resources\User;
+use Igorsgm\Ghost\Models\Resources\Webhook;
 use Igorsgm\Ghost\Responses\ErrorResponse;
 use Igorsgm\Ghost\Responses\SuccessResponse;
 use Illuminate\Support\Facades\Http;
@@ -239,5 +240,23 @@ class AdminApi extends BaseApi
     public function site(): AdminApi
     {
         return $this->setResource(Site::class);
+    }
+
+    /**
+     * Webhooks allow you to build or set up custom integrations, which subscribe to certain events in Ghost.
+     * When one of such events is triggered, Ghost sends a HTTP POST payload to the webhook’s configured URL.
+     * For instance, when a new post is published Ghost can send a notification to configured endpoint to trigger
+     * a search index re-build, slack notification, or whole site deploy.
+     *
+     * Methods: Edit, Add, Delete
+     *
+     * @see https://ghost.org/docs/admin-api/#webhooks
+     * @read https://ghost.org/integrations/custom-integrations/#api-webhook-integrations
+     * @read https://ghost.org/docs/webhooks/
+     * @return AdminApi
+     */
+    public function webhooks(): AdminApi
+    {
+        return $this->setResource(Webhook::class);
     }
 }
