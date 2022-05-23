@@ -2,6 +2,7 @@
 
 use Igorsgm\Ghost\Facades\Ghost;
 use Igorsgm\Ghost\Models\Resources\Webhook;
+use Igorsgm\Ghost\Responses\SuccessResponse;
 use Illuminate\Support\Facades\Http;
 
 uses()->group('admin');
@@ -47,4 +48,17 @@ it('updates a webhook', function () {
     $createdWebhook = $response->data->first();
     expect($createdWebhook)->toBeInstanceOf(Webhook::class)
         ->toHaveProperty('id');
+});
+
+it('deletes a webhook', function () {
+    $id = '5f04028cc9b839282b0eb5e3';
+
+    Http::fake([
+        "*admin/webhooks/$id/?*" => Http::response('', 204),
+    ]);
+
+    $response = Ghost::admin()->webhooks()->delete($id);
+
+    expect($response)->toBeInstanceOf(SuccessResponse::class);
+    expect($response->data)->toBeEmpty();
 });
