@@ -4,8 +4,10 @@ namespace Igorsgm\Ghost\Models\Resources;
 
 use Igorsgm\Ghost\Interfaces\ResourceInterface;
 
-class Offer implements ResourceInterface
+class Offer extends BaseResource implements ResourceInterface
 {
+    protected string $resourceName = 'offers';
+
     /**
      * @var string|null
      */
@@ -144,10 +146,5 @@ class Offer implements ResourceInterface
         $offer->updatedAt = $array['updated_at'] ?? null;
 
         return $offer;
-    }
-
-    public function getResourceName()
-    {
-        return 'offers';
     }
 }

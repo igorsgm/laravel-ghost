@@ -6,8 +6,10 @@ use Igorsgm\Ghost\Interfaces\ResourceInterface;
 use Igorsgm\Ghost\Models\Label;
 use Igorsgm\Ghost\Models\Subscription;
 
-class Member implements ResourceInterface
+class Member extends BaseResource implements ResourceInterface
 {
+    protected string $resourceName = 'members';
+
     /**
      * @var string|null
      */
@@ -126,10 +128,5 @@ class Member implements ResourceInterface
         $member->updatedAt = $array['updated_at'] ?? null;
 
         return $member;
-    }
-
-    public function getResourceName()
-    {
-        return 'members';
     }
 }

@@ -6,8 +6,10 @@ use Igorsgm\Ghost\Interfaces\ResourceInterface;
 use Igorsgm\Ghost\Models\Seo;
 use Illuminate\Support\Collection;
 
-class Post implements ResourceInterface
+class Post extends BaseResource implements ResourceInterface
 {
+    protected string $resourceName = 'posts';
+
     /**
      * @var string|null
      */
@@ -214,10 +216,5 @@ class Post implements ResourceInterface
         $post->primaryTag = !empty($array['primary_tag']) ? Tag::createFromArray($array['primary_tag']) : null;
 
         return $post;
-    }
-
-    public function getResourceName()
-    {
-        return 'posts';
     }
 }
