@@ -1,0 +1,44 @@
+{
+  "users": [
+    {
+      "id": "5951f5fca366002ebd5dbef7",
+      "name": "Ghost",
+      "slug": "ghost",
+      "profile_image": "https://static.ghost.org/v4.0.0/images/ghost-user.png",
+      "cover_image": null,
+      "bio": "You can delete this user to remove all the welcome posts",
+      "website": "https://ghost.org",
+      "location": "The Internet",
+      "facebook": "ghost",
+      "twitter": "ghost",
+      "meta_title": null,
+      "meta_description": null,
+      "url": "http://localhost:2370/author/ghost/"
+    },
+    {
+      "id": "5951f5fca366002ebd5dbef8",
+      "name": "Ghost 2",
+      "slug": "ghost2",
+      "profile_image": "https://static.ghost.org/v4.0.0/images/ghost-user.png",
+      "cover_image": null,
+      "bio": "You can delete this user to remove all the welcome posts",
+      "website": "https://ghost.org",
+      "location": "The Internet",
+      "facebook": "ghost",
+      "twitter": "ghost",
+      "meta_title": null,
+      "meta_description": null,
+      "url": "http://localhost:2370/author/ghost/"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "limit": "all",
+      "pages": 1,
+      "total": 2,
+      "next": null,
+      "prev": null
+    }
+  }
+}
