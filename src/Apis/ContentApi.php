@@ -73,6 +73,7 @@ class ContentApi extends BaseApi
 
     /**
      * Authors are a subset of users who have published posts associated with them.
+     *
      * @see https://ghost.org/docs/content-api/#authors
      * @return ContentApi
      */

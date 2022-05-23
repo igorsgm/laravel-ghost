@@ -60,8 +60,10 @@ it('creates an offer', function () {
     ]);
 
     $response = Ghost::admin()->offers()->create([
-        'name' => 'My Test Offer',
-        'status' => 'published',
+        'name' => 'Black Friday',
+        'code' => 'black-friday',
+        'display_title' => 'Black Friday Sale!',
+        'display_description' => '10% off on yearly plan',
     ]);
 
     expectSuccessfulResponse($response, Offer::class);
@@ -78,10 +80,9 @@ it('updates an offer', function () {
         "*admin/offers/$id/?*" => Http::response($this->getFixtureJson('offers.json')),
     ]);
 
-    $offer = Ghost::admin()->offers()->find($id);
     $response = Ghost::admin()->offers()->update($id, [
-        'title' => 'About this site updated',
-        'updated_at' => $offer->updatedAt,
+        'display_title' => 'Black Friday 2022',
+        'code' => 'black-friday-2022'
     ]);
 
     expectSuccessfulResponse($response, Offer::class);
@@ -89,18 +90,4 @@ it('updates an offer', function () {
     $createdOffer = $response->data->first();
     expect($createdOffer)->toBeInstanceOf(Offer::class)
         ->toHaveProperty('id');
-});
-
-it('deletes an offer', function () {
-    $id = '6285dbba44c5d85187a074ba';
-
-    //Delete requests have no payload in the request or response. Successful deletes will return an empty 204 response.
-    Http::fake([
-        "*admin/offers/$id/?*" => Http::response('', 204),
-    ]);
-
-    $response = Ghost::admin()->offers()->delete($id);
-
-    expect($response)->toBeInstanceOf(SuccessResponse::class);
-    expect($response->data)->toBeEmpty();
 });

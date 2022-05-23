@@ -141,8 +141,15 @@ it('creates a tier', function () {
     ]);
 
     $response = Ghost::admin()->tiers()->create([
-        'name' => 'My Test Tier',
-        'status' => 'published',
+        'name' => 'Platinum',
+        'description' => 'Access to everything',
+        'welcome_page_url' => '/welcome-to-platinum',
+        'visibility' => 'public',
+        'monthly_price' => [],
+        'yearly_price' => [],
+        'benefits' => [
+            [], []
+        ],
     ]);
 
     expectSuccessfulResponse($response, Tier::class);
@@ -159,10 +166,9 @@ it('updates a tier', function () {
         "*admin/tiers/$id/?*" => Http::response($this->getFixtureJson('tier.json')),
     ]);
 
-    $tier = Ghost::admin()->tiers()->find($id);
     $response = Ghost::admin()->tiers()->update($id, [
-        'title' => 'About this site updated',
-        'updated_at' => $tier->updatedAt,
+        'name' => 'Platinum 2',
+        'description' => 'Plat',
     ]);
 
     expectSuccessfulResponse($response, Tier::class);
@@ -170,18 +176,4 @@ it('updates a tier', function () {
     $createdTier = $response->data->first();
     expect($createdTier)->toBeInstanceOf(Tier::class)
         ->toHaveProperty('id');
-});
-
-it('deletes a tier', function () {
-    $id = '6285dbba44c5d85187a074ba';
-
-    //Delete requests have no payload in the request or response. Successful deletes will return an empty 204 response.
-    Http::fake([
-        "*admin/tiers/$id/?*" => Http::response('', 204),
-    ]);
-
-    $response = Ghost::admin()->tiers()->delete($id);
-
-    expect($response)->toBeInstanceOf(SuccessResponse::class);
-    expect($response->data)->toBeEmpty();
 });

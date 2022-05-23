@@ -3,11 +3,13 @@
 namespace Igorsgm\Ghost\Apis;
 
 use Firebase\JWT\JWT;
+use Igorsgm\Ghost\Models\Resources\Member;
 use Igorsgm\Ghost\Models\Resources\Offer;
 use Igorsgm\Ghost\Models\Resources\Page;
 use Igorsgm\Ghost\Models\Resources\Post;
 use Igorsgm\Ghost\Models\Resources\Tag;
 use Igorsgm\Ghost\Models\Resources\Tier;
+use Igorsgm\Ghost\Models\Resources\User;
 use Igorsgm\Ghost\Responses\ErrorResponse;
 use Igorsgm\Ghost\Responses\SuccessResponse;
 use Illuminate\Support\Facades\Http;
@@ -146,6 +148,7 @@ class AdminApi extends BaseApi
      * Posts are the primary resource in a Ghost site, providing means for publishing, managing and displaying content.
      * At the heart of every post is a mobiledoc field, containing a standardised JSON-based representation of your
      * content, which can be rendered in multiple formats.
+     * Methods: Browse, Read, Edit, Add, Delete
      *
      * @see https://ghost.org/docs/admin-api/#posts
      * @return AdminApi
@@ -158,6 +161,7 @@ class AdminApi extends BaseApi
     /**
      * Pages are static resources that are not included in channels or collections on the Ghost front-end.
      * They are identical to posts in terms of request and response structure when working with the APIs.
+     * Methods: Browse, Read, Edit, Add, Delete
      *
      * @see https://ghost.org/docs/admin-api/#pages
      * @return AdminApi
@@ -168,6 +172,7 @@ class AdminApi extends BaseApi
     }
 
     /**
+     * Methods: Browse, Read, Edit, Add, Delete
      * @return AdminApi
      */
     public function tags(): AdminApi
@@ -179,6 +184,7 @@ class AdminApi extends BaseApi
      * Tiers allow publishers to create multiple options for an audience to become paid subscribers.
      * Each tier can have its own price points, benefits, and content access levels.
      * Ghost connects tiers directly to the publication’s Stripe account.
+     * Methods: Browse, Read, Edit, Add
      *
      * @see https://ghost.org/docs/admin-api/#tiers
      * @return AdminApi
@@ -190,6 +196,7 @@ class AdminApi extends BaseApi
 
     /**
      * Use offers to create a discount or special price for members signing up on a tier.
+     * Methods: Browse, Read, Edit, Add
      *
      * @see https://ghost.org/docs/admin-api/#offers
      * @return AdminApi
@@ -197,5 +204,28 @@ class AdminApi extends BaseApi
     public function offers(): AdminApi
     {
         return $this->setResource(Offer::class);
+    }
+
+    /**
+     * The members resource provides an endpoint for fetching, creating, and updating member data.
+     * Methods: Browse, Read, Edit, Add
+     *
+     * @see https://ghost.org/docs/admin-api/#members
+     * @return AdminApi
+     */
+    public function members(): AdminApi
+    {
+        return $this->setResource(Member::class);
+    }
+
+    /**
+     * Methods: Browse, Read
+     *
+     * @see https://ghost.org/docs/admin-api/#users
+     * @return AdminApi
+     */
+    public function users(): AdminApi
+    {
+        return $this->setResource(User::class);
     }
 }
