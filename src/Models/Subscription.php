@@ -73,7 +73,7 @@ class Subscription
 
     /**
      * @param  array  $array
-     * @return Navigation
+     * @return Subscription
      */
     public static function createFromArray($array): Subscription
     {

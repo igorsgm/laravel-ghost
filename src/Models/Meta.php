@@ -13,7 +13,7 @@ class Meta
 
     /**
      * @param  array  $array
-     * @return Tag
+     * @return Meta
      */
     public static function createFromArray($array): Meta
     {

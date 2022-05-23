@@ -108,7 +108,7 @@ class User extends BaseResource implements ResourceInterface
 
     /**
      * @param  array  $array
-     * @return Author
+     * @return User
      */
     public static function createFromArray($array): User
     {

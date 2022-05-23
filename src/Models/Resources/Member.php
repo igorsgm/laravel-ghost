@@ -96,7 +96,7 @@ class Member extends BaseResource implements ResourceInterface
 
     /**
      * @param  array  $array
-     * @return Post
+     * @return Member
      */
     public static function createFromArray($array): Member
     {

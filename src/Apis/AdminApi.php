@@ -7,6 +7,7 @@ use Igorsgm\Ghost\Models\Resources\Member;
 use Igorsgm\Ghost\Models\Resources\Offer;
 use Igorsgm\Ghost\Models\Resources\Page;
 use Igorsgm\Ghost\Models\Resources\Post;
+use Igorsgm\Ghost\Models\Resources\Site;
 use Igorsgm\Ghost\Models\Resources\Tag;
 use Igorsgm\Ghost\Models\Resources\Tier;
 use Igorsgm\Ghost\Models\Resources\User;
@@ -227,5 +228,16 @@ class AdminApi extends BaseApi
     public function users(): AdminApi
     {
         return $this->setResource(User::class);
+    }
+
+    /**
+     * Methods: Read
+     *
+     * @see https://ghost.org/docs/admin-api/#site
+     * @return AdminApi
+     */
+    public function site(): AdminApi
+    {
+        return $this->setResource(Site::class);
     }
 }

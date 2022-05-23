@@ -54,7 +54,7 @@ class Seo
 
     /**
      * @param  array  $array
-     * @return Tag
+     * @return Seo
      */
     public static function createFromArray($array): Seo
     {

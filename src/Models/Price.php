@@ -56,7 +56,7 @@ class Price
 
     /**
      * @param  array  $array
-     * @return Navigation
+     * @return Price
      */
     public static function createFromArray($array): Price
     {

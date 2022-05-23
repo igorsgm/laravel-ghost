@@ -32,7 +32,7 @@ class Benefit
 
     /**
      * @param  array  $array
-     * @return Role
+     * @return Benefit
      */
     public static function createFromArray($array): Benefit
     {

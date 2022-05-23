@@ -63,7 +63,7 @@ class SuccessResponse
         $responseData = $this->response->json($resourceName);
         $meta = $this->response->json('meta');
 
-        if ($resourceName == 'settings') {
+        if (in_array($resourceName, ['settings', 'site'])) {
             $data = $this->resource::createFromArray($responseData);
         } else {
             $data = collect();

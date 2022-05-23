@@ -32,7 +32,7 @@ class Label
 
     /**
      * @param  array  $array
-     * @return Role
+     * @return Label
      */
     public static function createFromArray($array): Label
     {

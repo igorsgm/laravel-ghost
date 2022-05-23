@@ -66,7 +66,7 @@ class Page extends BaseResource implements ResourceInterface
 
     /**
      * @param  array  $array
-     * @return Tag
+     * @return Page
      */
     public static function createFromArray($array): Page
     {
