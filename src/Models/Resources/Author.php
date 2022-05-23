@@ -6,6 +6,8 @@ use Igorsgm\Ghost\Interfaces\ResourceInterface;
 
 class Author extends User implements ResourceInterface
 {
+    protected string $resourceName = 'authors';
+
     /**
      * @param  array  $array
      * @return Author
@@ -14,10 +16,5 @@ class Author extends User implements ResourceInterface
     {
         $author = new self();
         return $author::fill($author, $array);
-    }
-
-    public function getResourceName()
-    {
-        return 'authors';
     }
 }

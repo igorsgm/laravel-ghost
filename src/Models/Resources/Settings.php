@@ -6,8 +6,10 @@ use Igorsgm\Ghost\Interfaces\ResourceInterface;
 use Igorsgm\Ghost\Models\Navigation;
 use Igorsgm\Ghost\Models\Seo;
 
-class Settings implements ResourceInterface
+class Settings extends BaseResource implements ResourceInterface
 {
+    protected string $resourceName = 'settings';
+
     /**
      * @var string|null
      */
@@ -119,10 +121,5 @@ class Settings implements ResourceInterface
         $settings->seo = Seo::createFromArray($array);
 
         return $settings;
-    }
-
-    public function getResourceName()
-    {
-        return 'settings';
     }
 }

@@ -6,8 +6,10 @@ use Igorsgm\Ghost\Interfaces\ResourceInterface;
 use Igorsgm\Ghost\Models\Benefit;
 use Igorsgm\Ghost\Models\Price;
 
-class Tier implements ResourceInterface
+class Tier extends BaseResource implements ResourceInterface
 {
+    protected string $resourceName = 'tiers';
+
     /**
      * @var string|null
      */
@@ -106,10 +108,5 @@ class Tier implements ResourceInterface
         $tier->updatedAt = $array['updated_at'] ?? null;
 
         return $tier;
-    }
-
-    public function getResourceName()
-    {
-        return 'tiers';
     }
 }

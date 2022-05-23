@@ -5,8 +5,10 @@ namespace Igorsgm\Ghost\Models\Resources;
 use Igorsgm\Ghost\Interfaces\ResourceInterface;
 use Igorsgm\Ghost\Models\Seo;
 
-class Page implements ResourceInterface
+class Page extends BaseResource implements ResourceInterface
 {
+    protected string $resourceName = 'pages';
+
     /**
      * @var string
      */
@@ -98,10 +100,5 @@ class Page implements ResourceInterface
         $page->seo = Seo::createFromArray($array);
 
         return $page;
-    }
-
-    public function getResourceName()
-    {
-        return 'pages';
     }
 }

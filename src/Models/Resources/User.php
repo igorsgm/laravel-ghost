@@ -7,8 +7,10 @@ use Igorsgm\Ghost\Models\Role;
 use Igorsgm\Ghost\Models\Seo;
 use Illuminate\Support\Collection;
 
-class User implements ResourceInterface
+class User extends BaseResource implements ResourceInterface
 {
+    protected string $resourceName = 'users';
+
     /**
      * @var string|null
      */
@@ -146,10 +148,5 @@ class User implements ResourceInterface
         $user->postsCount = data_get($array, 'count.posts');
 
         return $user;
-    }
-
-    public function getResourceName()
-    {
-        return 'users';
     }
 }

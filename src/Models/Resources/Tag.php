@@ -5,8 +5,10 @@ namespace Igorsgm\Ghost\Models\Resources;
 use Igorsgm\Ghost\Interfaces\ResourceInterface;
 use Igorsgm\Ghost\Models\Seo;
 
-class Tag implements ResourceInterface
+class Tag extends BaseResource implements ResourceInterface
 {
+    protected string $resourceName = 'tags';
+
     /**
      * @var string|null
      */
@@ -111,10 +113,5 @@ class Tag implements ResourceInterface
         $tag->postsCount = data_get($array, 'count.posts');
 
         return $tag;
-    }
-
-    public function getResourceName()
-    {
-        return 'tags';
     }
 }
