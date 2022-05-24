@@ -3,6 +3,7 @@
 namespace Igorsgm\Ghost\Apis;
 
 use Firebase\JWT\JWT;
+use Igorsgm\Ghost\Models\Resources\Image;
 use Igorsgm\Ghost\Models\Resources\Member;
 use Igorsgm\Ghost\Models\Resources\Offer;
 use Igorsgm\Ghost\Models\Resources\Page;
@@ -11,6 +12,7 @@ use Igorsgm\Ghost\Models\Resources\Site;
 use Igorsgm\Ghost\Models\Resources\Tag;
 use Igorsgm\Ghost\Models\Resources\Tier;
 use Igorsgm\Ghost\Models\Resources\User;
+use Igorsgm\Ghost\Models\Resources\Webhook;
 use Igorsgm\Ghost\Responses\ErrorResponse;
 use Igorsgm\Ghost\Responses\SuccessResponse;
 use Illuminate\Support\Facades\Http;
@@ -129,6 +131,23 @@ class AdminApi extends BaseApi
     }
 
     /**
+     * @param  string  $filePath  The path to the file you want to upload
+     * @param  string  $ref  (optional) A reference or identifier for the image, e.g. the original filename and path.
+     *                       Will be returned as-is in the API response, making it useful for finding & replacing
+     *                       local image paths after uploads.
+     *
+     * @return ErrorResponse|SuccessResponse
+     */
+    public function upload($filePath, $ref = null)
+    {
+        $response = $this->getHttpClient()
+            ->attach('file', file_get_contents($filePath), basename($filePath))
+            ->post($this->makeApiUrl(), array_filter(compact('ref')));
+
+        return $this->handleResponse($response);
+    }
+
+    /**
      * The post creation/update endpoint is also able to convert HTML into mobiledoc.
      * The conversion generates the best available mobiledoc representation,
      * meaning this operation is lossy and the HTML rendered by Ghost may be different from the source HTML.
@@ -231,6 +250,21 @@ class AdminApi extends BaseApi
     }
 
     /**
+     * Sending images to Ghost via the API allows you to upload images one at a time, and store them with a storage
+     * adapter. The default adapter stores files locally in /content/images/ without making any modifications,
+     * except for sanitising the filename.
+     *
+     * Methods: Upload
+     *
+     * @see https://ghost.org/docs/admin-api/#images
+     * @return AdminApi
+     */
+    public function images(): AdminApi
+    {
+        return $this->setResource(Image::class);
+    }
+
+    /**
      * Methods: Read
      *
      * @see https://ghost.org/docs/admin-api/#site
@@ -239,5 +273,23 @@ class AdminApi extends BaseApi
     public function site(): AdminApi
     {
         return $this->setResource(Site::class);
+    }
+
+    /**
+     * Webhooks allow you to build or set up custom integrations, which subscribe to certain events in Ghost.
+     * When one of such events is triggered, Ghost sends a HTTP POST payload to the webhook’s configured URL.
+     * For instance, when a new post is published Ghost can send a notification to configured endpoint to trigger
+     * a search index re-build, slack notification, or whole site deploy.
+     *
+     * Methods: Edit, Add, Delete
+     *
+     * @see https://ghost.org/docs/admin-api/#webhooks
+     * @read https://ghost.org/integrations/custom-integrations/#api-webhook-integrations
+     * @read https://ghost.org/docs/webhooks/
+     * @return AdminApi
+     */
+    public function webhooks(): AdminApi
+    {
+        return $this->setResource(Webhook::class);
     }
 }

@@ -15,7 +15,7 @@ class Page extends BaseResource implements ResourceInterface
     public $slug;
 
     /**
-     * @varstring
+     * @var string
      */
     public $id;
 
