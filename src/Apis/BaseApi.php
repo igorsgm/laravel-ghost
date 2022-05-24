@@ -88,13 +88,9 @@ abstract class BaseApi
 
         if (!empty($this->resourceId)) {
             $endpoint .= "/{$this->resourceId}";
-        }
-
-        if (!empty($this->resourceSlug)) {
+        } elseif (!empty($this->resourceSlug)) {
             $endpoint .= "/slug/{$this->resourceSlug}";
-        }
-
-        if ($endpoint === 'images') {
+        } elseif ($endpoint === 'images') {
             $endpoint .= '/upload';
         }
 
