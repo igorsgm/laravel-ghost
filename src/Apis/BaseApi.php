@@ -85,10 +85,17 @@ abstract class BaseApi
     protected function buildEndpoint(): string
     {
         $endpoint = $this->resource->getResourceName();
+
         if (!empty($this->resourceId)) {
             $endpoint .= "/{$this->resourceId}";
-        } elseif (!empty($this->resourceSlug)) {
+        }
+
+        if (!empty($this->resourceSlug)) {
             $endpoint .= "/slug/{$this->resourceSlug}";
+        }
+
+        if ($endpoint === 'images') {
+            $endpoint .= '/upload';
         }
 
         return $endpoint;

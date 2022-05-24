@@ -3,6 +3,7 @@
 namespace Igorsgm\Ghost\Apis;
 
 use Firebase\JWT\JWT;
+use Igorsgm\Ghost\Models\Resources\Image;
 use Igorsgm\Ghost\Models\Resources\Member;
 use Igorsgm\Ghost\Models\Resources\Offer;
 use Igorsgm\Ghost\Models\Resources\Page;
@@ -130,6 +131,23 @@ class AdminApi extends BaseApi
     }
 
     /**
+     * @param  string  $filePath  The path to the file you want to upload
+     * @param  string  $ref  (optional) A reference or identifier for the image, e.g. the original filename and path.
+     *                       Will be returned as-is in the API response, making it useful for finding & replacing
+     *                       local image paths after uploads.
+     *
+     * @return ErrorResponse|SuccessResponse
+     */
+    public function upload($filePath, $ref = null)
+    {
+        $response = $this->getHttpClient()
+            ->attach('file', file_get_contents($filePath), basename($filePath))
+            ->post($this->makeApiUrl(), array_filter(compact('ref')));
+
+        return $this->handleResponse($response);
+    }
+
+    /**
      * The post creation/update endpoint is also able to convert HTML into mobiledoc.
      * The conversion generates the best available mobiledoc representation,
      * meaning this operation is lossy and the HTML rendered by Ghost may be different from the source HTML.
@@ -229,6 +247,21 @@ class AdminApi extends BaseApi
     public function users(): AdminApi
     {
         return $this->setResource(User::class);
+    }
+
+    /**
+     * Sending images to Ghost via the API allows you to upload images one at a time, and store them with a storage
+     * adapter. The default adapter stores files locally in /content/images/ without making any modifications,
+     * except for sanitising the filename.
+     *
+     * Methods: Upload
+     *
+     * @see https://ghost.org/docs/admin-api/#images
+     * @return AdminApi
+     */
+    public function images(): AdminApi
+    {
+        return $this->setResource(Image::class);
     }
 
     /**
