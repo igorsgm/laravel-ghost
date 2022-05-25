@@ -1,0 +1,20 @@
+{
+  "themes": [
+    {
+      "name": "Alto-master",
+      "package": {},
+      "active": false,
+      "templates": [
+        {
+          "filename": "custom-full-feature-image",
+          "name": "Full Feature Image",
+          "for": [
+            "page",
+            "post"
+          ],
+          "slug": null
+        }
+      ]
+    }
+  ]
+}

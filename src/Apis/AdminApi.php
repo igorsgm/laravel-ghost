@@ -10,6 +10,7 @@ use Igorsgm\Ghost\Models\Resources\Page;
 use Igorsgm\Ghost\Models\Resources\Post;
 use Igorsgm\Ghost\Models\Resources\Site;
 use Igorsgm\Ghost\Models\Resources\Tag;
+use Igorsgm\Ghost\Models\Resources\Theme;
 use Igorsgm\Ghost\Models\Resources\Tier;
 use Igorsgm\Ghost\Models\Resources\User;
 use Igorsgm\Ghost\Models\Resources\Webhook;
@@ -142,7 +143,21 @@ class AdminApi extends BaseApi
     {
         $response = $this->getHttpClient()
             ->attach('file', file_get_contents($filePath), basename($filePath))
-            ->post($this->makeApiUrl(), array_filter(compact('ref')));
+            ->post($this->makeApiUrl('/upload'), array_filter(compact('ref')));
+
+        return $this->handleResponse($response);
+    }
+
+    /**
+     * Activate a theme
+     *
+     * @param  string  $themeName
+     * @return ErrorResponse|SuccessResponse
+     */
+    public function activate(string $themeName)
+    {
+        $this->resourceId = $themeName;
+        $response = $this->getHttpClient()->put($this->makeApiUrl('/activate'));
 
         return $this->handleResponse($response);
     }
@@ -262,6 +277,19 @@ class AdminApi extends BaseApi
     public function images(): AdminApi
     {
         return $this->setResource(Image::class);
+    }
+
+    /**
+     * Themes can be uploaded from a local ZIP archive and activated.
+     *
+     * Methods: Upload, Activate
+     *
+     * @see https://ghost.org/docs/admin-api/#themes
+     * @return AdminApi
+     */
+    public function themes(): AdminApi
+    {
+        return $this->setResource(Theme::class);
     }
 
     /**

@@ -90,8 +90,6 @@ abstract class BaseApi
             $endpoint .= "/{$this->resourceId}";
         } elseif (!empty($this->resourceSlug)) {
             $endpoint .= "/slug/{$this->resourceSlug}";
-        } elseif ($endpoint === 'images') {
-            $endpoint .= '/upload';
         }
 
         return $endpoint;
@@ -100,9 +98,9 @@ abstract class BaseApi
     /**
      * @return string
      */
-    protected function makeApiUrl(): string
+    protected function makeApiUrl($suffix = ''): string
     {
-        return sprintf("%s/%s/?%s", $this->baseUrl, $this->buildEndpoint(), $this->buildParams());
+        return sprintf("%s/%s/?%s", $this->baseUrl, $this->buildEndpoint() . $suffix, $this->buildParams());
     }
 
     /**
