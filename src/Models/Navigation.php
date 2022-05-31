@@ -2,7 +2,7 @@
 
 namespace Igorsgm\Ghost\Models;
 
-class Navigation
+class Navigation extends BaseModel
 {
     /**
      * @var string|null
@@ -20,11 +20,6 @@ class Navigation
      */
     public static function createFromArray($array): Navigation
     {
-        $navigation = new self();
-
-        $navigation->label = $array['label'] ?? null;
-        $navigation->url = $array['url'] ?? null;
-
-        return $navigation;
+        return parent::fill(new self(), $array);
     }
 }

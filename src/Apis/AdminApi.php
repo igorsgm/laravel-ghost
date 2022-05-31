@@ -74,7 +74,7 @@ class AdminApi extends BaseApi
     /**
      * @return \Illuminate\Http\Client\PendingRequest
      */
-    public function getHttpClient()
+    private function getHttpClient()
     {
         return Http::withHeaders([
             'Authorization' => 'Ghost '.$this->adminToken,

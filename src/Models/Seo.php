@@ -2,10 +2,7 @@
 
 namespace Igorsgm\Ghost\Models;
 
-use Igorsgm\Ghost\Models\Resources\Tag;
-use Illuminate\Support\Str;
-
-class Seo
+class Seo extends BaseModel
 {
     /**
      * @var string
@@ -58,24 +55,6 @@ class Seo
      */
     public static function createFromArray($array): Seo
     {
-        $seo = new self();
-
-        $validProperties = [
-            'og_image',
-            'og_title',
-            'og_description',
-            'twitter_image',
-            'twitter_title',
-            'twitter_description',
-            'meta_title',
-            'meta_description',
-            'canonical_url',
-        ];
-
-        foreach ($validProperties as $property) {
-            $seo->{Str::camel($property)} = $array[$property] ?? null;
-        }
-
-        return $seo;
+        return parent::fill(new self(), $array);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Igorsgm\Ghost\Models;
 
-class Benefit
+class Benefit extends BaseModel
 {
     /**
      * @var string|null
@@ -29,21 +29,12 @@ class Benefit
      */
     public $updatedAt;
 
-
     /**
      * @param  array  $array
      * @return Benefit
      */
     public static function createFromArray($array): Benefit
     {
-        $benefit = new self();
-
-        $benefit->id = $array['id'] ?? null;
-        $benefit->name = $array['name'] ?? null;
-        $benefit->slug = $array['slug'] ?? null;
-        $benefit->createdAt = $array['created_at'] ?? null;
-        $benefit->updatedAt = $array['updated_at'] ?? null;
-
-        return $benefit;
+        return parent::fill(new self(), $array);
     }
 }

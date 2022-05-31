@@ -3,8 +3,6 @@
 namespace Igorsgm\Ghost\Models\Resources;
 
 use Igorsgm\Ghost\Interfaces\ResourceInterface;
-use Igorsgm\Ghost\Models\Label;
-use Igorsgm\Ghost\Models\Subscription;
 
 class Member extends BaseResource implements ResourceInterface
 {
@@ -100,33 +98,6 @@ class Member extends BaseResource implements ResourceInterface
      */
     public static function createFromArray($array): Member
     {
-        $member = new self();
-
-        $member->id = $array['id'] ?? null;
-        $member->uuid = $array['uuid'] ?? null;
-        $member->email = $array['email'] ?? null;
-        $member->name = $array['name'] ?? null;
-        $member->note = $array['note'] ?? null;
-        $member->geolocation = $array['geolocation'] ?? null;
-        $member->subscribed = $array['subscribed'] ?? false;
-
-        $member->labels = collect(data_get($array, 'labels'))->map(function ($tag) {
-            return Label::createFromArray($tag);
-        });
-
-        $member->subscriptions = collect(data_get($array, 'subscriptions'))->map(function ($tag) {
-            return Subscription::createFromArray($tag);
-        });
-
-        $member->avatarImage = $array['avatar_image'] ?? null;
-        $member->emailCount = $array['email_count'] ?? 0;
-        $member->emailOpenedCount = $array['email_opened_count'] ?? 0;
-        $member->emailOpenRate = $array['email_open_rate'] ?? null;
-        $member->status = $array['status'] ?? null;
-
-        $member->createdAt = $array['created_at'] ?? null;
-        $member->updatedAt = $array['updated_at'] ?? null;
-
-        return $member;
+        return parent::fill(new self(), $array);
     }
 }

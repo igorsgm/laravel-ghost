@@ -91,27 +91,6 @@ class Tag extends BaseResource implements ResourceInterface
      */
     public static function createFromArray($array): Tag
     {
-        $tag = new self();
-
-        $tag->id = $array['id'] ?? null;
-        $tag->name = $array['name'] ?? null;
-        $tag->slug = $array['slug'] ?? null;
-        $tag->description = $array['description'] ?? null;
-        $tag->featureImage = $array['feature_image'] ?? null;
-        $tag->visibility = $array['visibility'] ?? null;
-        $tag->codeinjectionHead = $array['codeinjection_head'] ?? null;
-        $tag->codeinjectionFoot = $array['codeinjection_foot'] ?? null;
-        $tag->accentColor = $array['accent_color'] ?? null;
-        $tag->parent = $array['parent'] ?? null;
-
-        $tag->createdAt = $array['created_at'] ?? null;
-        $tag->updatedAt = $array['updated_at'] ?? null;
-
-        $tag->url = $array['url'] ?? null;
-        $tag->seo = Seo::createFromArray($array);
-
-        $tag->postsCount = data_get($array, 'count.posts');
-
-        return $tag;
+        return parent::fill(new self(), $array);
     }
 }

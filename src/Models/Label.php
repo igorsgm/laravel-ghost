@@ -2,7 +2,7 @@
 
 namespace Igorsgm\Ghost\Models;
 
-class Label
+class Label extends BaseModel
 {
     /**
      * @var string|null
@@ -36,14 +36,6 @@ class Label
      */
     public static function createFromArray($array): Label
     {
-        $label = new self();
-
-        $label->id = $array['id'] ?? null;
-        $label->name = $array['name'] ?? null;
-        $label->slug = $array['slug'] ?? null;
-        $label->createdAt = $array['created_at'] ?? null;
-        $label->updatedAt = $array['updated_at'] ?? null;
-
-        return $label;
+        return parent::fill(new self(), $array);
     }
 }

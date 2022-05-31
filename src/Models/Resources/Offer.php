@@ -123,28 +123,6 @@ class Offer extends BaseResource implements ResourceInterface
      */
     public static function createFromArray($array): Offer
     {
-        $offer = new self();
-
-        $offer->id = $array['id'] ?? null;
-        $offer->name = $array['name'] ?? null;
-        $offer->code = $array['code'] ?? null;
-        $offer->displayTitle = $array['display_title'] ?? null;
-        $offer->displayDescription = $array['display_description'] ?? false;
-        $offer->type = $array['type'] ?? null;
-        $offer->cadence = $array['cadence'] ?? null;
-        $offer->amount = $array['amount'] ?? null;
-        $offer->duration = $array['duration'] ?? [];
-
-        $offer->durationInMonths = $array['duration_in_months'] ?? null;
-        $offer->currencyRestriction = $array['currency_restriction'] ?? null;
-        $offer->currency = $array['currency'] ?? null;
-        $offer->status = $array['status'] ?? null;
-        $offer->redemptionCount = $array['redemption_count'] ?? null;
-        $offer->tier = !empty($array['tier']) ? Tier::createFromArray($array['tier']) : null;
-
-        $offer->createdAt = $array['created_at'] ?? null;
-        $offer->updatedAt = $array['updated_at'] ?? null;
-
-        return $offer;
+        return parent::fill(new self(), $array);
     }
 }

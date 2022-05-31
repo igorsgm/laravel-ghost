@@ -26,11 +26,6 @@ class Image extends BaseResource implements ResourceInterface
      */
     public static function createFromArray($array): Image
     {
-        $image = new self();
-
-        $image->url = $array['url'] ?? null;
-        $image->ref = $array['ref'] ?? null;
-
-        return $image;
+        return parent::fill(new self(), $array);
     }
 }

@@ -2,7 +2,9 @@
 
 namespace Igorsgm\Ghost\Models\Resources;
 
-abstract class BaseResource
+use Igorsgm\Ghost\Models\BaseModel;
+
+abstract class BaseResource extends BaseModel
 {
     /**
      * The API Resource name on Ghost API

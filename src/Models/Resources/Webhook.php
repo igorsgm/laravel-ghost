@@ -79,23 +79,6 @@ class Webhook extends BaseResource implements ResourceInterface
      */
     public static function createFromArray($array): Webhook
     {
-        $webhook = new self();
-
-        $webhook->id = $array['id'] ?? null;
-        $webhook->event = $array['event'] ?? null;
-        $webhook->targetUrl = $array['target_url'] ?? null;
-        $webhook->name = $array['name'] ?? null;
-        $webhook->secret = $array['secret'] ?? null;
-        $webhook->apiVersion = $array['api_version'] ?? null;
-        $webhook->integrationId = $array['integration_id'] ?? null;
-        $webhook->status = $array['status'] ?? null;
-        $webhook->lastTriggeredAt = $array['last_triggered_at'] ?? null;
-        $webhook->lastTriggeredStatus = $array['last_triggered_status'] ?? null;
-        $webhook->lastTriggeredError = $array['last_triggered_error'] ?? null;
-
-        $webhook->createdAt = $array['created_at'] ?? null;
-        $webhook->updatedAt = $array['updated_at'] ?? null;
-
-        return $webhook;
+        return parent::fill(new self(), $array);
     }
 }
