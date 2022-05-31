@@ -2,7 +2,7 @@
 
 namespace Igorsgm\Ghost\Models;
 
-class Role
+class Role extends BaseModel
 {
     /**
      * @var string|null
@@ -36,13 +36,6 @@ class Role
      */
     public static function createFromArray($array): Role
     {
-        $role = new self();
-
-        $role->id = $array['id'] ?? null;
-        $role->name = $array['name'] ?? null;
-        $role->createdAt = $array['created_at'] ?? null;
-        $role->updatedAt = $array['updated_at'] ?? null;
-
-        return $role;
+        return parent::fill(new self(), $array);
     }
 }

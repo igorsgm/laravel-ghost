@@ -4,6 +4,7 @@ namespace Igorsgm\Ghost\Models\Resources;
 
 use Igorsgm\Ghost\Interfaces\ResourceInterface;
 use Igorsgm\Ghost\Models\Seo;
+use Illuminate\Support\Collection;
 
 class Page extends BaseResource implements ResourceInterface
 {
@@ -60,9 +61,39 @@ class Page extends BaseResource implements ResourceInterface
     public $url;
 
     /**
+     * @var Collection|null
+     */
+    public $authors;
+
+    /**
+     * @var Author|null
+     */
+    public $primaryAuthor;
+
+    /**
+     * @var Collection|null
+     */
+    public $tags;
+
+    /**
+     * @var Tag|null
+     */
+    public $primaryTag;
+
+    /**
      * @var Seo
      */
     public $seo;
+
+    /**
+     * @var string|null
+     */
+    public $createdAt;
+
+    /**
+     * @var string|null
+     */
+    public $updatedAt;
 
     /**
      * @param  array  $array
@@ -70,35 +101,6 @@ class Page extends BaseResource implements ResourceInterface
      */
     public static function createFromArray($array): Page
     {
-        $page = new self();
-
-        $page->slug = $array['slug'] ?? null;
-        $page->id = $array['id'] ?? null;
-        $page->name = $array['name'] ?? null;
-        $page->description = $array['description'] ?? null;
-        $page->featureImage = $array['feature_image'] ?? null;
-        $page->visibility = $array['visibility'] ?? null;
-        $page->codeinjectionHead = $array['codeinjection_head'] ?? null;
-        $page->codeinjectionFoot = $array['codeinjection_foot'] ?? null;
-        $page->accentColor = $array['accent_color'] ?? null;
-
-        $page->createdAt = $array['created_at'] ?? null;
-        $page->updatedAt = $array['updated_at'] ?? null;
-
-        $page->url = $array['url'] ?? null;
-
-        $page->authors = collect(data_get($array, 'authors'))->map(function ($author) {
-            return Author::createFromArray($author);
-        });
-        $page->primaryAuthor = !empty($array['primary_author']) ? Author::createFromArray($array['primary_author']) : null;
-
-        $page->tags = collect(data_get($array, 'tags'))->map(function ($tag) {
-            return Tag::createFromArray($tag);
-        });
-        $page->primaryTag = !empty($array['primary_tag']) ? Tag::createFromArray($array['primary_tag']) : null;
-
-        $page->seo = Seo::createFromArray($array);
-
-        return $page;
+        return parent::fill(new self(), $array);
     }
 }

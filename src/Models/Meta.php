@@ -2,9 +2,7 @@
 
 namespace Igorsgm\Ghost\Models;
 
-use Igorsgm\Ghost\Models\Resources\Tag;
-
-class Meta
+class Meta extends BaseModel
 {
     /**
      * @var

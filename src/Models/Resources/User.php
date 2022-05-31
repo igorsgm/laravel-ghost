@@ -3,8 +3,6 @@
 namespace Igorsgm\Ghost\Models\Resources;
 
 use Igorsgm\Ghost\Interfaces\ResourceInterface;
-use Igorsgm\Ghost\Models\Role;
-use Igorsgm\Ghost\Models\Seo;
 use Illuminate\Support\Collection;
 
 class User extends BaseResource implements ResourceInterface
@@ -113,38 +111,19 @@ class User extends BaseResource implements ResourceInterface
     public static function createFromArray($array): User
     {
         $user = new self();
-        $user = self::fill($user, $array);
+        $user = self::fillUser($user, $array);
 
         return $user;
     }
 
-    protected static function fill($user, array $array)
+    /**
+     * @param $user
+     * @param  array  $array
+     * @return ResourceInterface|\Igorsgm\Ghost\Models\BaseModel|mixed
+     */
+    protected static function fillUser($user, array $array)
     {
-        $user->id = $array['id'] ?? null;
-        $user->name = $array['name'] ?? null;
-        $user->slug = $array['slug'] ?? null;
-        $user->email = $array['email'] ?? null;
-        $user->profileImage = $array['profile_image'] ?? null;
-        $user->coverImage = $array['cover_image'] ?? null;
-        $user->bio = $array['bio'] ?? null;
-        $user->website = $array['website'] ?? null;
-        $user->location = $array['location'] ?? null;
-        $user->facebook = $array['facebook'] ?? null;
-        $user->twitter = $array['twitter'] ?? null;
-        $user->accessibility = $array['accessibility'] ?? null;
-        $user->tour = $array['tour'] ?? null;
-        $user->lastSeen = $array['last_seen'] ?? null;
-
-        $user->createdAt = $array['created_at'] ?? null;
-        $user->updatedAt = $array['updated_at'] ?? null;
-
-        $user->url = $array['url'] ?? null;
-
-        $user->seo = Seo::createFromArray($array);
-        $user->roles = collect(data_get($array, 'roles'))->map(function ($role) {
-            return Role::createFromArray($role);
-        });
-
+        $user = parent::fill($user, $array);
         $user->postsCount = data_get($array, 'count.posts');
 
         return $user;

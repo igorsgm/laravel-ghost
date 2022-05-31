@@ -39,14 +39,6 @@ class Site extends BaseResource implements ResourceInterface
      */
     public static function createFromArray($array): Site
     {
-        $site = new self();
-
-        $site->title = $array['title'] ?? null;
-        $site->description = $array['description'] ?? null;
-        $site->logo = $array['logo'] ?? null;
-        $site->url = $array['url'] ?? null;
-        $site->version = $array['version'] ?? null;
-
-        return $site;
+        return parent::fill(new self(), $array);
     }
 }

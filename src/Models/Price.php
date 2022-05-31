@@ -2,7 +2,7 @@
 
 namespace Igorsgm\Ghost\Models;
 
-class Price
+class Price extends BaseModel
 {
     /**
      * @var mixed|null
@@ -60,20 +60,6 @@ class Price
      */
     public static function createFromArray($array): Price
     {
-        $price = new self();
-
-        $price->id = $array['id'] ?? null;
-        $price->active = $array['active'] ?? false;
-        $price->nickname = $array['nickname'] ?? null;
-        $price->description = $array['description'] ?? null;
-        $price->currency = $array['currency'] ?? null;
-        $price->amount = $array['amount'] ?? null;
-        $price->type = $array['type'] ?? null;
-        $price->interval = $array['interval'] ?? null;
-
-        $price->createdAt = $array['created_at'] ?? null;
-        $price->updatedAt = $array['updated_at'] ?? null;
-
-        return $price;
+        return parent::fill(new self(), $array);
     }
 }

@@ -5,7 +5,7 @@ namespace Igorsgm\Ghost\Models;
 use Igorsgm\Ghost\Models\Resources\Offer;
 use Igorsgm\Ghost\Models\Resources\Tier;
 
-class Subscription
+class Subscription extends BaseModel
 {
     /**
      * @var mixed|null
@@ -77,23 +77,6 @@ class Subscription
      */
     public static function createFromArray($array): Subscription
     {
-        $subscription = new self();
-
-        $subscription->id = $array['id'] ?? null;
-        $subscription->customer = $array['customer'] ?? null;
-        $subscription->status = $array['status'] ?? null;
-        $subscription->startDate = $array['start_date'] ?? null;
-        $subscription->defaultPaymentCardLast4 = $array['default_payment_card_last4'] ?? null;
-
-        $subscription->cancelAtPeriodEnd = $array['cancel_at_period_end'] ?? false;
-        $subscription->cancellationReason = $array['cancellation_reason'] ?? null;
-
-        $subscription->currentPeriodEnd = $array['current_period_end'] ?? null;
-
-        $subscription->price = !empty($array['price']) ? Price::createFromArray($array['price']) : null;
-        $subscription->tier = !empty($array['tier']) ? Tier::createFromArray($array['tier']) : null;
-        $subscription->offer = !empty($array['offer']) ? Offer::createFromArray($array['offer']) : null;
-
-        return $subscription;
+        return parent::fill(new self(), $array);
     }
 }

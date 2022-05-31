@@ -3,8 +3,6 @@
 namespace Igorsgm\Ghost\Models\Resources;
 
 use Igorsgm\Ghost\Interfaces\ResourceInterface;
-use Igorsgm\Ghost\Models\Navigation;
-use Igorsgm\Ghost\Models\Seo;
 
 class Settings extends BaseResource implements ResourceInterface
 {
@@ -97,29 +95,6 @@ class Settings extends BaseResource implements ResourceInterface
      */
     public static function createFromArray($array): Settings
     {
-        $settings = new self();
-
-        $settings->title = $array['title'] ?? null;
-        $settings->description = $array['description'] ?? null;
-        $settings->logo = $array['logo'] ?? null;
-        $settings->icon = $array['icon'] ?? null;
-        $settings->accentColor = $array['accent_color'] ?? null;
-        $settings->coverImage = $array['cover_image'] ?? null;
-        $settings->facebook = $array['facebook'] ?? null;
-        $settings->twitter = $array['twitter'] ?? null;
-        $settings->lang = $array['lang'] ?? null;
-        $settings->timezone = $array['timezone'] ?? null;
-        $settings->codeinjectionHead = $array['codeinjection_head'] ?? null;
-        $settings->codeinjectionFoot = $array['codeinjection_foot'] ?? null;
-        $settings->navigation = collect(data_get($array, 'navigation'))->map(function ($navigation) {
-            return Navigation::createFromArray($navigation);
-        });
-        $settings->secondaryNavigation = $array['secondary_navigation'] ?? null;
-        $settings->membersSupportAddress = $array['members_support_address'] ?? null;
-
-        $settings->url = $array['url'] ?? null;
-        $settings->seo = Seo::createFromArray($array);
-
-        return $settings;
+        return parent::fill(new self(), $array);
     }
 }
