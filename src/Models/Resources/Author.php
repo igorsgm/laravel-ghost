@@ -14,7 +14,6 @@ class Author extends User implements ResourceInterface
      */
     public static function createFromArray($array): Author
     {
-        $author = new self();
-        return $author::fillUser($author, $array);
+        return parent::fillUser(new self(), $array);
     }
 }
