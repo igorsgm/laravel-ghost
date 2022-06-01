@@ -171,6 +171,6 @@ class Post extends BaseResource implements ResourceInterface
      */
     public static function createFromArray($array): Post
     {
-        return parent::fill(new self(), $array);
+        return parent::fill(new self(), $array, true);
     }
 }

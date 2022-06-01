@@ -101,6 +101,6 @@ class Page extends BaseResource implements ResourceInterface
      */
     public static function createFromArray($array): Page
     {
-        return parent::fill(new self(), $array);
+        return parent::fill(new self(), $array, true);
     }
 }
