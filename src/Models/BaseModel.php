@@ -25,7 +25,6 @@ abstract class BaseModel
      * @var array|string[]
      */
     protected static array $modelProperties = [
-        'seo' => \Igorsgm\Ghost\Models\Seo::class,
         'tier' => \Igorsgm\Ghost\Models\Resources\Tier::class,
         'primaryAuthor' => \Igorsgm\Ghost\Models\Resources\Author::class,
         'primaryTag' => \Igorsgm\Ghost\Models\Resources\Tag::class,
@@ -41,7 +40,7 @@ abstract class BaseModel
      * @param  array  $array
      * @return mixed
      */
-    public static function fill($model, $array)
+    public static function fill($model, $array, $hasSeo = false)
     {
         $validProperties = get_object_vars($model);
         $validProperties = array_keys(Arr::except($validProperties, 'resourceName'));
@@ -68,6 +67,11 @@ abstract class BaseModel
 
             $model->{$property} = $array[$arrayProperty] ?? null;
         }
+
+        if ($hasSeo) {
+            $model->seo = Seo::createFromArray($array);
+        }
+
 
         return $model;
     }
