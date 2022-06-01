@@ -57,6 +57,11 @@ abstract class BaseApi
     /**
      * @var string
      */
+    public string $filter = "";
+
+    /**
+     * @var string
+     */
     public string $page = "";
 
     /**
@@ -100,7 +105,7 @@ abstract class BaseApi
      */
     protected function makeApiUrl($suffix = ''): string
     {
-        return sprintf("%s/%s/?%s", $this->baseUrl, $this->buildEndpoint() . $suffix, $this->buildParams());
+        return sprintf("%s/%s/?%s", $this->baseUrl, $this->buildEndpoint().$suffix, $this->buildParams());
     }
 
     /**
@@ -113,6 +118,7 @@ abstract class BaseApi
             'fields' => $this->fields ?: null,
             'formats' => $this->formats ?: null,
             'source' => $this->source ?: null,
+            'filter' => $this->filter ?: null,
             'limit' => $this->limit ?: null,
             'page' => $this->page ?: null,
             'order' => $this->order ?: null,
@@ -195,11 +201,28 @@ abstract class BaseApi
     }
 
     /**
+     * Apply fine-grained filters to target specific data.
+     *
+     * @param  string  $filter
+     *
+     * @return $this
+     * @see https://ghost.org/docs/content-api/#filtering
+     * @see https://gist.github.com/ErisDS/f516a859355d515aa6ad
+     */
+    public function filter($filter): BaseApi
+    {
+        $this->filter = $filter;
+
+        return $this;
+    }
+
+    /**
      * Limit how many records are returned at once
      *
      * @param  int|string  $limit
      *
      * @return $this
+     * @see https://ghost.org/docs/content-api/#limit
      */
     public function limit($limit): BaseApi
     {
@@ -237,8 +260,9 @@ abstract class BaseApi
      * Tiers: monthly_price, yearly_price, benefits
      *
      * @param  string|array  ...$includes
-     *
      * @return $this
+     * @see https://ghost.org/docs/content-api/#include
+     *
      */
     public function include(...$includes): BaseApi
     {
@@ -264,6 +288,7 @@ abstract class BaseApi
      * @param  string|array  ...$fields
      *
      * @return $this
+     * @see https://ghost.org/docs/content-api/#fields
      */
     public function fields(...$fields): BaseApi
     {
@@ -294,6 +319,7 @@ abstract class BaseApi
     /**
      * @param  int  $page
      * @return $this
+     * @see https://ghost.org/docs/content-api/#page
      */
     public function page(int $page): BaseApi
     {
@@ -305,7 +331,9 @@ abstract class BaseApi
     /**
      * @param  string  $attr
      * @param  string  $order
+     *
      * @return $this
+     * @see https://ghost.org/docs/content-api/#order
      */
     public function order(string $attr, string $order = "DESC"): ContentApi
     {

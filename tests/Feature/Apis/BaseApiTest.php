@@ -80,6 +80,12 @@ it('sets formats', function () {
     expectQueryStringSet($ghost, 'formats', $formats);
 })->group('parameters');
 
+it('sets filter', function () {
+    $filterString = 'featured:true+tag:getting-started';
+    $ghost = Ghost::content()->filter($filterString);
+    expectQueryStringSet($ghost, 'filter', $filterString);
+})->group('parameters');
+
 it('sets limit', function () {
     $limit = 10;
     $ghost = Ghost::content()->limit(10);
