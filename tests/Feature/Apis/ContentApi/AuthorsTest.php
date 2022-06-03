@@ -44,6 +44,11 @@ it('returns an author by slug', function () {
         ->toHaveProperty('slug', $slug);
 });
 
+it('returns first Author', function () {
+    $author = Ghost::content()->authors()->first();
+    expect($author)->toBeInstanceOf(Author::class);
+});
+
 it('includes count.posts', function () {
     $ghost = Ghost::content()->authors()->include('count.posts');
     expectQueryStringSet($ghost, 'include', 'count.posts');

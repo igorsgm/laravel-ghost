@@ -44,6 +44,11 @@ it('returns a tag by slug', function () {
         ->toHaveProperty('slug', $slug);
 });
 
+it('returns first Tag', function () {
+    $tags = Ghost::content()->tags()->first();
+    expect($tags)->toBeInstanceOf(Tag::class);
+});
+
 it('includes count.posts', function () {
     $ghost = Ghost::content()->tags()->include('count.posts');
     expectQueryStringSet($ghost, 'include', 'count.posts');

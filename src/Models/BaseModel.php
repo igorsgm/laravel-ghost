@@ -2,6 +2,7 @@
 
 namespace Igorsgm\Ghost\Models;
 
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
@@ -10,7 +11,7 @@ abstract class BaseModel
     /**
      * @var array|string[]
      */
-    protected static array $modelCollectionProperties = [
+    private array $modelCollectionProperties = [
         'authors' => \Igorsgm\Ghost\Models\Resources\Author::class,
         'roles' => \Igorsgm\Ghost\Models\Role::class,
         'labels' => \Igorsgm\Ghost\Models\Label::class,
@@ -23,7 +24,7 @@ abstract class BaseModel
     /**
      * @var array|string[]
      */
-    protected static array $modelProperties = [
+    private array $modelProperties = [
         'tier' => \Igorsgm\Ghost\Models\Resources\Tier::class,
         'primaryAuthor' => \Igorsgm\Ghost\Models\Resources\Author::class,
         'primaryTag' => \Igorsgm\Ghost\Models\Resources\Tag::class,
@@ -34,13 +35,30 @@ abstract class BaseModel
         'offer' => \Igorsgm\Ghost\Models\Resources\Offer::class,
     ];
 
-    public function __construct(array $data = [])
-    {
+    /**
+     * The attributes that should be mutated to Carbon dates.
+     *
+     * @var array
+     */
+    private array $dates = [
+        'createdAt',
+        'updatedAt',
+        'publishedAt',
+    ];
+
+    /**
+     * @param  array  $data
+     */
+    public function __construct(array $data = []) {
         if (!empty($data)) {
             $this->fill($data);
         }
     }
 
+    /**
+     * @param  array  $data
+     * @return void
+     */
     private function fill(array $data)
     {
         if (in_array(get_class($this), config('ghost.seo.models-with'))) {
@@ -51,8 +69,8 @@ abstract class BaseModel
         foreach ($data as $key => $value) {
             $property = Str::camel($key);
 
-            if (array_key_exists($property, self::$modelCollectionProperties)) {
-                $propertyModel = self::$modelCollectionProperties[$property];
+            if (array_key_exists($property, $this->modelCollectionProperties)) {
+                $propertyModel = $this->modelCollectionProperties[$property];
 
                 $this->{$property} = collect($value)->map(function ($item) use (&$propertyModel) {
                     return new $propertyModel($item);
@@ -61,10 +79,14 @@ abstract class BaseModel
                 continue;
             }
 
-            if (array_key_exists($property, self::$modelProperties)) {
-                $propertyModel = self::$modelProperties[$property];
+            if (array_key_exists($property, $this->modelProperties)) {
+                $propertyModel = $this->modelProperties[$property];
                 $this->{$property} = !empty($value) ? new $propertyModel($value) : null;
                 continue;
+            }
+
+            if (in_array($property, $this->dates)) {
+                $value = Carbon::parse($value);
             }
 
             $this->{$property} = $value ?? null;

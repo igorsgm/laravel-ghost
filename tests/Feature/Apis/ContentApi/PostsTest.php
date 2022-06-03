@@ -93,6 +93,11 @@ it('returns a post by ID', function () {
     expect($post)->toBeInstanceOf(Post::class)->toHaveProperty('id', $id);
 });
 
+it('returns first Post', function () {
+    $post = Ghost::content()->posts()->first();
+    expect($post)->toBeInstanceOf(Post::class);
+});
+
 it('returns a post by slug', function () {
     $slug = 'welcome';
 

@@ -169,6 +169,15 @@ abstract class BaseApi
     }
 
     /**
+     * @return BaseResource|ErrorResponse
+     */
+    public function first()
+    {
+        $response = $this->limit(1)->get();
+        return $response->data->first();
+    }
+
+    /**
      * @param $limit
      * @return array[]
      */
