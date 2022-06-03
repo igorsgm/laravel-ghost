@@ -2,7 +2,7 @@
 
 namespace Igorsgm\Ghost\Apis;
 
-use Igorsgm\Ghost\Interfaces\ResourceInterface;
+use Igorsgm\Ghost\Models\Resources\BaseResource;
 use Igorsgm\Ghost\Responses\ErrorResponse;
 use Igorsgm\Ghost\Responses\SuccessResponse;
 use Illuminate\Support\Collection;
@@ -15,7 +15,7 @@ abstract class BaseApi
     protected $baseUrl;
 
     /**
-     * @var ResourceInterface
+     * @var BaseResource
      */
     protected $resource;
 
@@ -186,7 +186,7 @@ abstract class BaseApi
      *
      * @param  string  $id
      *
-     * @return ResourceInterface|ErrorResponse
+     * @return BaseResource|ErrorResponse
      */
     public function find(string $id)
     {
@@ -243,7 +243,7 @@ abstract class BaseApi
     }
 
     /**
-     * @return ResourceInterface
+     * @return BaseResource
      */
     public function getResource()
     {

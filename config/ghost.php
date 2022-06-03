@@ -33,6 +33,25 @@ return [
         'default_error_message' => 'Something went wrong. Please try again later.',
     ],
 
+    'seo' => [
+        'properties' => [
+            'og_image',
+            'og_title',
+            'og_description',
+            'twitter_image',
+            'twitter_title',
+            'twitter_description',
+            'meta_title',
+            'meta_description',
+            'canonical_url',
+        ],
+        'models-with' => [
+            \Igorsgm\Ghost\Models\Resources\Post::class,
+            \Igorsgm\Ghost\Models\Resources\Page::class,
+            \Igorsgm\Ghost\Models\Resources\Tag::class,
+        ],
+    ],
+
     /**
      * Experimental
      * Optionally, cache records when they are returned.

@@ -2,18 +2,29 @@
 
 namespace Igorsgm\Ghost\Models\Resources;
 
-use Igorsgm\Ghost\Interfaces\ResourceInterface;
-
-class Author extends User implements ResourceInterface
+/**
+ * Class User
+ * @property-read string $id;
+ * @property-read string $name;
+ * @property-read string $slug;
+ * @property-read string $email;
+ * @property-read string $profileImage;
+ * @property-read string $coverImage;
+ * @property-read string $bio;
+ * @property-read string $website;
+ * @property-read string $location;
+ * @property-read string $facebook;
+ * @property-read string $twitter;
+ * @property-read string $accessibility;
+ * @property-read string $tour;
+ * @property-read string $lastSeen;
+ * @property-read string $url;
+ * @property-read string $createdAt;
+ * @property-read string $updatedAt;
+ * @property-read \Illuminate\Support\Collection $roles;
+ * @property-read integer $postsCount;
+ */
+class Author extends User
 {
     protected string $resourceName = 'authors';
-
-    /**
-     * @param  array  $array
-     * @return Author
-     */
-    public static function createFromArray($array): Author
-    {
-        return parent::fillUser(new self(), $array);
-    }
 }

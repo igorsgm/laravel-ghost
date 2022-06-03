@@ -2,7 +2,6 @@
 
 namespace Igorsgm\Ghost\Models;
 
-use Igorsgm\Ghost\Interfaces\ResourceInterface;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
@@ -35,25 +34,28 @@ abstract class BaseModel
         'offer' => \Igorsgm\Ghost\Models\Resources\Offer::class,
     ];
 
-    /**
-     * @param  ResourceInterface|BaseModel  $model
-     * @param  array  $array
-     * @return mixed
-     */
-    public static function fill($model, $array, $hasSeo = false)
+    public function __construct(array $data = [])
     {
-        $validProperties = get_object_vars($model);
-        $validProperties = array_keys(Arr::except($validProperties, 'resourceName'));
+        if (!empty($data)) {
+            $this->fill($data);
+        }
+    }
 
-        foreach ($validProperties as $property) {
-            $arrayProperty = Str::snake($property);
+    private function fill(array $data)
+    {
+        if (in_array(get_class($this), config('ghost.seo.models-with'))) {
+            $seoProperties = Arr::only($data, config('ghost.seo.properties'));
+            $data = Arr::except($data, config('ghost.seo.properties'));
+        }
+
+        foreach ($data as $key => $value) {
+            $property = Str::camel($key);
 
             if (array_key_exists($property, self::$modelCollectionProperties)) {
                 $propertyModel = self::$modelCollectionProperties[$property];
 
-                $propertyData = collect(data_get($array, $arrayProperty));
-                $model->{$property} = $propertyData->map(function ($item) use (&$propertyModel) {
-                    return $propertyModel::createFromArray($item);
+                $this->{$property} = collect($value)->map(function ($item) use (&$propertyModel) {
+                    return new $propertyModel($item);
                 });
 
                 continue;
@@ -61,18 +63,15 @@ abstract class BaseModel
 
             if (array_key_exists($property, self::$modelProperties)) {
                 $propertyModel = self::$modelProperties[$property];
-                $model->{$property} = !empty($array[$arrayProperty]) ? $propertyModel::createFromArray($array[$arrayProperty]) : null;
+                $this->{$property} = !empty($value) ? new $propertyModel($value) : null;
                 continue;
             }
 
-            $model->{$property} = $array[$arrayProperty] ?? null;
+            $this->{$property} = $value ?? null;
         }
 
-        if ($hasSeo) {
-            $model->seo = Seo::createFromArray($array);
+        if (!empty($seoProperties)) {
+            $this->seo = new Seo($seoProperties);
         }
-
-
-        return $model;
     }
 }

@@ -3,8 +3,8 @@
 namespace Igorsgm\Ghost\Responses;
 
 use Igorsgm\Ghost\Apis\BaseApi;
-use Igorsgm\Ghost\Interfaces\ResourceInterface;
 use Igorsgm\Ghost\Models\Meta;
+use Igorsgm\Ghost\Models\Resources\BaseResource;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
 
@@ -16,7 +16,7 @@ class SuccessResponse
     private $contentApi;
 
     /**
-     * @var ResourceInterface
+     * @var BaseResource
      */
     private $resource;
 
@@ -42,10 +42,10 @@ class SuccessResponse
 
     /**
      * @param  BaseApi  $contentApi
-     * @param  ResourceInterface  $resource
+     * @param  BaseResource  $resource
      * @param  Response|mixed  $response
      */
-    public function __construct($contentApi, ResourceInterface $resource, $response)
+    public function __construct($contentApi, BaseResource $resource, $response)
     {
         $this->contentApi = $contentApi;
         $this->resource = $resource;
@@ -64,19 +64,19 @@ class SuccessResponse
         $meta = $this->response->json('meta');
 
         if (in_array($resourceName, ['settings', 'site'])) {
-            $data = $this->resource::createFromArray($responseData);
+            $data = new $this->resource($responseData);
         } else {
             $data = collect();
             $responseData = !empty($responseData) ? $responseData : [];
-            foreach ($responseData as $resourceProperty) {
-                $data->push($this->resource::createFromArray($resourceProperty));
+            foreach ($responseData as $resourceItemData) {
+                $data->push(new $this->resource($resourceItemData));
             }
         }
 
         $this->data = $data;
 
         if (!empty($meta)) {
-            $this->meta = Meta::createFromArray($meta);
+            $this->meta = new Meta($meta);
         }
     }
 

@@ -2,39 +2,15 @@
 
 namespace Igorsgm\Ghost\Models;
 
+/**
+ * Class Benefit
+ *
+ * @property-read string $id
+ * @property-read string $name
+ * @property-read string $slug
+ * @property-read string $createdAt
+ * @property-read string $updatedAt
+ */
 class Benefit extends BaseModel
 {
-    /**
-     * @var string|null
-     */
-    public $id;
-
-    /**
-     * @var string|null
-     */
-    public $name;
-
-    /**
-     * @var string|null
-     */
-    public $slug;
-
-    /**
-     * @var string|null
-     */
-    public $createdAt;
-
-    /**
-     * @var string|null
-     */
-    public $updatedAt;
-
-    /**
-     * @param  array  $array
-     * @return Benefit
-     */
-    public static function createFromArray($array): Benefit
-    {
-        return parent::fill(new self(), $array);
-    }
 }
