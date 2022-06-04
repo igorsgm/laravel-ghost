@@ -15,7 +15,7 @@ namespace Igorsgm\Ghost\Models\Resources;
  * @property-read string $duration once/forever/repeating. repeating duration is only available when cadence is month
  * @property-read string $durationInMonths Number of months offer should be repeated when duration is repeating
  * @property-read string $currencyRestriction Denotes whether the offer `currency` is restricted. If so, changing the currency invalidates the offer
- * @property-read string $currency Fixed type offers only - specifies tier's currency as three letter ISO currency code
+ * @property-read string $currency Fixed type offers only - specifies tier's currency as three-letter ISO currency code
  * @property-read mixed $status Active or archived - denotes if the offer is active or archived
  * @property-read mixed $redemptionCount Number of times the offer has been redeemed
  * @property-read Tier $tier Tier on which offer is applied

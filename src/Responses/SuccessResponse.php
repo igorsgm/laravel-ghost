@@ -13,7 +13,7 @@ class SuccessResponse
     /**
      * @var BaseApi
      */
-    private $contentApi;
+    private $api;
 
     /**
      * @var BaseResource
@@ -41,13 +41,13 @@ class SuccessResponse
     public $meta = [];
 
     /**
-     * @param  BaseApi  $contentApi
+     * @param  BaseApi  $api
      * @param  BaseResource  $resource
      * @param  Response|mixed  $response
      */
-    public function __construct($contentApi, BaseResource $resource, $response)
+    public function __construct(BaseApi $api, BaseResource $resource, $response)
     {
-        $this->contentApi = $contentApi;
+        $this->api = $api;
         $this->resource = $resource;
         $this->response = $response;
 
@@ -87,7 +87,7 @@ class SuccessResponse
     public function getPreviousPage()
     {
         $previusPage = $this->meta->prev();
-        return $this->contentApi->page($previusPage)->get();
+        return $this->api->page($previusPage)->get();
     }
 
     /**
@@ -97,6 +97,6 @@ class SuccessResponse
     public function getNextPage()
     {
         $nextPage = $this->meta->next();
-        return $this->contentApi->page($nextPage)->get();
+        return $this->api->page($nextPage)->get();
     }
 }

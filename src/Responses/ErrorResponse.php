@@ -40,11 +40,9 @@ class ErrorResponse
         $this->errors = collect();
 
         if (!config('ghost.debug.enabled')) {
-            $this->errors->push((object) [
+            return $this->errors->push((object) [
                 'message' => config('ghost.debug.default_error_message'),
             ]);
-
-            return false;
         }
 
         $responseErrors = $this->response->json('errors') ?? [];
@@ -52,7 +50,5 @@ class ErrorResponse
         foreach ($responseErrors as $error) {
             $this->errors->push((object) $error);
         }
-
-        return true;
     }
 }

@@ -61,14 +61,13 @@ class AdminApi extends BaseApi
         $payload = [
             'exp' => strtotime('+10 minutes'), //expiration Unix timestamp
             'iat' => time(), //Issued at Time, Unix timestamp
-            'aud' => "/v{$this->version}/admin/", //audience
+            'aud' => "/v$this->version/admin/", //audience
         ];
-        $token = JWT::encode($payload, $decodedSecret, 'HS256', $id);
 
         //debug. return original payload
         //$decoded = JWT::decode($token, $decodedSecret, ['HS256']);
 
-        return $token;
+        return JWT::encode($payload, $decodedSecret, 'HS256', $id);
     }
 
     /**
@@ -242,7 +241,7 @@ class AdminApi extends BaseApi
     }
 
     /**
-     * The members resource provides an endpoint for fetching, creating, and updating member data.
+     * The member's resource provides an endpoint for fetching, creating, and updating member data.
      * Methods: Browse, Read, Edit, Add
      *
      * @see https://ghost.org/docs/admin-api/#members
@@ -305,9 +304,9 @@ class AdminApi extends BaseApi
 
     /**
      * Webhooks allow you to build or set up custom integrations, which subscribe to certain events in Ghost.
-     * When one of such events is triggered, Ghost sends a HTTP POST payload to the webhook’s configured URL.
+     * When one of such events is triggered, Ghost sends an HTTP POST payload to the webhook’s configured URL.
      * For instance, when a new post is published Ghost can send a notification to configured endpoint to trigger
-     * a search index re-build, slack notification, or whole site deploy.
+     * a search index re-build, Slack notification, or whole site deploy.
      *
      * Methods: Edit, Add, Delete
      *
