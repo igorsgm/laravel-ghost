@@ -61,6 +61,11 @@ it('returns a page by ID', function () {
         ->toHaveProperty('id', $pageId);
 });
 
+it('returns first Page', function () {
+    $page = Ghost::content()->pages()->first();
+    expect($page)->toBeInstanceOf(Page::class);
+});
+
 it('returns a page by slug', function () {
     $slug = 'about';
 

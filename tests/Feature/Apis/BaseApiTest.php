@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Igorsgm\Ghost\Facades\Ghost;
 use Igorsgm\Ghost\Models\Resources\Post;
 use Igorsgm\Ghost\Responses\ErrorResponse;
@@ -177,4 +178,11 @@ it('returns Resource Model when resourceId is found on find().', function () {
 it('returns SuccessResponse when all() is called.', function () {
     $response = Ghost::content()->posts()->all();
     expect($response)->toBeInstanceOf(SuccessResponse::class);
+});
+
+it('parses dates do Carbon', function () {
+    $post = Ghost::content()->posts()->first();
+    expect($post->createdAt)->toBeInstanceOf(Carbon::class);
+    expect($post->updatedAt)->toBeInstanceOf(Carbon::class);
+    expect($post->publishedAt)->toBeInstanceOf(Carbon::class);
 });

@@ -36,7 +36,7 @@ class ContentApi extends BaseApi
 
     /**
      * Posts are the primary resource in a Ghost site.
-     * Using the posts endpoint it is possible to get lists of posts filtered by various criteria.
+     * Using the posts' endpoint it is possible to get lists of posts filtered by various criteria.
      * By default, posts are returned in reverse chronological order by published date when fetching more than one.
      *
      * @return ContentApi

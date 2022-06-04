@@ -2,7 +2,7 @@
 
 namespace Igorsgm\Ghost\Models;
 
-use Igorsgm\Ghost\Interfaces\ResourceInterface;
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
@@ -11,7 +11,7 @@ abstract class BaseModel
     /**
      * @var array|string[]
      */
-    protected static array $modelCollectionProperties = [
+    private array $modelCollectionProperties = [
         'authors' => \Igorsgm\Ghost\Models\Resources\Author::class,
         'roles' => \Igorsgm\Ghost\Models\Role::class,
         'labels' => \Igorsgm\Ghost\Models\Label::class,
@@ -24,7 +24,7 @@ abstract class BaseModel
     /**
      * @var array|string[]
      */
-    protected static array $modelProperties = [
+    private array $modelProperties = [
         'tier' => \Igorsgm\Ghost\Models\Resources\Tier::class,
         'primaryAuthor' => \Igorsgm\Ghost\Models\Resources\Author::class,
         'primaryTag' => \Igorsgm\Ghost\Models\Resources\Tag::class,
@@ -36,43 +36,64 @@ abstract class BaseModel
     ];
 
     /**
-     * @param  ResourceInterface|BaseModel  $model
-     * @param  array  $array
-     * @return mixed
+     * The attributes that should be mutated to Carbon dates.
+     *
+     * @var array
      */
-    public static function fill($model, $array, $hasSeo = false)
+    private array $dates = [
+        'createdAt',
+        'updatedAt',
+        'publishedAt',
+    ];
+
+    /**
+     * @param  array  $data
+     */
+    public function __construct(array $data = []) {
+        if (!empty($data)) {
+            $this->fill($data);
+        }
+    }
+
+    /**
+     * @param  array  $data
+     * @return void
+     */
+    private function fill(array $data)
     {
-        $validProperties = get_object_vars($model);
-        $validProperties = array_keys(Arr::except($validProperties, 'resourceName'));
+        if (in_array(get_class($this), config('ghost.seo.models-with'))) {
+            $seoProperties = Arr::only($data, config('ghost.seo.properties'));
+            $data = Arr::except($data, config('ghost.seo.properties'));
+        }
 
-        foreach ($validProperties as $property) {
-            $arrayProperty = Str::snake($property);
+        foreach ($data as $key => $value) {
+            $property = Str::camel($key);
 
-            if (array_key_exists($property, self::$modelCollectionProperties)) {
-                $propertyModel = self::$modelCollectionProperties[$property];
+            if (array_key_exists($property, $this->modelCollectionProperties)) {
+                $propertyModel = $this->modelCollectionProperties[$property];
 
-                $propertyData = collect(data_get($array, $arrayProperty));
-                $model->{$property} = $propertyData->map(function ($item) use (&$propertyModel) {
-                    return $propertyModel::createFromArray($item);
+                $this->{$property} = collect($value)->map(function ($item) use (&$propertyModel) {
+                    return new $propertyModel($item);
                 });
 
                 continue;
             }
 
-            if (array_key_exists($property, self::$modelProperties)) {
-                $propertyModel = self::$modelProperties[$property];
-                $model->{$property} = !empty($array[$arrayProperty]) ? $propertyModel::createFromArray($array[$arrayProperty]) : null;
+            if (array_key_exists($property, $this->modelProperties)) {
+                $propertyModel = $this->modelProperties[$property];
+                $this->{$property} = !empty($value) ? new $propertyModel($value) : null;
                 continue;
             }
 
-            $model->{$property} = $array[$arrayProperty] ?? null;
+            if (in_array($property, $this->dates)) {
+                $value = Carbon::parse($value);
+            }
+
+            $this->{$property} = $value ?? null;
         }
 
-        if ($hasSeo) {
-            $model->seo = Seo::createFromArray($array);
+        if (!empty($seoProperties)) {
+            $this->seo = new Seo($seoProperties);
         }
-
-
-        return $model;
     }
 }

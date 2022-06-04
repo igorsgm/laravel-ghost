@@ -5,25 +5,20 @@ namespace Igorsgm\Ghost\Models;
 class Meta extends BaseModel
 {
     /**
-     * @var
+     * @var array
      */
     public $pagination;
 
     /**
-     * @param  array  $array
-     * @return Meta
+     * @param  array  $data
      */
-    public static function createFromArray($array): Meta
+    public function __construct(array $data = [])
     {
-        $meta = new Meta();
-
-        $meta->pagination = (object) $array['pagination'];
-
-        return $meta;
+        $this->pagination = (object) $data['pagination'];
     }
 
     /**
-     * @return int|null
+     * @return int
      */
     public function page()
     {
@@ -31,7 +26,7 @@ class Meta extends BaseModel
     }
 
     /**
-     * @return int|null
+     * @return int
      */
     public function limit()
     {
@@ -39,7 +34,7 @@ class Meta extends BaseModel
     }
 
     /**
-     * @return int|null
+     * @return int
      */
     public function pages()
     {
@@ -47,7 +42,7 @@ class Meta extends BaseModel
     }
 
     /**
-     * @return int|null
+     * @return int
      */
     public function total()
     {
@@ -63,7 +58,7 @@ class Meta extends BaseModel
     }
 
     /**
-     * @return int|null
+     * @return int
      */
     public function next()
     {
@@ -79,7 +74,7 @@ class Meta extends BaseModel
     }
 
     /**
-     * @return int|null
+     * @return int
      */
     public function prev()
     {

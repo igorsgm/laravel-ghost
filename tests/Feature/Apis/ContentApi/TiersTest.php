@@ -2,6 +2,7 @@
 
 use Igorsgm\Ghost\Facades\Ghost;
 use Igorsgm\Ghost\Models\Resources\Tier;
+use Illuminate\Support\Facades\Http;
 
 uses()->group('content');
 uses()->group('tiers');
@@ -25,6 +26,10 @@ it('gets all tiers paginated', function () {
 
 
 it('includes monthly_price and yearly_price', function () {
+    Http::fake([
+        "*tiers/?*" => Http::response($this->getFixtureJson('tier.json')),
+    ]);
+
     $ghost = Ghost::content()->tiers()->include(['monthly_price', 'yearly_price']);
     expectQueryStringSet($ghost, 'include', 'monthly_price,yearly_price');
 

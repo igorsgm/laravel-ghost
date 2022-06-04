@@ -2,7 +2,7 @@
 
 namespace Igorsgm\Ghost\Apis;
 
-use Igorsgm\Ghost\Interfaces\ResourceInterface;
+use Igorsgm\Ghost\Models\Resources\BaseResource;
 use Igorsgm\Ghost\Responses\ErrorResponse;
 use Igorsgm\Ghost\Responses\SuccessResponse;
 use Illuminate\Support\Collection;
@@ -15,7 +15,7 @@ abstract class BaseApi
     protected $baseUrl;
 
     /**
-     * @var ResourceInterface
+     * @var BaseResource
      */
     protected $resource;
 
@@ -92,15 +92,16 @@ abstract class BaseApi
         $endpoint = $this->resource->getResourceName();
 
         if (!empty($this->resourceId)) {
-            $endpoint .= "/{$this->resourceId}";
+            $endpoint .= "/$this->resourceId";
         } elseif (!empty($this->resourceSlug)) {
-            $endpoint .= "/slug/{$this->resourceSlug}";
+            $endpoint .= "/slug/$this->resourceSlug";
         }
 
         return $endpoint;
     }
 
     /**
+     * @param string $suffix
      * @return string
      */
     protected function makeApiUrl($suffix = ''): string
@@ -169,8 +170,17 @@ abstract class BaseApi
     }
 
     /**
+     * @return BaseResource|ErrorResponse
+     */
+    public function first()
+    {
+        $response = $this->limit(1)->get();
+        return $response->data->first();
+    }
+
+    /**
      * @param $limit
-     * @return array[]
+     * @return array
      */
     public function paginate($limit = null)
     {
@@ -186,7 +196,7 @@ abstract class BaseApi
      *
      * @param  string  $id
      *
-     * @return ResourceInterface|ErrorResponse
+     * @return BaseResource|ErrorResponse
      */
     public function find(string $id)
     {
@@ -243,7 +253,7 @@ abstract class BaseApi
     }
 
     /**
-     * @return ResourceInterface
+     * @return BaseResource
      */
     public function getResource()
     {
@@ -283,7 +293,7 @@ abstract class BaseApi
     }
 
     /**
-     * Limit the fields returned in the response object
+     * Limit the fields returned to the response object
      *
      * @param  string|array  ...$fields
      *
@@ -335,7 +345,7 @@ abstract class BaseApi
      * @return $this
      * @see https://ghost.org/docs/content-api/#order
      */
-    public function order(string $attr, string $order = "DESC"): ContentApi
+    public function order(string $attr, string $order = "DESC"): BaseApi
     {
         $this->order = $attr." ".strtolower($order);
 
@@ -349,7 +359,7 @@ abstract class BaseApi
      * @param  string  $order
      * @return $this
      */
-    public function orderBy(string $attr, string $order = "DESC"): ContentApi
+    public function orderBy(string $attr, string $order = "DESC"): BaseApi
     {
         return $this->order($attr, $order);
     }

@@ -20,18 +20,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function setUp(): void
     {
         parent::setUp();
-//        Factory::guessFactoryNamesUsing(function (string $modelName) {
-//            'Igorsgm\\Ghost\\Database\\Factories\\'.class_basename($modelName).'Factory';
-//        });
-
-//        Http::fake([
-//            '*authors*' => Http::response(file_get_contents(__DIR__.'/Fixtures/authors.json'), 200),
-//            '*posts/slug/nonsense*' => Http::response([], 404),
-//            '*posts*' => Http::response(file_get_contents(__DIR__.'/Fixtures/posts.json'), 200),
-//            '*tags*' => Http::response(file_get_contents(__DIR__.'/Fixtures/tags.json'), 200),
-//            '*pages*' => Http::response(file_get_contents(__DIR__.'/Fixtures/pages.json'), 200),
-//            '*settings*' => Http::response(file_get_contents(__DIR__.'/Fixtures/settings.json'), 200),
-//        ]);
     }
 
     /**
@@ -59,6 +47,24 @@ class TestCase extends \Orchestra\Testbench\TestCase
                 'enabled' => true,
                 'default_error_message' => 'Something went wrong. Please try again later.',
             ],
+            'seo' => [
+                'properties' => [
+                    'og_image',
+                    'og_title',
+                    'og_description',
+                    'twitter_image',
+                    'twitter_title',
+                    'twitter_description',
+                    'meta_title',
+                    'meta_description',
+                    'canonical_url',
+                ],
+                'models-with' => [
+                    \Igorsgm\Ghost\Models\Resources\Post::class,
+                    \Igorsgm\Ghost\Models\Resources\Page::class,
+                    \Igorsgm\Ghost\Models\Resources\Tag::class,
+                ],
+            ],
             'cache' => [
                 'cache_records' => false,
                 'cache_prefix' => 'ghost_',
@@ -72,7 +78,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     /**
      * Retrieves the content of a Fixture json file, to mock Ghost Admin API responses.
      *
-     * @param string $fileName
+     * @param  string  $fileName
      * @return false|string
      */
     public function getFixtureJson($fileName)

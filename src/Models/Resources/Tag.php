@@ -2,95 +2,31 @@
 
 namespace Igorsgm\Ghost\Models\Resources;
 
-use Igorsgm\Ghost\Interfaces\ResourceInterface;
-use Igorsgm\Ghost\Models\Seo;
-
-class Tag extends BaseResource implements ResourceInterface
+/**
+ * Class Tag
+ * @property-read string $id
+ * @property-read string $slug
+ * @property-read string $name
+ * @property-read string $description
+ * @property-read string $featureImage
+ * @property-read string $visibility
+ * @property-read string $codeinjectionHead
+ * @property-read string $codeinjectionFoot
+ * @property-read string $accentColor
+ * @property-read string $url
+ * @property-read string $parent Admin only
+ * @property-read \Igorsgm\Ghost\Models\Seo $seo
+ * @property-read mixed $postsCount
+ * @property-read string $createdAt
+ * @property-read string $updatedAt
+ */
+class Tag extends BaseResource
 {
     protected string $resourceName = 'tags';
 
-    /**
-     * @var string|null
-     */
-    public $id;
-
-    /**
-     * @var string|null
-     */
-    public $slug;
-
-    /**
-     * @var string|null
-     */
-    public $name;
-
-    /**
-     * @var string|null
-     */
-    public $description;
-
-    /**
-     * @var string|null
-     */
-    public $featureImage;
-
-    /**
-     * @var string|null
-     */
-    public $visibility;
-
-    /**
-     * @var string|null
-     */
-    public $codeinjectionHead;
-
-    /**
-     * @var string|null
-     */
-    public $codeinjectionFoot;
-
-    /**
-     * @var string|null
-     */
-    public $accentColor;
-
-    /**
-     * @var string
-     */
-    public $url;
-
-    /**
-     * @var string|null
-     */
-    public $createdAt;
-
-    /**
-     * @var string|null
-     */
-    public $updatedAt;
-
-    /**
-     * Admin only
-     * @var string|null
-     */
-    public $parent;
-
-    /**
-     * @var Seo
-     */
-    public $seo;
-
-    /**
-     * @var mixed
-     */
-    public $postsCount;
-
-    /**
-     * @param  array  $array
-     * @return Tag
-     */
-    public static function createFromArray($array): Tag
+    public function __construct(array $data = [])
     {
-        return parent::fill(new self(), $array, true);
+        parent::__construct($data);
+        $this->postsCount = data_get($data, 'count.posts');
     }
 }

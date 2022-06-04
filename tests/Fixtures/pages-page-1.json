@@ -31,7 +31,120 @@
       "twitter_description": null,
       "meta_title": null,
       "meta_description": null,
-      "frontmatter": null
+      "frontmatter": null,
+      "authors": [
+        {
+          "id": "1",
+          "name": "John Doe",
+          "slug": "john",
+          "email": "john.doe@gmail.com",
+          "profile_image": "//www.gravatar.com/avatar/27ed9a6b4ca3868b57150e24f08537d3?s=250&d=mm&r=x",
+          "cover_image": null,
+          "bio": null,
+          "website": null,
+          "location": null,
+          "facebook": null,
+          "twitter": null,
+          "accessibility": "{\"nightShift\":true}",
+          "status": "active",
+          "meta_title": null,
+          "meta_description": null,
+          "tour": null,
+          "last_seen": "2022-05-19T06:46:44.000Z",
+          "created_at": "2021-10-30T20:34:20.000Z",
+          "updated_at": "2022-05-19T06:46:44.000Z",
+          "roles": [
+            {
+              "id": "617dac4ce01e977921bf8256",
+              "name": "Owner",
+              "description": "Blog Owner",
+              "created_at": "2021-10-30T20:34:20.000Z",
+              "updated_at": "2021-10-30T20:34:20.000Z"
+            }
+          ],
+          "url": "http:\/\/localhost:2370\/author\/john\/"
+        }
+      ],
+      "primary_author": {
+        "id": "1",
+        "name": "John Doe",
+        "slug": "john",
+        "email": "john.doe@gmail.com",
+        "profile_image": "//www.gravatar.com/avatar/27ed9a6b4ca3868b57150e24f08537d3?s=250&d=mm&r=x",
+        "cover_image": null,
+        "bio": null,
+        "website": null,
+        "location": null,
+        "facebook": null,
+        "twitter": null,
+        "accessibility": "{\"nightShift\":true}",
+        "status": "active",
+        "meta_title": null,
+        "meta_description": null,
+        "tour": null,
+        "last_seen": "2022-05-19T06:46:44.000Z",
+        "created_at": "2021-10-30T20:34:20.000Z",
+        "updated_at": "2022-05-19T06:46:44.000Z",
+        "roles": [
+          {
+            "id": "617dac4ce01e977921bf8256",
+            "name": "Owner",
+            "description": "Blog Owner",
+            "created_at": "2021-10-30T20:34:20.000Z",
+            "updated_at": "2021-10-30T20:34:20.000Z"
+          }
+        ],
+        "url": "http:\/\/localhost:2370\/author\/john\/"
+      },
+      "tags": [
+        {
+          "id": "617dac4ce01e97a921bf8253",
+          "name": "Guides",
+          "slug": "guides-2",
+          "description": null,
+          "feature_image": null,
+          "visibility": "public",
+          "og_image": null,
+          "og_title": null,
+          "og_description": null,
+          "twitter_image": null,
+          "twitter_title": null,
+          "twitter_description": null,
+          "meta_title": null,
+          "meta_description": null,
+          "codeinjection_head": null,
+          "codeinjection_foot": null,
+          "canonical_url": null,
+          "accent_color": null,
+          "created_at": "2021-10-30T20:34:20.000Z",
+          "updated_at": "2021-12-19T19:24:07.000Z",
+          "url": "http://localhost:2370/tag/guides-2/"
+        },
+        {
+          "id": "6180c4f2e539ec445ca2facj",
+          "name": "#Frameworks",
+          "slug": "frameworks",
+          "description": null,
+          "feature_image": "http://localhost:2370/content/images/2021/11/frameworks.svg",
+          "visibility": "internal",
+          "og_image": null,
+          "og_title": null,
+          "og_description": null,
+          "twitter_image": null,
+          "twitter_title": null,
+          "twitter_description": null,
+          "meta_title": null,
+          "meta_description": null,
+          "codeinjection_head": null,
+          "codeinjection_foot": null,
+          "canonical_url": null,
+          "accent_color": "#FF2D1F",
+          "created_at": "2021-11-02T04:56:18.000Z",
+          "updated_at": "2021-12-03T04:25:11.000Z",
+          "url": "http://localhost:2370/404/"
+        }
+      ],
+      "primary_tag": null
     },
     {
       "id": "605360bbce93e1003bd6ddd8",
