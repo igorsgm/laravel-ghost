@@ -74,22 +74,7 @@ abstract class BaseModel
 
         foreach ($data as $key => $value) {
             $property = Str::camel($key);
-
-            if (array_key_exists($property, $this->modelCollectionProperties)) {
-                $this->fillModelCollectionProperty($property, $value);
-                continue;
-            }
-
-            if (array_key_exists($property, $this->modelProperties)) {
-                $this->fillModelProperty($property, $value);
-                continue;
-            }
-
-            if (in_array($property, $this->dates)) {
-                $value = Carbon::parse($value);
-            }
-
-            $this->{$property} = $value ?? null;
+            $this->{$property} = $this->getCastedValue($property, $value) ?? null;
         }
 
         if (!empty($seoProperties)) {
@@ -102,13 +87,13 @@ abstract class BaseModel
      *
      * @param  string  $property
      * @param  mixed  $value
-     * @return void
+     * @return \Illuminate\Support\Collection
      */
-    private function fillModelCollectionProperty($property, $value)
+    private function castModelCollectionProperty($property, $value)
     {
         $propertyModel = $this->modelCollectionProperties[$property];
 
-        $this->{$property} = collect($value)->map(function ($item) use (&$propertyModel) {
+        return collect($value)->map(function ($item) use (&$propertyModel) {
             return new $propertyModel($item);
         });
     }
@@ -118,11 +103,33 @@ abstract class BaseModel
      *
      * @param  string  $property
      * @param  mixed  $value
-     * @return void
+     * @return BaseModel|null
      */
-    private function fillModelProperty($property, $value)
+    private function castModelProperty($property, $value)
     {
         $propertyModel = $this->modelProperties[$property];
-        $this->{$property} = !empty($value) ? new $propertyModel($value) : null;
+        return !empty($value) ? new $propertyModel($value) : null;
+    }
+
+    /**
+     * @param  string  $property
+     * @param  string|array  $value
+     * @return Carbon|BaseModel|\Illuminate\Support\Collection|mixed|null
+     */
+    private function getCastedValue(string $property, $value)
+    {
+        if (array_key_exists($property, $this->modelCollectionProperties)) {
+            $value = $this->castModelCollectionProperty($property, $value);
+        }
+
+        if (array_key_exists($property, $this->modelProperties)) {
+            $value = $this->castModelProperty($property, $value);
+        }
+
+        if (in_array($property, $this->dates)) {
+            $value = Carbon::parse($value);
+        }
+
+        return $value;
     }
 }
