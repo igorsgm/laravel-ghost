@@ -40,7 +40,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
         $app['config']->set('ghost', [
             'ghost_api_version' => 4,
-            'admin_domain' => 'https://demo.ghost.io',
+            'admin_domain' => 'http://demo.ghost.io',
             'admin_key' => '1234:56789',
             'content_key' => '22444f78447824223cefc48062',
             'debug' => [
