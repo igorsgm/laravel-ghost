@@ -47,9 +47,15 @@ abstract class BaseModel
     ];
 
     /**
+     * @var Seo $seo
+     */
+    protected $seo;
+
+    /**
      * @param  array  $data
      */
-    public function __construct(array $data = []) {
+    public function __construct(array $data = [])
+    {
         if (!empty($data)) {
             $this->fill($data);
         }
@@ -70,18 +76,12 @@ abstract class BaseModel
             $property = Str::camel($key);
 
             if (array_key_exists($property, $this->modelCollectionProperties)) {
-                $propertyModel = $this->modelCollectionProperties[$property];
-
-                $this->{$property} = collect($value)->map(function ($item) use (&$propertyModel) {
-                    return new $propertyModel($item);
-                });
-
+                $this->fillModelCollectionProperty($property, $value);
                 continue;
             }
 
             if (array_key_exists($property, $this->modelProperties)) {
-                $propertyModel = $this->modelProperties[$property];
-                $this->{$property} = !empty($value) ? new $propertyModel($value) : null;
+                $this->fillModelProperty($property, $value);
                 continue;
             }
 
@@ -95,5 +95,34 @@ abstract class BaseModel
         if (!empty($seoProperties)) {
             $this->seo = new Seo($seoProperties);
         }
+    }
+
+    /**
+     * Fill a model property with a collection of models, when $property is inside $modelCollectionProperties keys
+     *
+     * @param  string  $property
+     * @param  mixed  $value
+     * @return void
+     */
+    private function fillModelCollectionProperty($property, $value)
+    {
+        $propertyModel = $this->modelCollectionProperties[$property];
+
+        $this->{$property} = collect($value)->map(function ($item) use (&$propertyModel) {
+            return new $propertyModel($item);
+        });
+    }
+
+    /**
+     * Fill a model property with a specific model, when $property is inside $modelProperties keys
+     *
+     * @param  string  $property
+     * @param  mixed  $value
+     * @return void
+     */
+    private function fillModelProperty($property, $value)
+    {
+        $propertyModel = $this->modelProperties[$property];
+        $this->{$property} = !empty($value) ? new $propertyModel($value) : null;
     }
 }

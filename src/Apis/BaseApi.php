@@ -114,19 +114,14 @@ abstract class BaseApi
      */
     protected function buildParams(): string
     {
-        $params = [
-            'include' => $this->include ?: null,
-            'fields' => $this->fields ?: null,
-            'formats' => $this->formats ?: null,
-            'source' => $this->source ?: null,
-            'filter' => $this->filter ?: null,
-            'limit' => $this->limit ?: null,
-            'page' => $this->page ?: null,
-            'order' => $this->order ?: null,
-            'key' => $this->key,
-        ];
+        $params = ['include', 'fields', 'formats', 'source', 'filter', 'limit', 'page', 'order', 'key'];
 
-        return http_build_query($params);
+        $queryParams = [];
+        foreach ($params as $param) {
+            $queryParams[$param] = $this->{$param} ?: null;
+        }
+
+        return http_build_query($queryParams);
     }
 
     /**
