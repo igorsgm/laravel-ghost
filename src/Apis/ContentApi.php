@@ -30,7 +30,7 @@ class ContentApi extends BaseApi
      */
     public function get()
     {
-        $response = Http::get($this->makeApiUrl());
+        $response = Http::withoutVerifying()->get($this->makeApiUrl());
         return $this->handleResponse($response);
     }
 
