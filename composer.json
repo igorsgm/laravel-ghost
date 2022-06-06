@@ -7,7 +7,7 @@
         "laravel",
         "ghost",
         "blog",
-        "cms",
+        "cms"
     ],
     "homepage": "https://github.com/igorsgm/laravel-ghost",
     "license": "MIT",
