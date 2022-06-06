@@ -2,7 +2,7 @@
     <img src="https://raw.githubusercontent.com/igorsgm/laravel-ghost/master/logo.png" alt="Laravel Ghost">
 </p>
 
-<p align="center">A Laravel wrapper that allows you to access Ghost APIs (Content & Admin). Access, create and manage your Ghost content from you app!</p>
+<p align="center">A Laravel wrapper that allows you to access <a title="Ghost Content API Documentation" href="https://ghost.org/docs/content-api/">Ghost APIs</a> (<a title="Ghost Content API Documentation" href="https://ghost.org/docs/content-api/">Content</a> & <a title="Ghost Admin API Documentation" href="https://ghost.org/docs/admin-api/">Admin</a>). Access, create and manage your Ghost content from you app!</p>
 
 <p align="center">
     <a href="https://packagist.org/packages/igorsgm/laravel-ghost">
@@ -10,6 +10,9 @@
     </a>
     <a href="https://travis-ci.org/igorsgm/laravel-ghost">
         <img src="https://img.shields.io/scrutinizer/build/g/igorsgm/laravel-ghost/master?style=flat-square" alt="Build Status">
+    </a>
+<a href="https://travis-ci.org/igorsgm/laravel-ghost">
+        <img src="https://img.shields.io/scrutinizer/coverage/g/igorsgm/laravel-ghost/master?style=flat-square" alt="Tests Coverage">
     </a>
     <a href="https://scrutinizer-ci.com/g/igorsgm/laravel-ghost">
         <img src="https://img.shields.io/scrutinizer/g/igorsgm/laravel-ghost.svg?style=flat-square" alt="Quality Score">
@@ -34,10 +37,13 @@ You can publish the config file with:
 ```bash
 php artisan vendor:publish --provider="Igorsgm\Ghost\GhostServiceProvider" --tag="ghost-config"
 ```
+
 ___
 
 ## Usage
+
 #### Define Ghost API credentials at `ghost.php` config or in your `.env` file. i.e.:
+
 ```
 GHOST_ADMIN_DOMAIN=https://demo.ghost.io
 GHOST_CONTENT_API_KEY=22444f78447824223cefc48062
@@ -46,7 +52,8 @@ GHOST_ADMIN_API_KEY=foo:bar
 
 ## Content API
 
-### 1) General Usage 
+### 1) General Usage
+
 ```php
 // Using the Facade (recommended), which will take the variables from the ghost.php config file
 $contentApi = Ghost::content();
@@ -77,6 +84,7 @@ Ghost::content()->tiers()->all();
 ```
 
 #### Single resource returned as Post, Author, Tag, Page or Tier
+
 ```php
 // Retrieve a single resource by slug
 Ghost::content()->posts()->fromSlug('welcome');
@@ -89,6 +97,7 @@ Ghost::content()->posts()->find('6285dbba44c5d85187a074ba');
 ```
 
 #### Paginations
+
 ```php
 // Get paginated resources
 Ghost::content()->posts()->paginate();
@@ -103,6 +112,7 @@ $response->getPreviousPage();
 ```
 
 #### Build your request
+
 > Valid for both: Ghost::content() and Ghost::admin() APIs
 
 ```php
@@ -118,6 +128,7 @@ Ghost::content()->posts()
 ```
 
 ## Admin API
+
 - All ContentAPI methods related to Post, Author, Tag, Page or Tier are also available in the Admin API.
 
 | Resource     | Methods                     |
@@ -134,9 +145,10 @@ Ghost::content()->posts()
 | ->site()     | get                         |
 | ->webhooks() | create, update, delete      |
 
+#### (Admin) Posts, Pages, Tags, Tiers, Offers, Members, Users, Webhooks
 
-#### (Admin) Posts, Pages, Tags, Tiers, Offers, Members, Users, Webhooks 
 > The consume of these Admin APIs are similar and can be used with the following methods:
+
 ```php
 // Create post with mobiledoc source
 Ghost::admin()->posts()->create([
@@ -167,6 +179,7 @@ Ghost::admin()->posts()->delete('6285dbba44c5d85187a074ba');
 ```
 
 #### (Admin) Images, Themes
+
 ```php
 // Upload image
 $imagePathOrUrl = 'https://picsum.photos/200';
@@ -181,6 +194,7 @@ Ghost::admin()->themes()->activate('theme-name');
 ```
 
 ___
+
 ### Testing
 
 ```bash
