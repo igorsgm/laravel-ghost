@@ -28,11 +28,18 @@ return [
      */
     'admin_key' => env('GHOST_ADMIN_API_KEY', ''),
 
+    /**
+     * When debugging is enabled, Ghost API error messages will be returned,
+     * otherwise the default error message takes place.
+     */
     'debug' => [
         'enabled' => env('GHOST_DEBUG_ENABLED', true),
         'default_error_message' => 'Something went wrong. Please try again later.',
     ],
 
+    /**
+     * SEO properties that are automatically added to posts, pages and tags
+     */
     'seo' => [
         'properties' => [
             'og_image',

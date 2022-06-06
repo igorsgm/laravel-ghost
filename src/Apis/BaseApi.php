@@ -311,8 +311,8 @@ abstract class BaseApi
      *
      *
      * @param  string  $format
-     *
      * @return $this
+     * @see https://ghost.org/docs/content-api/#formats
      */
     public function formats(string $format): BaseApi
     {

@@ -184,7 +184,7 @@ it('updates a post with mobiledoc', function () {
     ]);
 
     $post = Ghost::admin()->posts()->find($id);
-    $response = Ghost::admin()->posts()->source('html')->update($id, [
+    $response = Ghost::admin()->posts()->update($id, [
         'title' => 'My New Title',
         'mobiledoc' => '{"version":"0.3.1","atoms":[],"cards":[],"markups":[],"sections":[[1,"p",[[0,[],0,"My updated post content. Work in progress..."]]]]}',
         'updated_at' => $post->updatedAt,
