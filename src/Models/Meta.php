@@ -2,30 +2,23 @@
 
 namespace Igorsgm\Ghost\Models;
 
-use Igorsgm\Ghost\Models\Resources\Tag;
-
-class Meta
+class Meta extends BaseModel
 {
     /**
-     * @var
+     * @var array
      */
     public $pagination;
 
     /**
-     * @param  array  $array
-     * @return Tag
+     * @param  array  $data
      */
-    public static function createFromArray($array): Meta
+    public function __construct(array $data = [])
     {
-        $meta = new Meta();
-
-        $meta->pagination = (object) $array['pagination'];
-
-        return $meta;
+        $this->pagination = (object) $data['pagination'];
     }
 
     /**
-     * @return int|null
+     * @return int
      */
     public function page()
     {
@@ -33,7 +26,7 @@ class Meta
     }
 
     /**
-     * @return int|null
+     * @return int
      */
     public function limit()
     {
@@ -41,7 +34,7 @@ class Meta
     }
 
     /**
-     * @return int|null
+     * @return int
      */
     public function pages()
     {
@@ -49,7 +42,7 @@ class Meta
     }
 
     /**
-     * @return int|null
+     * @return int
      */
     public function total()
     {
@@ -57,7 +50,15 @@ class Meta
     }
 
     /**
-     * @return int|null
+     * @return bool
+     */
+    public function hasNext()
+    {
+        return !empty($this->pagination->next);
+    }
+
+    /**
+     * @return int
      */
     public function next()
     {
@@ -65,7 +66,15 @@ class Meta
     }
 
     /**
-     * @return int|null
+     * @return bool
+     */
+    public function hasPrev()
+    {
+        return !empty($this->pagination->prev);
+    }
+
+    /**
+     * @return int
      */
     public function prev()
     {

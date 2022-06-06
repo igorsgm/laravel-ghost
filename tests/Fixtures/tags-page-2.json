@@ -1,0 +1,56 @@
+{
+  "tags": [
+    {
+      "id": "59799bbd6ebb2f00243a33db",
+      "name": "Getting Started",
+      "slug": "getting-started",
+      "description": null,
+      "feature_image": null,
+      "visibility": "public",
+      "meta_title": null,
+      "meta_description": null,
+      "og_image": null,
+      "og_title": null,
+      "og_description": null,
+      "twitter_image": null,
+      "twitter_title": null,
+      "twitter_description": null,
+      "codeinjection_head": null,
+      "codeinjection_foot": null,
+      "canonical_url": null,
+      "accent_color": null,
+      "url": "https://demo.ghost.io/tag/getting-started/"
+    },
+    {
+      "id": "5979a779df093500228e958b",
+      "name": "Speeches",
+      "slug": "speeches",
+      "description": "Some of the greatest words ever spoken.",
+      "feature_image": "https://demo.ghost.io/content/images/2015/03/cover1.jpg",
+      "visibility": "public",
+      "meta_title": null,
+      "meta_description": null,
+      "og_image": null,
+      "og_title": null,
+      "og_description": null,
+      "twitter_image": null,
+      "twitter_title": null,
+      "twitter_description": null,
+      "codeinjection_head": null,
+      "codeinjection_foot": null,
+      "canonical_url": null,
+      "accent_color": null,
+      "url": "https://demo.ghost.io/tag/speeches/"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 2,
+      "limit": 2,
+      "pages": 4,
+      "total": 7,
+      "next": 3,
+      "prev": 1
+    }
+  }
+}

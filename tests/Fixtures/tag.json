@@ -1,0 +1,60 @@
+{
+  "tags": [
+    {
+      "id": "5979a779df093500228e958b",
+      "name": "Speeches",
+      "slug": "speeches",
+      "description": "Some of the greatest words ever spoken.",
+      "feature_image": "https://demo.ghost.io/content/images/2015/03/cover1.jpg",
+      "visibility": "public",
+      "meta_title": null,
+      "meta_description": null,
+      "og_image": null,
+      "og_title": null,
+      "og_description": null,
+      "twitter_image": null,
+      "twitter_title": null,
+      "twitter_description": null,
+      "codeinjection_head": null,
+      "codeinjection_foot": null,
+      "canonical_url": null,
+      "accent_color": null,
+      "url": "https://demo.ghost.io/tag/speeches/",
+      "authors": [
+        {
+          "id": "1",
+          "name": "John Doe",
+          "slug": "john",
+          "email": "john.doe@gmail.com",
+          "profile_image": "//www.gravatar.com/avatar/27ed9a6b4ca3868b57150e24f08537d3?s=250&d=mm&r=x",
+          "cover_image": null,
+          "bio": null,
+          "website": null,
+          "location": null,
+          "facebook": null,
+          "twitter": null,
+          "accessibility": "{\"nightShift\":true}",
+          "status": "active",
+          "meta_title": null,
+          "meta_description": null,
+          "tour": null,
+          "last_seen": "2022-05-19T05:25:00.000Z",
+          "created_at": "2021-10-30T20:34:20.000Z",
+          "updated_at": "2022-05-19T05:25:00.000Z",
+          "roles": [
+            {
+              "id": "617dac4ce01e977921bf8256",
+              "name": "Owner",
+              "description": "Blog Owner",
+              "created_at": "2021-10-30T20:34:20.000Z",
+              "updated_at": "2021-10-30T20:34:20.000Z"
+            }
+          ],
+          "url": "http://localhost:2370/author/john/"
+        }
+      ],
+      "created_at": "2021-10-30T20:34:20.000Z",
+      "updated_at": "2021-12-19T19:24:07.000Z"
+    }
+  ]
+}

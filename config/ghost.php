@@ -29,9 +29,35 @@ return [
     'admin_key' => env('GHOST_ADMIN_API_KEY', ''),
 
     /**
-     * Set true to return Api Errors instead of empty data
+     * When debugging is enabled, Ghost API error messages will be returned,
+     * otherwise the default error message takes place.
      */
-    'debug_enabled' => env('GHOST_DEBUG_ENABLED', true),
+    'debug' => [
+        'enabled' => env('GHOST_DEBUG_ENABLED', true),
+        'default_error_message' => 'Something went wrong. Please try again later.',
+    ],
+
+    /**
+     * SEO properties that are automatically added to posts, pages and tags
+     */
+    'seo' => [
+        'properties' => [
+            'og_image',
+            'og_title',
+            'og_description',
+            'twitter_image',
+            'twitter_title',
+            'twitter_description',
+            'meta_title',
+            'meta_description',
+            'canonical_url',
+        ],
+        'models-with' => [
+            \Igorsgm\Ghost\Models\Resources\Post::class,
+            \Igorsgm\Ghost\Models\Resources\Page::class,
+            \Igorsgm\Ghost\Models\Resources\Tag::class,
+        ],
+    ],
 
     /**
      * Experimental

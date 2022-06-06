@@ -2,119 +2,31 @@
 
 namespace Igorsgm\Ghost\Models\Resources;
 
-use Igorsgm\Ghost\Interfaces\ResourceInterface;
-use Igorsgm\Ghost\Models\Seo;
-
-class Tag implements ResourceInterface
+/**
+ * Class Tag
+ * @property-read string $id
+ * @property-read string $slug
+ * @property-read string $name
+ * @property-read string $description
+ * @property-read string $featureImage
+ * @property-read string $visibility
+ * @property-read string $codeinjectionHead
+ * @property-read string $codeinjectionFoot
+ * @property-read string $accentColor
+ * @property-read string $url
+ * @property-read string $parent Admin only
+ * @property-read \Igorsgm\Ghost\Models\Seo $seo
+ * @property-read mixed $postsCount
+ * @property-read string $createdAt
+ * @property-read string $updatedAt
+ */
+class Tag extends BaseResource
 {
-    /**
-     * @var string|null
-     */
-    public $id;
+    protected string $resourceName = 'tags';
 
-    /**
-     * @var string|null
-     */
-    public $slug;
-
-    /**
-     * @var string|null
-     */
-    public $name;
-
-    /**
-     * @var string|null
-     */
-    public $description;
-
-    /**
-     * @var string|null
-     */
-    public $featureImage;
-
-    /**
-     * @var string|null
-     */
-    public $visibility;
-
-    /**
-     * @var string|null
-     */
-    public $codeinjectionHead;
-
-    /**
-     * @var string|null
-     */
-    public $codeinjectionFoot;
-
-    /**
-     * @var string|null
-     */
-    public $accentColor;
-
-    /**
-     * @var string
-     */
-    public $url;
-
-    /**
-     * @var string|null
-     */
-    public $createdAt;
-
-    /**
-     * @var string|null
-     */
-    public $updatedAt;
-
-    /**
-     * Admin only
-     * @var string|null
-     */
-    public $parent;
-
-    /**
-     * @var Seo
-     */
-    public $seo;
-
-    /**
-     * @var mixed
-     */
-    public $postsCount;
-
-    /**
-     * @param  array  $array
-     * @return Tag
-     */
-    public static function createFromArray($array): Tag
+    public function __construct(array $data = [])
     {
-        $tag = new self();
-
-        $tag->id = $array['id'] ?? null;
-        $tag->name = $array['name'] ?? null;
-        $tag->slug = $array['slug'] ?? null;
-        $tag->description = $array['description'] ?? null;
-        $tag->featureImage = $array['feature_image'] ?? null;
-        $tag->visibility = $array['visibility'] ?? null;
-        $tag->codeinjectionHead = $array['codeinjection_head'] ?? null;
-        $tag->codeinjectionFoot = $array['codeinjection_foot'] ?? null;
-        $tag->accentColor = $array['accent_color'] ?? null;
-        $tag->parent = $array['parent'] ?? null;
-
-        $tag->createdAt = $array['created_at'] ?? null;
-        $tag->updatedAt = $array['updated_at'] ?? null;
-
-        $tag->url = $array['url'] ?? null;
-        $tag->seo = Seo::createFromArray($array);
-
-        $tag->postsCount = data_get($array, 'count.posts');
-
-        return $tag;
-    }
-
-    public function getResourceName()
-    {
-        return 'tags';
+        parent::__construct($data);
+        $this->postsCount = data_get($data, 'count.posts');
     }
 }

@@ -1,0 +1,9 @@
+{
+  "site": {
+    "title": "Ghost",
+    "description": "The professional publishing platform",
+    "logo": "/content/images/2014/09/logo.png",
+    "url": "https://demo.ghost.io/",
+    "version": "3.14"
+  }
+}

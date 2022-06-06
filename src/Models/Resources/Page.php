@@ -2,92 +2,28 @@
 
 namespace Igorsgm\Ghost\Models\Resources;
 
-use Igorsgm\Ghost\Interfaces\ResourceInterface;
-use Igorsgm\Ghost\Models\Seo;
-
-class Page implements ResourceInterface
+/**
+ * Class Page
+ *
+ * @property-read string $slug
+ * @property-read string $id
+ * @property-read string $name
+ * @property-read string $description
+ * @property-read string $featureImage
+ * @property-read string $visibility
+ * @property-read string $codeinjectionHead
+ * @property-read string $codeinjectionFoot
+ * @property-read string $accentColor
+ * @property-read string $url
+ * @property-read \Illuminate\Support\Collection $authors
+ * @property-read Author $primaryAuthor
+ * @property-read \Illuminate\Support\Collection $tags
+ * @property-read Tag $primaryTag
+ * @property-read \Igorsgm\Ghost\Models\Seo $seo
+ * @property-read string $createdAt
+ * @property-read string $updatedAt
+ */
+class Page extends BaseResource
 {
-    /**
-     * @var string
-     */
-    public $slug;
-
-    /**
-     * @varstring
-     */
-    public $id;
-
-    /**
-     * @var string
-     */
-    public $name;
-
-    /**
-     * @var string
-     */
-    public $description;
-
-    /**
-     * @var string
-     */
-    public $featureImage;
-
-    /**
-     * @var string
-     */
-    public $visibility;
-
-    /**
-     * @var string
-     */
-    public $codeinjectionHead;
-
-    /**
-     * @var string
-     */
-    public $codeinjectionFoot;
-
-    /**
-     * @var string
-     */
-    public $accentColor;
-
-    /**
-     * @var string
-     */
-    public $url;
-
-    /**
-     * @var Seo
-     */
-    public $seo;
-
-    /**
-     * @param  array  $array
-     * @return Tag
-     */
-    public static function createFromArray($array): Page
-    {
-        $page = new self();
-
-        $page->slug = $array['slug'] ?? null;
-        $page->id = $array['id'] ?? null;
-        $page->name = $array['name'] ?? null;
-        $page->description = $array['description'] ?? null;
-        $page->featureImage = $array['feature_image'] ?? null;
-        $page->visibility = $array['visibility'] ?? null;
-        $page->codeinjectionHead = $array['codeinjection_head'] ?? null;
-        $page->codeinjectionFoot = $array['codeinjection_foot'] ?? null;
-        $page->accentColor = $array['accent_color'] ?? null;
-
-        $page->url = $array['url'] ?? null;
-        $page->seo = Seo::createFromArray($array);
-
-        return $page;
-    }
-
-    public function getResourceName()
-    {
-        return 'pages';
-    }
+    protected string $resourceName = 'pages';
 }

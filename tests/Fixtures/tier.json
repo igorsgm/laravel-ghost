@@ -1,0 +1,118 @@
+{
+  "tiers": [
+    {
+      "id": "622727ad96a190e914ab6664",
+      "name": "Free",
+      "description": null,
+      "slug": "free",
+      "active": true,
+      "type": "free",
+      "welcome_page_url": null,
+      "created_at": "2022-03-08T09:53:49.000Z",
+      "updated_at": "2022-03-08T10:43:15.000Z",
+      "stripe_prices": null,
+      "monthly_price": {
+        "id": "622a3ee084d05a9c1137e9d9",
+        "stripe_tier_id": "prod_LIRJ2Pxe8YTPc6",
+        "stripe_price_id": "price_1KbqQdFToJelIqAsAkQN9kU7",
+        "active": true,
+        "nickname": "Monthly",
+        "description": null,
+        "currency": "usd",
+        "amount": 500,
+        "type": "recurring",
+        "interval": "month",
+        "created_at": "2022-03-10T18:09:36.000Z",
+        "updated_at": "2022-03-10T18:09:36.000Z"
+      },
+      "yearly_price": {
+        "id": "622a3ee084d05a9c1137e9da",
+        "stripe_tier_id": "prod_LIRJ2Pxe8YTPc6",
+        "stripe_price_id": "price_1KbqQeFToJelIqAs1FCHkvHe",
+        "active": true,
+        "nickname": "Yearly",
+        "description": null,
+        "currency": "usd",
+        "amount": 5000,
+        "type": "recurring",
+        "interval": "year",
+        "created_at": "2022-03-10T18:09:36.000Z",
+        "updated_at": "2022-03-10T18:09:36.000Z"
+      },
+      "benefits": [
+        {
+          "id": "622f95514994080df574930d",
+          "name": "Free daily newsletter",
+          "slug": "test",
+          "created_at": "2022-03-14T19:19:45.000Z",
+          "updated_at": "2022-03-14T19:19:45.000Z"
+        },
+        {
+          "id": "622f95514994080df574930e",
+          "name": "3 posts a week",
+          "slug": "test-2",
+          "created_at": "2022-03-14T19:19:45.000Z",
+          "updated_at": "2022-03-14T19:19:45.000Z"
+        }
+      ],
+      "visibility": "public"
+    },
+    {
+      "id": "622727ad96a190e914ab6665",
+      "name": "Bronze",
+      "description": "Access to basic features",
+      "slug": "default-product",
+      "active": true,
+      "type": "paid",
+      "welcome_page_url": null,
+      "created_at": "2022-03-08T09:53:49.000Z",
+      "updated_at": "2022-03-14T19:22:46.000Z",
+      "stripe_prices": null,
+      "monthly_price": {
+        "id": "622a3ee084d05a9c1137e9d9",
+        "stripe_tier_id": "prod_LIRJ2Pxe8YTPc6",
+        "stripe_price_id": "price_1KbqQdFToJelIqAsAkQN9kU7",
+        "active": true,
+        "nickname": "Monthly",
+        "description": null,
+        "currency": "usd",
+        "amount": 500,
+        "type": "recurring",
+        "interval": "month",
+        "created_at": "2022-03-10T18:09:36.000Z",
+        "updated_at": "2022-03-10T18:09:36.000Z"
+      },
+      "yearly_price": {
+        "id": "622a3ee084d05a9c1137e9da",
+        "stripe_tier_id": "prod_LIRJ2Pxe8YTPc6",
+        "stripe_price_id": "price_1KbqQeFToJelIqAs1FCHkvHe",
+        "active": true,
+        "nickname": "Yearly",
+        "description": null,
+        "currency": "usd",
+        "amount": 5000,
+        "type": "recurring",
+        "interval": "year",
+        "created_at": "2022-03-10T18:09:36.000Z",
+        "updated_at": "2022-03-10T18:09:36.000Z"
+      },
+      "benefits": [
+        {
+          "id": "622f95514994080df574930d",
+          "name": "Free daily newsletter",
+          "slug": "test",
+          "created_at": "2022-03-14T19:19:45.000Z",
+          "updated_at": "2022-03-14T19:19:45.000Z"
+        },
+        {
+          "id": "622f95514994080df574930e",
+          "name": "3 posts a week",
+          "slug": "test-2",
+          "created_at": "2022-03-14T19:19:45.000Z",
+          "updated_at": "2022-03-14T19:19:45.000Z"
+        }
+      ],
+      "visibility": "public"
+    }
+  ]
+}

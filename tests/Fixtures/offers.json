@@ -1,0 +1,24 @@
+{
+  "offers": [
+    {
+      "id": "6230dd69e8bc4d3097caefd3",
+      "name": "Black friday",
+      "code": "black-friday",
+      "display_title": "Black friday sale!",
+      "display_description": "10% off our yearly price",
+      "type": "percent",
+      "cadence": "year",
+      "amount": 10,
+      "duration": "once",
+      "duration_in_months": null,
+      "currency_restriction": false,
+      "currency": null,
+      "status": "active",
+      "redemption_count": 0,
+      "tier": {
+        "id": "62307cc71b4376a976734038",
+        "name": "Platinum"
+      }
+    }
+  ]
+}

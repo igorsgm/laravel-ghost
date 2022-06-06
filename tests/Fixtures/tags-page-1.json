@@ -1,0 +1,56 @@
+{
+  "tags": [
+    {
+      "id": "5979a779df093500228e958a",
+      "name": "Fables",
+      "slug": "fables",
+      "description": "A series of short stories that make you think.",
+      "feature_image": "https://demo.ghost.io/content/images/2015/03/cover2.jpg",
+      "visibility": "public",
+      "meta_title": null,
+      "meta_description": null,
+      "og_image": null,
+      "og_title": null,
+      "og_description": null,
+      "twitter_image": null,
+      "twitter_title": null,
+      "twitter_description": null,
+      "codeinjection_head": null,
+      "codeinjection_foot": null,
+      "canonical_url": null,
+      "accent_color": null,
+      "url": "https://demo.ghost.io/tag/fables/"
+    },
+    {
+      "id": "5979a779df093500228e9587",
+      "name": "Fiction",
+      "slug": "fiction",
+      "description": null,
+      "feature_image": null,
+      "visibility": "public",
+      "meta_title": null,
+      "meta_description": null,
+      "og_image": null,
+      "og_title": null,
+      "og_description": null,
+      "twitter_image": null,
+      "twitter_title": null,
+      "twitter_description": null,
+      "codeinjection_head": null,
+      "codeinjection_foot": null,
+      "canonical_url": null,
+      "accent_color": null,
+      "url": "https://demo.ghost.io/tag/fiction/"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "limit": 2,
+      "pages": 4,
+      "total": 7,
+      "next": 2,
+      "prev": null
+    }
+  }
+}

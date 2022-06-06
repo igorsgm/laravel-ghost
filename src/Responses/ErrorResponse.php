@@ -39,20 +39,16 @@ class ErrorResponse
     {
         $this->errors = collect();
 
-        if (!config('ghost.debug_enabled')) {
-            $this->errors->push((object) [
-                'message' => 'Something went wrong. Please try again later.',
+        if (!config('ghost.debug.enabled')) {
+            return $this->errors->push((object) [
+                'message' => config('ghost.debug.default_error_message'),
             ]);
-
-            return false;
         }
 
-        $responseErrors = $this->response->json('errors');
+        $responseErrors = $this->response->json('errors') ?? [];
 
         foreach ($responseErrors as $error) {
             $this->errors->push((object) $error);
         }
-
-        return true;
     }
 }
