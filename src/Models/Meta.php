@@ -14,7 +14,7 @@ class Meta extends BaseModel
      */
     public function __construct(array $data = [])
     {
-        $this->pagination = (object) $data['pagination'];
+        $this->pagination = (object) ($data['pagination'] ?? []);
     }
 
     /**

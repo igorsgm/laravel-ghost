@@ -50,7 +50,7 @@ class GhostServiceProvider extends ServiceProvider
     public function register()
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/ghost.php', 'laravel-ghost');
+        $this->mergeConfigFrom(__DIR__.'/../config/ghost.php', 'ghost');
 
         // Register the main class to use with the facade
         $this->app->singleton('laravel-ghost', function () {
