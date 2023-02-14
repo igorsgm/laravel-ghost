@@ -45,7 +45,7 @@ class ErrorResponse
             ]);
         }
 
-        $responseErrors = $this->response->json('errors') ?? [];
+        $responseErrors = data_get($this->response->json(), 'errors', []);
 
         foreach ($responseErrors as $error) {
             $this->errors->push((object) $error);

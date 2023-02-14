@@ -60,8 +60,10 @@ class SuccessResponse
     private function handle()
     {
         $resourceName = $this->resource->getResourceName();
-        $responseData = $this->response->json($resourceName);
-        $meta = $this->response->json('meta');
+        $decodedResponse = $this->response->json();
+
+        $responseData = data_get($decodedResponse, $resourceName);
+        $meta = data_get($decodedResponse, 'meta');
 
         if (in_array($resourceName, ['settings', 'site'])) {
             $data = new $this->resource($responseData);
