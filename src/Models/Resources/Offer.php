@@ -4,11 +4,12 @@ namespace Igorsgm\Ghost\Models\Resources;
 
 /**
  * Class Offer
+ *
  * @property-read string $id
  * @property-read string $name Internal name for an offer, must be unique
  * @property-read string $code Shortcode for the offer, for example: https://yoursite.com/black-friday
  * @property-read string $displayTitle Name displayed in the offer window
- * @property-read boolean $displayDescription Text displayed in the offer window
+ * @property-read bool $displayDescription Text displayed in the offer window
  * @property-read string $type Percent or fixed - whether the amount off is a percentage or fixed
  * @property-read string $cadence month or year - denotes if offer applies to tier's monthly or yearly price
  * @property-read string $amount Offer discount amount, as a percentage or fixed value as set in type

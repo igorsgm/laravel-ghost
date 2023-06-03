@@ -22,7 +22,7 @@ class ContentApi extends BaseApi
         $this->key = data_get($params, 'key') ?? config('ghost.content_key');
         $this->domain = data_get($params, 'domain') ?? config('ghost.admin_domain');
         $this->version = data_get($params, 'version') ?? config('ghost.ghost_api_version');
-        $this->baseUrl = sprintf("%s/ghost/api/v%s/content", rtrim($this->domain, '/'), $this->version);
+        $this->baseUrl = sprintf('%s/ghost/api/v%s/content', rtrim($this->domain, '/'), $this->version);
     }
 
     /**
@@ -31,6 +31,7 @@ class ContentApi extends BaseApi
     public function get()
     {
         $response = Http::withoutVerifying()->get($this->makeApiUrl());
+
         return $this->handleResponse($response);
     }
 
@@ -39,7 +40,6 @@ class ContentApi extends BaseApi
      * Using the posts' endpoint it is possible to get lists of posts filtered by various criteria.
      * By default, posts are returned in reverse chronological order by published date when fetching more than one.
      *
-     * @return ContentApi
      * @see https://ghost.org/docs/content-api/#posts
      */
     public function posts(): ContentApi
@@ -52,7 +52,6 @@ class ContentApi extends BaseApi
      * The API will only return pages that were created as resources
      * and will not contain routes created with dynamic routing.
      *
-     * @return ContentApi
      * @see https://ghost.org/docs/content-api/#pages
      */
     public function pages(): ContentApi
@@ -64,7 +63,6 @@ class ContentApi extends BaseApi
      * Tags are the primary taxonomy within a Ghost site.
      *
      * @see https://ghost.org/docs/content-api/#tags
-     * @return ContentApi
      */
     public function tags(): ContentApi
     {
@@ -75,7 +73,6 @@ class ContentApi extends BaseApi
      * Authors are a subset of users who have published posts associated with them.
      *
      * @see https://ghost.org/docs/content-api/#authors
-     * @return ContentApi
      */
     public function authors(): ContentApi
     {
@@ -86,7 +83,6 @@ class ContentApi extends BaseApi
      * Settings contain the global settings for a site.
      *
      * @see https://ghost.org/docs/content-api/#settings
-     * @return ContentApi
      */
     public function settings(): ContentApi
     {
@@ -99,7 +95,6 @@ class ContentApi extends BaseApi
      * Ghost connects tiers directly to the publication’s Stripe account.
      *
      * @see https://ghost.org/docs/content-api/#tiers
-     * @return ContentApi
      */
     public function tiers(): ContentApi
     {

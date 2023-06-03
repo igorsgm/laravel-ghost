@@ -16,7 +16,7 @@ it('sets resource to Tag::class', function () {
 
 it('gets all tags', function () {
     Http::fake([
-        "*admin/tags*" => Http::response($this->getFixtureJson('tags-page-1.json')),
+        '*admin/tags*' => Http::response($this->getFixtureJson('tags-page-1.json')),
     ]);
 
     $response = Ghost::admin()->tags()->all();
@@ -89,7 +89,7 @@ it('parses properties Seo class', function () {
     expectSuccessfulResponse($response, Tag::class);
     $tag = $response->data->first();
 
-    if (!empty($tag->seo)) {
+    if (! empty($tag->seo)) {
         expect($tag->seo)->toBeInstanceOf(Seo::class);
     }
 });
@@ -124,7 +124,7 @@ it('returns a tag by slug', function () {
 
 it('creates a tag', function () {
     Http::fake([
-        "*admin/tags/?*" => Http::response($this->getFixtureJson('tag.json')),
+        '*admin/tags/?*' => Http::response($this->getFixtureJson('tag.json')),
     ]);
 
     $response = Ghost::admin()->tags()->create([

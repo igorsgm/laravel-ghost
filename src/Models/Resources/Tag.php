@@ -4,6 +4,7 @@ namespace Igorsgm\Ghost\Models\Resources;
 
 /**
  * Class Tag
+ *
  * @property-read string $id
  * @property-read string $slug
  * @property-read string $name

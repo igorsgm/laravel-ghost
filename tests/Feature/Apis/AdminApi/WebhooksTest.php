@@ -15,7 +15,7 @@ it('sets resource to Webhook::class', function () {
 
 it('creates a webhook', function () {
     Http::fake([
-        "*admin/webhooks/?*" => Http::response($this->getFixtureJson('webhooks.json')),
+        '*admin/webhooks/?*' => Http::response($this->getFixtureJson('webhooks.json')),
     ]);
 
     $response = Ghost::admin()->webhooks()->create([

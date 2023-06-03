@@ -14,7 +14,7 @@ it('sets resource to User::class', function () {
 
 it('gets all users', function () {
     Http::fake([
-        "*admin/users*" => Http::response($this->getFixtureJson('users.json')),
+        '*admin/users*' => Http::response($this->getFixtureJson('users.json')),
     ]);
 
     $response = Ghost::admin()->users()->all();

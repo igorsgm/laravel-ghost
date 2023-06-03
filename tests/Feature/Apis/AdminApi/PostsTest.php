@@ -18,7 +18,7 @@ it('sets resource to Post::class', function () {
 
 it('gets all posts', function () {
     Http::fake([
-        "*admin/posts*" => Http::response($this->getFixtureJson('posts-page-1.json')),
+        '*admin/posts*' => Http::response($this->getFixtureJson('posts-page-1.json')),
     ]);
 
     $response = Ghost::admin()->posts()->all();
@@ -96,15 +96,15 @@ it('parses properties to Author, Tag and Seo classes', function () {
     expectCollectionToBeEmptyOrInstanceOf($post->authors, Author::class);
     expectCollectionToBeEmptyOrInstanceOf($post->tags, Tag::class);
 
-    if (!empty($post->primaryAuthor)) {
+    if (! empty($post->primaryAuthor)) {
         expect($post->primaryAuthor)->toBeInstanceOf(Author::class);
     }
 
-    if (!empty($post->primaryTag)) {
+    if (! empty($post->primaryTag)) {
         expect($post->primaryTag)->toBeInstanceOf(Tag::class);
     }
 
-    if (!empty($post->seo)) {
+    if (! empty($post->seo)) {
         expect($post->seo)->toBeInstanceOf(Seo::class);
     }
 });
@@ -139,7 +139,7 @@ it('returns a post by slug', function () {
 
 it('creates a post with mobiledoc source', function () {
     Http::fake([
-        "*admin/posts/?*" => Http::response($this->getFixtureJson('post.json')),
+        '*admin/posts/?*' => Http::response($this->getFixtureJson('post.json')),
     ]);
 
     $response = Ghost::admin()->posts()->create([
@@ -157,7 +157,7 @@ it('creates a post with mobiledoc source', function () {
 
 it('creates a post with HTML source', function () {
     Http::fake([
-        "*admin/posts/?*" => Http::response($this->getFixtureJson('post.json')),
+        '*admin/posts/?*' => Http::response($this->getFixtureJson('post.json')),
     ]);
 
     $response = Ghost::admin()->posts()->source('html')->create([

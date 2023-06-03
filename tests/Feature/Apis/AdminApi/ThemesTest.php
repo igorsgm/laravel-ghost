@@ -15,7 +15,7 @@ it('sets resource to Theme::class', function () {
 
 it('uploads a theme', function () {
     Http::fake([
-        "*admin/themes/upload*" => Http::response($this->getFixtureJson('themes.json')),
+        '*admin/themes/upload*' => Http::response($this->getFixtureJson('themes.json')),
     ]);
 
     $zipPathOrUrl = 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-zip-file.zip';

@@ -15,7 +15,7 @@ it('sets resource to Image::class', function () {
 
 it('uploads an image', function () {
     Http::fake([
-        "*admin/images/upload*" => Http::response($this->getFixtureJson('images.json'), 201),
+        '*admin/images/upload*' => Http::response($this->getFixtureJson('images.json'), 201),
     ]);
 
     $imagePathOrUrl = 'https://picsum.photos/200';

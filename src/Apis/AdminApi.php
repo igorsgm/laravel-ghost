@@ -20,14 +20,8 @@ use Illuminate\Support\Facades\Http;
 
 class AdminApi extends BaseApi
 {
-    /**
-     * @var string
-     */
-    public string $resourceSlug = "";
+    public string $resourceSlug = '';
 
-    /**
-     * @var string
-     */
     private string $adminToken;
 
     /**
@@ -38,21 +32,21 @@ class AdminApi extends BaseApi
         $this->key = data_get($params, 'key') ?? config('ghost.admin_key');
         $this->domain = data_get($params, 'domain') ?? config('ghost.admin_domain');
         $this->version = data_get($params, 'version') ?? config('ghost.ghost_api_version');
-        $this->baseUrl = sprintf("%s/ghost/api/v%s/admin", rtrim($this->domain, '/'), $this->version);
+        $this->baseUrl = sprintf('%s/ghost/api/v%s/admin', rtrim($this->domain, '/'), $this->version);
         $this->adminToken = $this->adminToken($this->key);
     }
 
     /**
      * Generates JSON Web Token (JWT) from Ghost Admin API key
      *
-     * @param $adminKey
      * @return string
+     *
      * @read https://ghost.org/docs/admin-api/#token-authentication
      */
     private function adminToken($adminKey)
     {
         //Step 1: Split the API key by the : into an id and a secret
-        list($id, $secret) = explode(':', $adminKey);
+        [$id, $secret] = explode(':', $adminKey);
 
         // Step 3: Decode the hexadecimal secret into the original binary byte array
         $decodedSecret = pack('H*', $secret);
@@ -86,11 +80,11 @@ class AdminApi extends BaseApi
     public function get()
     {
         $response = $this->getHttpClient()->get($this->makeApiUrl());
+
         return $this->handleResponse($response);
     }
 
     /**
-     * @param  array  $data
      * @return SuccessResponse|ErrorResponse
      */
     public function create(array $data)
@@ -103,8 +97,6 @@ class AdminApi extends BaseApi
     }
 
     /**
-     * @param  string  $id
-     * @param  array  $data
      * @return SuccessResponse|ErrorResponse
      */
     public function update(string $id, array $data)
@@ -119,7 +111,6 @@ class AdminApi extends BaseApi
     }
 
     /**
-     * @param  string  $id
      * @return SuccessResponse|ErrorResponse
      */
     public function delete(string $id)
@@ -127,6 +118,7 @@ class AdminApi extends BaseApi
         $this->resourceId = $id;
 
         $response = $this->getHttpClient()->delete($this->makeApiUrl());
+
         return $this->handleResponse($response);
     }
 
@@ -135,7 +127,6 @@ class AdminApi extends BaseApi
      * @param  string  $ref  (optional) A reference or identifier for the image, e.g. the original filename and path.
      *                       Will be returned as-is in the API response, making it useful for finding & replacing
      *                       local image paths after uploads.
-     *
      * @return ErrorResponse|SuccessResponse
      */
     public function upload($filePath, $ref = null)
@@ -150,7 +141,6 @@ class AdminApi extends BaseApi
     /**
      * Activate a theme
      *
-     * @param  string  $themeName
      * @return ErrorResponse|SuccessResponse
      */
     public function activate(string $themeName)
@@ -166,10 +156,6 @@ class AdminApi extends BaseApi
      * The conversion generates the best available mobiledoc representation,
      * meaning this operation is lossy and the HTML rendered by Ghost may be different from the source HTML.
      * For the best results ensure your HTML is well-formed, e.g. uses block and inline elements correctly.
-     *
-     * @param  string  $source
-     *
-     * @return AdminApi
      */
     public function source(string $source): AdminApi
     {
@@ -185,7 +171,6 @@ class AdminApi extends BaseApi
      * Methods: Browse, Read, Edit, Add, Delete
      *
      * @see https://ghost.org/docs/admin-api/#posts
-     * @return AdminApi
      */
     public function posts(): AdminApi
     {
@@ -198,7 +183,6 @@ class AdminApi extends BaseApi
      * Methods: Browse, Read, Edit, Add, Delete
      *
      * @see https://ghost.org/docs/admin-api/#pages
-     * @return AdminApi
      */
     public function pages(): AdminApi
     {
@@ -207,7 +191,6 @@ class AdminApi extends BaseApi
 
     /**
      * Methods: Browse, Read, Edit, Add, Delete
-     * @return AdminApi
      */
     public function tags(): AdminApi
     {
@@ -221,7 +204,6 @@ class AdminApi extends BaseApi
      * Methods: Browse, Read, Edit, Add
      *
      * @see https://ghost.org/docs/admin-api/#tiers
-     * @return AdminApi
      */
     public function tiers(): AdminApi
     {
@@ -233,7 +215,6 @@ class AdminApi extends BaseApi
      * Methods: Browse, Read, Edit, Add
      *
      * @see https://ghost.org/docs/admin-api/#offers
-     * @return AdminApi
      */
     public function offers(): AdminApi
     {
@@ -245,7 +226,6 @@ class AdminApi extends BaseApi
      * Methods: Browse, Read, Edit, Add
      *
      * @see https://ghost.org/docs/admin-api/#members
-     * @return AdminApi
      */
     public function members(): AdminApi
     {
@@ -256,7 +236,6 @@ class AdminApi extends BaseApi
      * Methods: Browse, Read
      *
      * @see https://ghost.org/docs/admin-api/#users
-     * @return AdminApi
      */
     public function users(): AdminApi
     {
@@ -271,7 +250,6 @@ class AdminApi extends BaseApi
      * Methods: Upload
      *
      * @see https://ghost.org/docs/admin-api/#images
-     * @return AdminApi
      */
     public function images(): AdminApi
     {
@@ -284,7 +262,6 @@ class AdminApi extends BaseApi
      * Methods: Upload, Activate
      *
      * @see https://ghost.org/docs/admin-api/#themes
-     * @return AdminApi
      */
     public function themes(): AdminApi
     {
@@ -295,7 +272,6 @@ class AdminApi extends BaseApi
      * Methods: Read
      *
      * @see https://ghost.org/docs/admin-api/#site
-     * @return AdminApi
      */
     public function site(): AdminApi
     {
@@ -311,9 +287,9 @@ class AdminApi extends BaseApi
      * Methods: Edit, Add, Delete
      *
      * @see https://ghost.org/docs/admin-api/#webhooks
+     *
      * @read https://ghost.org/integrations/custom-integrations/#api-webhook-integrations
      * @read https://ghost.org/docs/webhooks/
-     * @return AdminApi
      */
     public function webhooks(): AdminApi
     {
