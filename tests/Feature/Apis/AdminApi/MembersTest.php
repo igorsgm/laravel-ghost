@@ -16,7 +16,7 @@ it('sets resource to Member::class', function () {
 
 it('gets all members', function () {
     Http::fake([
-        "*admin/members*" => Http::response($this->getFixtureJson('members.json')),
+        '*admin/members*' => Http::response($this->getFixtureJson('members.json')),
     ]);
 
     $response = Ghost::admin()->members()->all();
@@ -35,11 +35,11 @@ it('parses properties to Label and Subscription classes', function () {
     expectSuccessfulResponse($response, Member::class);
     $member = $response->data->first();
 
-    if (!empty($member->labels)) {
+    if (! empty($member->labels)) {
         expectCollectionToBeEmptyOrInstanceOf($member->labels, Label::class);
     }
 
-    if (!empty($member->subscriptions)) {
+    if (! empty($member->subscriptions)) {
         expectCollectionToBeEmptyOrInstanceOf($member->subscriptions, Subscription::class);
     }
 });
@@ -60,7 +60,7 @@ it('returns a member by ID', function () {
 
 it('creates a member', function () {
     Http::fake([
-        "*admin/members/?*" => Http::response($this->getFixtureJson('members.json')),
+        '*admin/members/?*' => Http::response($this->getFixtureJson('members.json')),
     ]);
 
     $response = Ghost::admin()->members()->create([

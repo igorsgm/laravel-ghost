@@ -19,81 +19,42 @@ abstract class BaseApi
      */
     protected $resource;
 
-    /**
-     * @var string
-     */
-    public string $resourceId = "";
+    public string $resourceId = '';
+
+    public string $resourceSlug = '';
+
+    public string $include = '';
+
+    public string $fields = '';
+
+    public string $formats = '';
 
     /**
      * @var string
      */
-    public string $resourceSlug = "";
+    protected $source = '';
 
-    /**
-     * @var string
-     */
-    public string $include = "";
+    public string $limit = '';
 
-    /**
-     * @var string
-     */
-    public string $fields = "";
+    public string $filter = '';
 
-    /**
-     * @var string
-     */
-    public string $formats = "";
+    public string $page = '';
 
-    /**
-     * @var string
-     */
-    protected $source = "";
+    public string $order = '';
 
-    /**
-     * @var string
-     */
-    public string $limit = "";
-
-    /**
-     * @var string
-     */
-    public string $filter = "";
-
-    /**
-     * @var string
-     */
-    public string $page = "";
-
-    /**
-     * @var string
-     */
-    public string $order = "";
-
-    /**
-     * @var string
-     */
     protected string $key;
 
-    /**
-     * @var string
-     */
     protected string $domain;
 
-    /**
-     * @var string
-     */
     protected string $version;
 
-    /**
-     * @return string
-     */
     protected function buildEndpoint(): string
     {
         $endpoint = $this->resource->getResourceName();
 
-        if (!empty($this->resourceId)) {
+        if (! empty($this->resourceId)) {
             $endpoint .= "/$this->resourceId";
-        } elseif (!empty($this->resourceSlug)) {
+        } elseif (! empty($this->resourceSlug)) {
             $endpoint .= "/slug/$this->resourceSlug";
         }
 
@@ -101,17 +62,13 @@ abstract class BaseApi
     }
 
     /**
-     * @param string $suffix
-     * @return string
+     * @param  string  $suffix
      */
     protected function makeApiUrl($suffix = ''): string
     {
-        return sprintf("%s/%s/?%s", $this->baseUrl, $this->buildEndpoint().$suffix, $this->buildParams());
+        return sprintf('%s/%s/?%s', $this->baseUrl, $this->buildEndpoint().$suffix, $this->buildParams());
     }
 
-    /**
-     * @return string
-     */
     protected function buildParams(): string
     {
         $params = ['include', 'fields', 'formats', 'source', 'filter', 'limit', 'page', 'order', 'key'];
@@ -125,7 +82,6 @@ abstract class BaseApi
     }
 
     /**
-     * @param $response
      * @return ErrorResponse|SuccessResponse
      */
     protected function handleResponse($response)
@@ -140,7 +96,6 @@ abstract class BaseApi
     /**
      * Return resource from slug
      *
-     * @param  string  $slug
      *
      * @return array|ErrorResponse|mixed
      */
@@ -170,11 +125,11 @@ abstract class BaseApi
     public function first()
     {
         $response = $this->limit(1)->get();
+
         return $response->data->first();
     }
 
     /**
-     * @param $limit
      * @return array
      */
     public function paginate($limit = null)
@@ -189,7 +144,6 @@ abstract class BaseApi
     /**
      * Return resource from ID
      *
-     * @param  string  $id
      *
      * @return BaseResource|ErrorResponse
      */
@@ -209,8 +163,8 @@ abstract class BaseApi
      * Apply fine-grained filters to target specific data.
      *
      * @param  string  $filter
-     *
      * @return $this
+     *
      * @see https://ghost.org/docs/content-api/#filtering
      * @see https://gist.github.com/ErisDS/f516a859355d515aa6ad
      */
@@ -225,8 +179,8 @@ abstract class BaseApi
      * Limit how many records are returned at once
      *
      * @param  int|string  $limit
-     *
      * @return $this
+     *
      * @see https://ghost.org/docs/content-api/#limit
      */
     public function limit($limit): BaseApi
@@ -237,7 +191,6 @@ abstract class BaseApi
     }
 
     /**
-     * @param  string  $resourceClass
      * @return $this
      */
     public function setResource(string $resourceClass): BaseApi
@@ -266,8 +219,8 @@ abstract class BaseApi
      *
      * @param  string|array  ...$includes
      * @return $this
-     * @see https://ghost.org/docs/content-api/#include
      *
+     * @see https://ghost.org/docs/content-api/#include
      */
     public function include(...$includes): BaseApi
     {
@@ -279,7 +232,6 @@ abstract class BaseApi
     /**
      * Alias for include method
      *
-     * @param ...$includes
      * @return $this
      */
     public function with(...$includes): BaseApi
@@ -291,8 +243,8 @@ abstract class BaseApi
      * Limit the fields returned to the response object
      *
      * @param  string|array  ...$fields
-     *
      * @return $this
+     *
      * @see https://ghost.org/docs/content-api/#fields
      */
     public function fields(...$fields): BaseApi
@@ -310,8 +262,8 @@ abstract class BaseApi
      * Possible formats: html, plaintext, mobiledoc.
      *
      *
-     * @param  string  $format
      * @return $this
+     *
      * @see https://ghost.org/docs/content-api/#formats
      */
     public function formats(string $format): BaseApi
@@ -322,8 +274,8 @@ abstract class BaseApi
     }
 
     /**
-     * @param  int  $page
      * @return $this
+     *
      * @see https://ghost.org/docs/content-api/#page
      */
     public function page(int $page): BaseApi
@@ -334,15 +286,13 @@ abstract class BaseApi
     }
 
     /**
-     * @param  string  $attr
-     * @param  string  $order
-     *
      * @return $this
+     *
      * @see https://ghost.org/docs/content-api/#order
      */
-    public function order(string $attr, string $order = "DESC"): BaseApi
+    public function order(string $attr, string $order = 'DESC'): BaseApi
     {
-        $this->order = $attr." ".strtolower($order);
+        $this->order = $attr.' '.strtolower($order);
 
         return $this;
     }
@@ -350,11 +300,9 @@ abstract class BaseApi
     /**
      * Alias for order method
      *
-     * @param  string  $attr
-     * @param  string  $order
      * @return $this
      */
-    public function orderBy(string $attr, string $order = "DESC"): BaseApi
+    public function orderBy(string $attr, string $order = 'DESC'): BaseApi
     {
         return $this->order($attr, $order);
     }

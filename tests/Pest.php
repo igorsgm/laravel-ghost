@@ -11,7 +11,6 @@
 |
 */
 
-
 use Igorsgm\Ghost\Models\Meta;
 use Igorsgm\Ghost\Responses\SuccessResponse;
 use Igorsgm\Ghost\Tests\TestCase;
@@ -49,10 +48,9 @@ expect()->extend('toBeOne', function () {
 /**
  * Call protected/private method of a class.
  *
- * @param  object &$object  Instantiated object that we will run method on.
+ * @param  object  &$object  Instantiated object that we will run method on.
  * @param  string  $methodName  Method name to call
  * @param  array  $parameters  Array of parameters to pass into method.
- *
  * @return mixed Method return.
  */
 function invokeMethod(&$object, $methodName, array $parameters = [])
@@ -81,7 +79,7 @@ function expectQueryStringSet($ghost, $parameter, $value)
 
     unset($parsedQueryString['key']);
     expect($parsedQueryString)->toMatchArray([
-        $parameter => $value
+        $parameter => $value,
     ]);
 }
 
@@ -114,9 +112,7 @@ function expectSuccessfulResponse($response, $resourceClass)
 
     expectCollectionToBeEmptyOrInstanceOf($items, $resourceClass);
 
-    if (!empty($response->meta)) {
+    if (! empty($response->meta)) {
         expect($response->meta)->toBeInstanceOf(Meta::class);
     }
 }
-
-

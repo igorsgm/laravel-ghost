@@ -14,7 +14,7 @@ it('sets resource to Site::class', function () {
 
 it('gets site', function () {
     Http::fake([
-        "*admin/site*" => Http::response($this->getFixtureJson('site.json')),
+        '*admin/site*' => Http::response($this->getFixtureJson('site.json')),
     ]);
 
     $response = Ghost::admin()->site()->get();

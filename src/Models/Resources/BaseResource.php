@@ -8,7 +8,6 @@ abstract class BaseResource extends BaseModel
 {
     /**
      * The API Resource name on Ghost API
-     * @var string
      */
     protected string $resourceName = '';
 

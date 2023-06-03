@@ -37,8 +37,6 @@ abstract class BaseModel
 
     /**
      * The attributes that should be mutated to Carbon dates.
-     *
-     * @var array
      */
     private array $dates = [
         'createdAt',
@@ -47,22 +45,18 @@ abstract class BaseModel
     ];
 
     /**
-     * @var Seo $seo
+     * @var Seo
      */
     protected $seo;
 
-    /**
-     * @param  array  $data
-     */
     public function __construct(array $data = [])
     {
-        if (!empty($data)) {
+        if (! empty($data)) {
             $this->fill($data);
         }
     }
 
     /**
-     * @param  array  $data
      * @return void
      */
     private function fill(array $data)
@@ -77,7 +71,7 @@ abstract class BaseModel
             $this->{$property} = $this->getCastedValue($property, $value) ?? null;
         }
 
-        if (!empty($seoProperties)) {
+        if (! empty($seoProperties)) {
             $this->seo = new Seo($seoProperties);
         }
     }
@@ -108,11 +102,11 @@ abstract class BaseModel
     private function castModelProperty($property, $value)
     {
         $propertyModel = $this->modelProperties[$property];
-        return !empty($value) ? new $propertyModel($value) : null;
+
+        return ! empty($value) ? new $propertyModel($value) : null;
     }
 
     /**
-     * @param  string  $property
      * @param  string|array  $value
      * @return Carbon|BaseModel|\Illuminate\Support\Collection|mixed|null
      */

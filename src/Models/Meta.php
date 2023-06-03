@@ -9,9 +9,6 @@ class Meta extends BaseModel
      */
     public $pagination;
 
-    /**
-     * @param  array  $data
-     */
     public function __construct(array $data = [])
     {
         $this->pagination = (object) ($data['pagination'] ?? []);
@@ -54,7 +51,7 @@ class Meta extends BaseModel
      */
     public function hasNext()
     {
-        return !empty($this->pagination->next);
+        return ! empty($this->pagination->next);
     }
 
     /**
@@ -70,7 +67,7 @@ class Meta extends BaseModel
      */
     public function hasPrev()
     {
-        return !empty($this->pagination->prev);
+        return ! empty($this->pagination->prev);
     }
 
     /**
