@@ -4,6 +4,7 @@ namespace Igorsgm\Ghost\Models\Resources;
 
 /**
  * Class User
+ *
  * @property-read string $id;
  * @property-read string $name;
  * @property-read string $slug;
@@ -22,7 +23,7 @@ namespace Igorsgm\Ghost\Models\Resources;
  * @property-read string $createdAt;
  * @property-read string $updatedAt;
  * @property-read \Illuminate\Support\Collection $roles;
- * @property-read integer $postsCount;
+ * @property-read int $postsCount;
  */
 class Author extends User
 {

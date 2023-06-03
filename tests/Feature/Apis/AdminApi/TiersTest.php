@@ -4,7 +4,6 @@ use Igorsgm\Ghost\Facades\Ghost;
 use Igorsgm\Ghost\Models\Benefit;
 use Igorsgm\Ghost\Models\Price;
 use Igorsgm\Ghost\Models\Resources\Tier;
-use Igorsgm\Ghost\Responses\SuccessResponse;
 use Illuminate\Support\Facades\Http;
 
 uses()->group('admin');
@@ -17,7 +16,7 @@ it('sets resource to Tier::class', function () {
 
 it('gets all tiers', function () {
     Http::fake([
-        "*admin/tiers*" => Http::response($this->getFixtureJson('tiers.json')),
+        '*admin/tiers*' => Http::response($this->getFixtureJson('tiers.json')),
     ]);
 
     $response = Ghost::admin()->tiers()->all();
@@ -90,19 +89,19 @@ it('parses properties to Benefit and Price classes', function () {
     expectSuccessfulResponse($response, Tier::class);
     $tier = $response->data->first();
 
-    if (!empty($tier->benefits)) {
+    if (! empty($tier->benefits)) {
         expectCollectionToBeEmptyOrInstanceOf($tier->benefits, Benefit::class);
     }
 
-    if (!empty($tier->monthlyPrice)) {
+    if (! empty($tier->monthlyPrice)) {
         expect($tier->monthlyPrice)->toBeInstanceOf(Price::class);
     }
 
-    if (!empty($tier->yearlyPrice)) {
+    if (! empty($tier->yearlyPrice)) {
         expect($tier->yearlyPrice)->toBeInstanceOf(Price::class);
     }
 
-    if (!empty($tier->stripePrices)) {
+    if (! empty($tier->stripePrices)) {
         expectCollectionToBeEmptyOrInstanceOf($tier->stripePrices, Price::class);
     }
 });
@@ -137,7 +136,7 @@ it('returns a tier by slug', function () {
 
 it('creates a tier', function () {
     Http::fake([
-        "*admin/tiers/?*" => Http::response($this->getFixtureJson('tier.json')),
+        '*admin/tiers/?*' => Http::response($this->getFixtureJson('tier.json')),
     ]);
 
     $response = Ghost::admin()->tiers()->create([
@@ -148,7 +147,7 @@ it('creates a tier', function () {
         'monthly_price' => [],
         'yearly_price' => [],
         'benefits' => [
-            [], []
+            [], [],
         ],
     ]);
 

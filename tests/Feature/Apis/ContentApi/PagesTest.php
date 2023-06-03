@@ -38,15 +38,15 @@ it('parses properties to Author, Tag and Seo classes', function () {
     expectCollectionToBeEmptyOrInstanceOf($page->authors, Author::class);
     expectCollectionToBeEmptyOrInstanceOf($page->tags, Tag::class);
 
-    if (!empty($page->primaryAuthor)) {
+    if (! empty($page->primaryAuthor)) {
         expect($page->primaryAuthor)->toBeInstanceOf(Author::class);
     }
 
-    if (!empty($page->primaryTag)) {
+    if (! empty($page->primaryTag)) {
         expect($page->primaryTag)->toBeInstanceOf(Tag::class);
     }
 
-    if (!empty($page->seo)) {
+    if (! empty($page->seo)) {
         expect($page->seo)->toBeInstanceOf(Seo::class);
     }
 });

@@ -28,7 +28,7 @@ it('parses properties to Navigation and Seo classes', function () {
 
     expectCollectionToBeEmptyOrInstanceOf($settings->navigation, Navigation::class);
 
-    if (!empty($post->seo)) {
+    if (! empty($post->seo)) {
         expect($post->seo)->toBeInstanceOf(Seo::class);
     }
 });

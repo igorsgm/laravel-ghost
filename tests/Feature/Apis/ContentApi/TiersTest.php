@@ -24,10 +24,9 @@ it('gets all tiers paginated', function () {
     expect($response->meta->pagination)->not()->toBeEmpty();
 });
 
-
 it('includes monthly_price and yearly_price', function () {
     Http::fake([
-        "*tiers/?*" => Http::response($this->getFixtureJson('tier.json')),
+        '*tiers/?*' => Http::response($this->getFixtureJson('tier.json')),
     ]);
 
     $ghost = Ghost::content()->tiers()->include(['monthly_price', 'yearly_price']);

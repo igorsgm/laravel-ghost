@@ -3,7 +3,6 @@
 use Igorsgm\Ghost\Facades\Ghost;
 use Igorsgm\Ghost\Models\Resources\Offer;
 use Igorsgm\Ghost\Models\Resources\Tier;
-use Igorsgm\Ghost\Responses\SuccessResponse;
 use Illuminate\Support\Facades\Http;
 
 uses()->group('admin');
@@ -16,7 +15,7 @@ it('sets resource to Offer::class', function () {
 
 it('gets all offers', function () {
     Http::fake([
-        "*admin/offers*" => Http::response($this->getFixtureJson('offers.json')),
+        '*admin/offers*' => Http::response($this->getFixtureJson('offers.json')),
     ]);
 
     $response = Ghost::admin()->offers()->all();
@@ -35,7 +34,7 @@ it('parses property to Tier classes', function () {
     expectSuccessfulResponse($response, Offer::class);
     $offer = $response->data->first();
 
-    if (!empty($offer->tier)) {
+    if (! empty($offer->tier)) {
         expect($offer->tier)->toBeInstanceOf(Tier::class);
     }
 });
@@ -56,7 +55,7 @@ it('returns an offer by ID', function () {
 
 it('creates an offer', function () {
     Http::fake([
-        "*admin/offers/?*" => Http::response($this->getFixtureJson('offers.json')),
+        '*admin/offers/?*' => Http::response($this->getFixtureJson('offers.json')),
     ]);
 
     $response = Ghost::admin()->offers()->create([
@@ -82,7 +81,7 @@ it('updates an offer', function () {
 
     $response = Ghost::admin()->offers()->update($id, [
         'display_title' => 'Black Friday 2022',
-        'code' => 'black-friday-2022'
+        'code' => 'black-friday-2022',
     ]);
 
     expectSuccessfulResponse($response, Offer::class);

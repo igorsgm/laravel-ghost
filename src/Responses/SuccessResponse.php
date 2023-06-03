@@ -41,8 +41,6 @@ class SuccessResponse
     public $meta = [];
 
     /**
-     * @param  BaseApi  $api
-     * @param  BaseResource  $resource
      * @param  Response|mixed  $response
      */
     public function __construct(BaseApi $api, BaseResource $resource, $response)
@@ -69,7 +67,7 @@ class SuccessResponse
             $data = new $this->resource($responseData);
         } else {
             $data = collect();
-            $responseData = !empty($responseData) ? $responseData : [];
+            $responseData = ! empty($responseData) ? $responseData : [];
             foreach ($responseData as $resourceItemData) {
                 $data->push(new $this->resource($resourceItemData));
             }
@@ -77,28 +75,32 @@ class SuccessResponse
 
         $this->data = $data;
 
-        if (!empty($meta)) {
+        if (! empty($meta)) {
             $this->meta = new Meta($meta);
         }
     }
 
     /**
      * Fetches the Previous page response
+     *
      * @return array|array[]|SuccessResponse
      */
     public function getPreviousPage()
     {
         $previusPage = $this->meta->prev();
+
         return $this->api->page($previusPage)->get();
     }
 
     /**
      * Fetches the Next page response
+     *
      * @return array|array[]|SuccessResponse
      */
     public function getNextPage()
     {
         $nextPage = $this->meta->next();
+
         return $this->api->page($nextPage)->get();
     }
 }

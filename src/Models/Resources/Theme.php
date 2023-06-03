@@ -7,7 +7,7 @@ namespace Igorsgm\Ghost\Models\Resources;
  *
  * @property-read mixed $name
  * @property-read mixed $package
- * @property-read boolean $active
+ * @property-read bool $active
  * @property-read array $templates
  */
 class Theme extends BaseResource

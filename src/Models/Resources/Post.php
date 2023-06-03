@@ -30,7 +30,7 @@ namespace Igorsgm\Ghost\Models\Resources;
  * @property-read string $readingTime
  * @property-read string $access
  * @property-read string $emailSubject
- * @property-read boolean $emailOnly
+ * @property-read bool $emailOnly
  * @property-read \Illuminate\Support\Collection $authors
  * @property-read Author $primaryAuthor
  * @property-read \Illuminate\Support\Collection $tags

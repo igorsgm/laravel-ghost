@@ -9,7 +9,7 @@ namespace Igorsgm\Ghost\Models\Resources;
  * @property-read string $name
  * @property-read string $slug
  * @property-read string $description
- * @property-read boolean $active
+ * @property-read bool $active
  * @property-read string $type
  * @property-read string $welcomePageUrl
  * @property-read string $visibility
