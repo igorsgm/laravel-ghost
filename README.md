@@ -9,7 +9,7 @@
         <img src="https://img.shields.io/packagist/v/igorsgm/laravel-ghost.svg?style=flat-square" alt="Latest Version on Packagist">
     </a>
     <a href="https://travis-ci.org/igorsgm/laravel-ghost">
-        <img src="https://img.shields.io/scrutinizer/build/g/igorsgm/laravel-ghost/master?style=flat-square" alt="Build Status">
+        <img src="https://img.shields.io/github/actions/workflow/status/igorsgm/laravel-git-hooks/main.yml?style=flat-square" alt="Build Status">
     </a>
 <a href="https://travis-ci.org/igorsgm/laravel-ghost">
         <img src="https://img.shields.io/scrutinizer/coverage/g/igorsgm/laravel-ghost/master?style=flat-square" alt="Tests Coverage">
