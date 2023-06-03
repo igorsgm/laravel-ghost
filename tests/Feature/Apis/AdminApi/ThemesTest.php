@@ -18,7 +18,7 @@ it('uploads a theme', function () {
         '*admin/themes/upload*' => Http::response($this->getFixtureJson('themes.json')),
     ]);
 
-    $zipPathOrUrl = 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-zip-file.zip';
+    $zipPathOrUrl = 'https://github.com/igorsgm/laravel-ghost/raw/develop/tests/Fixtures/sample-zip-file.zip';
     $response = Ghost::admin()->themes()->upload($zipPathOrUrl);
 
     expect($response)->toBeInstanceOf(SuccessResponse::class);
