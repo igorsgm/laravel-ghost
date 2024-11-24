@@ -11,17 +11,23 @@ use Igorsgm\Ghost\Models\Resources\Tier;
 use Igorsgm\Ghost\Responses\ErrorResponse;
 use Igorsgm\Ghost\Responses\SuccessResponse;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 
 class ContentApi extends BaseApi
 {
+    protected $cacheEnabled;
+    protected $cacheDuration;
+
     /**
-     * @param  array  $params  Here you can provide 'key', 'domain', 'version' to override the default ones.
+     * @param  array  $params  Here you can provide 'key', 'domain', 'version', 'cache_enabled', and 'cache_duration'.
      */
     public function __construct(array $params = [])
     {
         $this->key = data_get($params, 'key') ?? config('ghost.content_key');
         $this->domain = data_get($params, 'domain') ?? config('ghost.admin_domain');
         $this->version = data_get($params, 'version') ?? config('ghost.ghost_api_version');
+        $this->cacheEnabled = data_get($params, 'cache_enabled', config('ghost.cache_enabled', false));
+        $this->cacheDuration = data_get($params, 'cache_duration', config('ghost.cache_duration', 3600));
         $this->baseUrl = sprintf('%s/ghost/api/v%s/content', rtrim($this->domain, '/'), $this->version);
     }
 
@@ -30,9 +36,30 @@ class ContentApi extends BaseApi
      */
     public function get()
     {
-        $response = Http::withoutVerifying()->get($this->makeApiUrl());
+        $url = $this->makeApiUrl();
 
+        if ($this->cacheEnabled) {
+            $cacheKey = $this->generateCacheKey($url);
+
+            return Cache::remember($cacheKey, $this->cacheDuration, function () use ($url) {
+                $response = Http::withoutVerifying()->get($url);
+                return $this->handleResponse($response);
+            });
+        }
+
+        $response = Http::withoutVerifying()->get($url);
         return $this->handleResponse($response);
+    }
+
+    /**
+     * Generate a unique cache key for the given URL.
+     *
+     * @param  string  $url
+     * @return string
+     */
+    protected function generateCacheKey(string $url): string
+    {
+        return 'content_api:' . md5($url);
     }
 
     /**
